@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.container {
+    background-color: #000000;
+    width: 100vw;
+    height: 100vh;
+}
+
+.heading {
+    /* background-color: white; */
+    height: 8%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.heading_center{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+#home_btn{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f1f1f;
+    border: none;
+}
+.logo{
+    margin-left: 1rem;
+}
+.fa-house{
+    color: white;
+    font-size: large;
+}
+.input{
+    width: 28vw;
+    background-color: #1f1f1f;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding-left: 10px;
+    border: none;
+    border-radius: 50px;
+}
+.search_icon{
+    color: #b3b3b3;
+    font-size: 1.2em;
+    margin-left: 1rem;
+    margin-right: 1.2rem;
+    cursor: pointer;
+}
+.input::placeholder {
+    color: #b3b3b3;
+}
+.input_ele{
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1em;
+    padding-left: 10px;
+    outline: none;
+}
+.right_head{
+    display: flex;
+    gap: 1rem;
+}
+.sign_up{
+    height: 3.5rem;
+    width: 6rem;
+    display: flex;
+    /* background-color: red; */
+    color: #b3b3b3;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    
+}
+.log_in{
+    height: 3rem;
+    width: 6.5rem;
+    display: flex;
+    background-color: white;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    
+}
