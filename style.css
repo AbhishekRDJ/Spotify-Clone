@@ -99,3 +99,33 @@
     justify-content: center;
     
 }
+.left{
+    background-color: #121212;
+    width: 25%;
+    display: flex;
+    margin: 5px;
+    border-radius: 8px;
+    gap: 2rem;
+    padding: 20px;
+}
+.lib{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: small;
+}
+.logo_lib{
+    width: 25px;
+    fill: #f2f2f2;
+}
+.lib h3{
+    color: #f2f2f2;
+    width: 6rem;
+    /* background-color: red; */
+}
+.plus_btn{
+    width: 25px;
+    fill: #f2f2f2;
+    /* background-color: darkblue; */
+    padding-left: 13vw;
+}
