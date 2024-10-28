@@ -212,7 +212,8 @@
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: #2a2a2a;
+    background-color: #121212;
+    cursor: pointer;
     border-radius: 8px;
     max-width: 350px;
     color: white;
@@ -259,4 +260,19 @@
     color: black;
     font-size: 12px;
     margin-left: 2px;
+  }
+  .card:hover{
+    background-color: #2a2a2a;
+  }
+  .card:active{
+    background-color: #121212;
+  }
+  .fa-solid {
+    cursor: pointer;
+  }
+  svg {
+    cursor: pointer;
+  }
+  button{
+    cursor: pointer;
   }
