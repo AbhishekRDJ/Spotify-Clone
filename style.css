@@ -7,15 +7,22 @@
     font-weight: 700;
     font-style: normal;
 }
+body{
+    background-color: #000000;
+    
+    
+}
 
 .container {
     background-color: #000000;
-    width: 100vw;
+    width: 98.85vw;
+    
     height: 100vh;
+    display: flex;
 }
 
 .heading {
-    /* background-color: white; */
+    background-color: #000000;
     height: 8%;
     padding: 10px;
     display: flex;
@@ -37,6 +44,7 @@
     align-items: center;
     justify-content: center;
     background-color: #1f1f1f;
+    
     border: none;
 }
 
@@ -46,6 +54,7 @@
 
 .fa-house {
     color: white;
+    
     font-size: large;
 }
 
@@ -58,6 +67,7 @@
     justify-content: left;
     padding-left: 10px;
     border: none;
+    
     border-radius: 50px;
 }
 
@@ -86,6 +96,7 @@
 .right_head {
     display: flex;
     gap: 1rem;
+    
 }
 
 .sign_up {
@@ -276,3 +287,4 @@
   button{
     cursor: pointer;
   }
+
