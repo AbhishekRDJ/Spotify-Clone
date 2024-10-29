@@ -336,3 +336,63 @@ body{
     text-overflow: ellipsis;
     /* Add ellipsis if text is too long */
 }
+.playlist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 10px;
+    /* background-color: red; */
+    max-width: 800px;
+    /* margin: 10px; */
+    margin: 0 auto;
+    
+}
+
+.playlist_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-color: #0c0c0e46; /* Card background color */
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.playlist_item:hover {
+    transform: scale(1.05);
+}
+
+.playlist_item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.playlist_item span {
+    font-size: 14px;
+    font-weight: bold;
+}
+.playlist_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-color: #4d437463; /* Card background color */
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    overflow: hidden; /* Prevents content from overflowing out of the card */
+}
+
+.playlist_item span {
+    font-size: 14px;
+    font-weight: bold;
+    flex: 1; /* Takes up available space within the item */
+    white-space: nowrap; /* Prevents wrapping */
+    overflow: hidden; /* Hides overflow content */
+    text-overflow: ellipsis; /* Adds "..." at the end if the text is too long */
+}
