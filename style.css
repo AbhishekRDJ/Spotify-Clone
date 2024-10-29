@@ -186,14 +186,17 @@ body{
 .playlist_btn {
     /* background-color: red; */
     height: 20px;
-    display: flex;
+    display: flex; 
+    flex-wrap: wrap;  
     gap: 1rem;
     align-items: center;
-    margin: auto;
-    justify-content: center;
-    margin: auto;
+    /* justify-content: center; */
+    /* margin: auto; */
+    min-height: 4vw;
     padding: 5px;
+    overflow-y:visible;
 }
+
 
 .playlist_btn button {
     padding: 5px;
@@ -288,3 +291,6 @@ body{
     cursor: pointer;
   }
 
+.right{
+    
+}
