@@ -292,5 +292,47 @@ body{
   }
 
 .right{
-    
+    background-color: red;
+    width: 70%;
+    background-color: #121212;
+
+    display: flex;
+    margin: 5px;
+    border-radius: 8px;
+    gap: 2rem;
+    padding: 20px;
+    flex-direction: column;
+    white-space: nowrap;
+    /* Prevent wrapping */
+    overflow: hidden;
+    /* Hide any overflowed text */
+    text-overflow: ellipsis;
+}
+.head_btn{
+    height: 20px;
+    display: flex; 
+    flex-wrap: wrap;  
+    gap: 1rem;
+    align-items: center;
+    /* justify-content: center; */
+    /* margin: auto; */
+    min-height: 4vw;
+    padding: 5px;
+    overflow-y:visible;
+}
+.head_btn button{
+    padding: 5px;
+    border: none;
+    height: auto;
+    border-radius: 50px;
+    background-color: #333333;
+    /* Allow height to adjust based on content */
+    white-space: nowrap;
+    /* Prevent wrapping */
+    overflow: hidden;
+    /* Hide any overflowed text */
+    color: white;
+    padding: 10px;
+    text-overflow: ellipsis;
+    /* Add ellipsis if text is too long */
 }
