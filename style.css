@@ -168,7 +168,7 @@ body{
 .search_session {
     /* background-color: red; */
     color: #f2f2f2;
-    width: 25vw;
+    width: 24vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -181,6 +181,7 @@ body{
     gap: 1rem;
     align-items: center;
     justify-content: center;
+    /* background-color: red; */
 }
 
 .playlist_btn {
@@ -307,6 +308,7 @@ body{
     overflow: hidden;
     /* Hide any overflowed text */
     text-overflow: ellipsis;
+    
 }
 .head_btn{
     height: 20px;
