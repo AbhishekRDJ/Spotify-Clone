@@ -229,6 +229,9 @@ body {
 
 .most {
     /* background-color: red; */
+    overflow-y: scroll;
+    width: 30vw;
+    padding-bottom: 2.5rem;
 
 }
 
@@ -451,6 +454,7 @@ button {
     margin-left: 2rem;
     margin-right: 2rem;
     padding: 10px;
+    padding-bottom: 2.6rem;
 }
 
 .card2 {
@@ -496,4 +500,128 @@ button {
     font-size: small;
     padding: 2px;
 
+}
+
+.footer {
+    background-color: red;
+    width: 20px;
+}
+
+.music-player {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+/* Song info section */
+.song-info {
+    display: flex;
+    align-items: center;
+}
+
+.album-cover {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.song-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.song-details .title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.song-details .artist {
+    font-size: 12px;
+    color: #bbb;
+}
+
+/* Playback controls */
+.playback-controls {
+    display: flex;
+    align-items: center;
+}
+
+.playback-controls button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.playback-controls .play-pause {
+    font-size: 24px;
+}
+
+/* Progress bar */
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin: 0 20px;
+}
+
+.time {
+    font-size: 12px;
+    color: #bbb;
+}
+
+.progress-bar {
+    position: relative;
+    height: 4px;
+    background-color: #444;
+    width: 100%;
+    border-radius: 2px;
+    margin: 0 10px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #1db954;
+    width: 50%;
+    border-radius: 2px;
+}
+
+/* Volume and settings section */
+.settings {
+    display: flex;
+    align-items: center;
+}
+
+.settings button {
+    background: none;
+    border: none;
+    color: #fff;
+    margin: 0 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.volume-slider {
+    height: 4px;
+    background-color: #444;
+    width: 80px;
+    border-radius: 2px;
+    margin: 0 10px;
+    position: relative;
+}
+
+.volume {
+    height: 100%;
+    background-color: #1db954;
+    width: 50%;
+    border-radius: 2px;
 }
