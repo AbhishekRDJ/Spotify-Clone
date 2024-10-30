@@ -7,16 +7,17 @@
     font-weight: 700;
     font-style: normal;
 }
-body{
+
+body {
     background-color: #000000;
-    
-    
+
+
 }
 
 .container {
     background-color: #000000;
     width: 98.85vw;
-    
+
     height: 100vh;
     display: flex;
 }
@@ -28,6 +29,13 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: fixed;
+    /* Sticks the heading to the top */
+    top: 0;
+    /* Aligns it to the top of the viewport */
+    width: 98.5%;
+    /* Ensures the heading takes up the full width */
+    z-index: 10;
 }
 
 .heading_center {
@@ -44,7 +52,7 @@ body{
     align-items: center;
     justify-content: center;
     background-color: #1f1f1f;
-    
+
     border: none;
 }
 
@@ -54,7 +62,7 @@ body{
 
 .fa-house {
     color: white;
-    
+
     font-size: large;
 }
 
@@ -67,7 +75,7 @@ body{
     justify-content: left;
     padding-left: 10px;
     border: none;
-    
+
     border-radius: 50px;
 }
 
@@ -96,7 +104,7 @@ body{
 .right_head {
     display: flex;
     gap: 1rem;
-    
+
 }
 
 .sign_up {
@@ -123,6 +131,7 @@ body{
 }
 
 .left {
+
     background-color: #121212;
     width: 25%;
     display: flex;
@@ -137,7 +146,8 @@ body{
     overflow: hidden;
     /* Hide any overflowed text */
     text-overflow: ellipsis;
-    
+    margin-top: 11vh;
+
 
 }
 
@@ -188,15 +198,15 @@ body{
 .playlist_btn {
     /* background-color: red; */
     height: 20px;
-    display: flex; 
-    flex-wrap: wrap;  
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
     /* justify-content: center; */
     /* margin: auto; */
     min-height: 4vw;
     padding: 5px;
-    overflow-y:visible;
+    overflow-y: visible;
 }
 
 
@@ -216,14 +226,17 @@ body{
     text-overflow: ellipsis;
     /* Add ellipsis if text is too long */
 }
-.most{
+
+.most {
     /* background-color: red; */
-    
+
 }
-.most li{
+
+.most li {
     margin: 10px;
-    
+
 }
+
 .card {
     display: flex;
     align-items: center;
@@ -235,32 +248,32 @@ body{
     color: white;
     font-family: Arial, sans-serif;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  }
+}
 
-  .card img {
+.card img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-right: 10px;
-  }
+}
 
-  .card-content {
+.card-content {
     flex-grow: 1;
-  }
+}
 
-  .card-title {
+.card-title {
     font-size: 1rem;
     font-weight: bold;
     margin: 0;
     color: white;
-  }
+}
 
-  .card-subtitle {
+.card-subtitle {
     font-size: 0.9rem;
     color: #b3b3b3;
-  }
+}
 
-  .play-button {
+.play-button {
     width: 24px;
     height: 24px;
     background-color: white;
@@ -269,31 +282,36 @@ body{
     align-items: center;
     justify-content: center;
     margin-right: 10px;
-  }
+}
 
-  .play-button::before {
+.play-button::before {
     content: "▶";
     color: black;
     font-size: 12px;
     margin-left: 2px;
-  }
-  .card:hover{
-    background-color: #2a2a2a;
-  }
-  .card:active{
-    background-color: #121212;
-  }
-  .fa-solid {
-    cursor: pointer;
-  }
-  svg {
-    cursor: pointer;
-  }
-  button{
-    cursor: pointer;
-  }
+}
 
-.right{
+.card:hover {
+    background-color: #2a2a2a;
+}
+
+.card:active {
+    background-color: #121212;
+}
+
+.fa-solid {
+    cursor: pointer;
+}
+
+svg {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+.right {
     background-color: red;
     width: 70%;
     background-color: #121212;
@@ -309,23 +327,26 @@ body{
     overflow-y: scroll;
     /* Hide any overflowed text */
     text-overflow: ellipsis;
-    
+
     max-height: 82%;
-    
+    margin-top: 11vh;
+
 }
-.head_btn{
+
+.head_btn {
     height: 20px;
-    display: flex; 
-    flex-wrap: wrap;  
+    display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
     /* justify-content: center; */
     /* margin: auto; */
     min-height: 4vw;
     padding: 5px;
-    overflow-y:visible;
+    overflow-y: visible;
 }
-.head_btn button{
+
+.head_btn button {
     padding: 5px;
     border: none;
     height: auto;
@@ -341,6 +362,7 @@ body{
     text-overflow: ellipsis;
     /* Add ellipsis if text is too long */
 }
+
 .playlist {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -350,7 +372,7 @@ body{
     max-width: 800px;
     /* margin: 10px; */
     margin: 0 auto;
-    
+
 }
 
 .playlist_item {
@@ -358,7 +380,8 @@ body{
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    background-color: #0c0c0e46; /* Card background color */
+    background-color: #0c0c0e46;
+    /* Card background color */
     color: white;
     padding: 10px;
     border-radius: 8px;
@@ -380,35 +403,44 @@ body{
     font-size: 14px;
     font-weight: bold;
 }
+
 .playlist_item {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    background-color: #4d437463; /* Card background color */
+    background-color: #4d437463;
+    /* Card background color */
     color: white;
     padding: 10px;
     border-radius: 8px;
     transition: transform 0.3s;
-    overflow: hidden; /* Prevents content from overflowing out of the card */
+    overflow: hidden;
+    /* Prevents content from overflowing out of the card */
 }
 
 .playlist_item span {
     font-size: 14px;
     font-weight: bold;
-    flex: 1; /* Takes up available space within the item */
-    white-space: nowrap; /* Prevents wrapping */
-    overflow: hidden; /* Hides overflow content */
-    text-overflow: ellipsis; /* Adds "..." at the end if the text is too long */
+    flex: 1;
+    /* Takes up available space within the item */
+    white-space: nowrap;
+    /* Prevents wrapping */
+    overflow: hidden;
+    /* Hides overflow content */
+    text-overflow: ellipsis;
+    /* Adds "..." at the end if the text is too long */
 }
-.playing_card{
+
+.playing_card {
     /* background-color: red; */
     padding: 5px;
     display: flex;
     color: white;
     flex-direction: column;
 }
-.card2_wrap{
+
+.card2_wrap {
     /* background-color: blue; */
     gap: 1rem;
     display: flex;
@@ -420,12 +452,13 @@ body{
     margin-right: 2rem;
     padding: 10px;
 }
-.card2{
+
+.card2 {
     /* background-color: pink; */
     width: 200px;
     height: 260px;
     padding: 5px;
-    flex-wrap:nowrap;
+    flex-wrap: nowrap;
     border: none;
     border-radius: 8px;
     display: flex;
@@ -437,16 +470,19 @@ body{
     gap: 1rem;
     padding: 0 10px;
 }
-.card2:hover{
+
+.card2:hover {
     background-color: #33333370;
 }
-.image-container{
-    
+
+.image-container {
+
     border-radius: 8px;
     align-items: center;
     justify-content: center;
 }
-.image-container img{
+
+.image-container img {
     border-radius: 8px;
     margin-top: 8px;
     width: 100%;
@@ -454,10 +490,10 @@ body{
     display: flex;
 
 }
-.description{
+
+.description {
     /* background-color: aqua; */
     font-size: small;
     padding: 2px;
 
 }
-
