@@ -20,3 +20,6 @@
 
 // // Set initial gradient on page load
 // setRandomGradient();
+
+console.log("get started with JavaScript")
+

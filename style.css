@@ -232,12 +232,34 @@ body {
 .most {
     /* background-color: red; */
     overflow-y: scroll;
+    display: none;
     width: 30vw;
     padding-bottom: 2.5rem;
 
 }
 
+.songs_list {
+    /* background-color: red; */
+    display: flex;
+    overflow-y: scroll;
+    /* display: flex; */
+    border-radius: 8px;
+    width: 28vw;
+    /* margin: auto 0; */
+    align-items:start;
+    padding-bottom: 2.5rem;
+}
+
+.song_card {
+    margin-bottom: 0.6rem;
+}
+
 .most li {
+    margin: 10px;
+
+}
+
+.song_list li {
     margin: 10px;
 
 }
@@ -255,6 +277,35 @@ body {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.song_card {
+
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+    background-color: #121212;
+    cursor: pointer;
+    /* background-color: rebeccapurple; */
+    border-radius: 8px;
+    max-width: 350px;
+    color: white;
+    min-height: 35px;
+    width: 26vw;
+    gap: 1rem;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.song_card:hover {
+    background-color: #2a2a2a;
+
+}
+
+.song_card:active {
+    background-color: #121212;
+}
+
 .card img {
     width: 60px;
     height: 60px;
@@ -266,6 +317,25 @@ body {
     flex-grow: 1;
 }
 
+.song_title {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    /* background-color: red; */
+
+}
+
+.subpause {
+    display: none;
+}
+
 .card-title {
     font-size: 1rem;
     font-weight: bold;
@@ -273,7 +343,22 @@ body {
     color: white;
 }
 
+
+.card_title {
+
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    color: white;
+}
+
 .card-subtitle {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+}
+
+.playlist_name {
+
     font-size: 0.9rem;
     color: #b3b3b3;
 }
