@@ -325,7 +325,7 @@ button {
     margin: 5px;
     border-radius: 8px;
     gap: 2rem;
-    padding:20px;
+    padding: 20px;
 
     flex-direction: column;
     /* white-space: nowrap; */
@@ -336,7 +336,7 @@ button {
 
     max-height: 82%;
     margin-top: 11vh;
-
+    overflow-x: hidden;
 }
 
 .head_btn {
@@ -360,7 +360,7 @@ button {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     border: none;
     width: 100%;
-    
+
     /* Keeps it above other content */
 }
 
@@ -550,6 +550,9 @@ button {
 .song-info {
     display: flex;
     align-items: center;
+    /* background-color: red; */
+    padding: 4px;
+    max-width: 25vw;
 }
 
 .album-cover {
@@ -566,6 +569,8 @@ button {
 
 .song-details .title {
     font-size: 14px;
+    overflow: hidden;
+    overflow-x: hidden;
     font-weight: bold;
 }
 
