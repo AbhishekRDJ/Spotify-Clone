@@ -50,3 +50,14 @@ listItems.forEach(li => {
   li.addEventListener('click', showSongsList);
 });
 homeButton.addEventListener('click', showMostContainer);
+
+// numbering funcation below
+
+// Select all 'li' elements within '.songs_list'
+const listItems1 = document.querySelectorAll('.songs_list ul li');
+
+// Iterate over each 'li' and set the number
+listItems1.forEach((item, index) => {
+  const numberElement = item.querySelector('.song_number');
+  numberElement.textContent = index + 1; // Set the text to the current index + 1
+});
