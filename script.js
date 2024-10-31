@@ -62,8 +62,7 @@ listItems1.forEach((item, index) => {
   numberElement.textContent = index + 1; // Set the text to the current index + 1
 });
 
-// Array holding song data
-// Array holding song data
+
 // Array holding song data
 const songsData = [
     {
