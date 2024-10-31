@@ -317,15 +317,16 @@ button {
 }
 
 .right {
-    background-color: red;
     width: 70%;
     background-color: #121212;
+    /* background-color: red; */
 
     display: flex;
     margin: 5px;
     border-radius: 8px;
     gap: 2rem;
-    padding: 20px;
+    padding:20px;
+
     flex-direction: column;
     /* white-space: nowrap; */
     /* Prevent wrapping */
@@ -339,16 +340,28 @@ button {
 }
 
 .head_btn {
+    position: sticky;
+    /* Makes it stick to the top when scrolling */
+    top: 0;
+    /* Keeps it at the top of the viewport */
     height: 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-    /* justify-content: center; */
-    /* margin: auto; */
     min-height: 4vw;
     padding: 5px;
     overflow-y: visible;
+    background-color: #121212;
+    z-index: 1;
+    border-radius: 50px;
+    /* background-color: red; */
+    margin-top: 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    border: none;
+    width: 100%;
+    
+    /* Keeps it above other content */
 }
 
 .head_btn button {
@@ -521,6 +534,16 @@ button {
     align-items: center;
     padding: 10px 20px;
     box-sizing: border-box;
+    height: 11vh;
+    /* background-color: red; */
+}
+
+.center_footer {
+    display: flex;
+    flex-direction: column;
+    /* background-color: #1db954; */
+    padding: 10px;
+    margin: auto;
 }
 
 /* Song info section */
@@ -555,6 +578,8 @@ button {
 .playback-controls {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
 }
 
 .playback-controls button {
@@ -587,16 +612,24 @@ button {
     position: relative;
     height: 4px;
     background-color: #444;
-    width: 100%;
+    width: 40vw;
     border-radius: 2px;
     margin: 0 10px;
 }
 
 .progress {
     height: 100%;
-    background-color: #1db954;
-    width: 50%;
+    background-color: white;
+    width: 40%;
     border-radius: 2px;
+}
+
+#playing {
+    /* display: none; */
+}
+
+#pause {
+    display: none;
 }
 
 /* Volume and settings section */
@@ -628,4 +661,13 @@ button {
     background-color: #1db954;
     width: 50%;
     border-radius: 2px;
+}
+
+.title {
+    color: #dbdbdb;
+    margin: 5px 0px;
+}
+
+.artist {
+    color: #828282;
 }
