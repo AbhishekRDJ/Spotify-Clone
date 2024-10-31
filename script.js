@@ -61,3 +61,76 @@ listItems1.forEach((item, index) => {
   const numberElement = item.querySelector('.song_number');
   numberElement.textContent = index + 1; // Set the text to the current index + 1
 });
+
+// Array holding song data
+const songsData = [
+    {
+      title: "Kalank Title Track",
+      playlist: "Liked Songs",
+      filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
+    },
+    {
+      title: "Song Title 2",
+      playlist: "Liked Songs",
+      filePath: "path/to/song2.mp3"
+    }
+  ];
+  
+  
+  // Create an audio player to reuse for playing songs
+  let currentAudio = new Audio();
+  
+  // Function to populate the songs list
+  function populateSongsList() {
+    const songsListUl = document.querySelector('.songs_list ul');
+    songsListUl.innerHTML = ''; // Clear existing content
+  
+    songsData.forEach((song, index) => {
+      const li = document.createElement('li');
+      li.classList.add('song_card');
+      
+      // Populate the list item with song information
+      li.innerHTML = `
+        <div class="number"><h3 class="song_number">${index + 1}</h3></div>
+        <div class="song_title">
+          <div class="card_title">
+            <p>${song.title}</p>
+            <div class="playlist_name"><p>${song.playlist}</p></div>
+          </div>
+          <div class="sub_btn">
+            <div class="subplay"><i class="fa-regular fa-circle-play"></i></div>
+            <div class="subpause"><i class="fa-solid fa-pause"></i></div>
+          </div>
+        </div>
+      `;
+  
+      // Attach click event to play the song when this song_card is clicked
+      li.addEventListener('click', () => {
+        playSong(song.filePath);
+      });
+  
+      songsListUl.appendChild(li);
+    });
+  }
+  
+  // Function to play a song
+  function playSong(filePath) {
+    if (currentAudio.src !== filePath) {
+      currentAudio.src = filePath; // Set the song file
+    }
+    
+    currentAudio.play(); // Play the song
+  }
+  
+  // Function to handle switching views
+  function showSongsList() {
+    populateSongsList();
+    document.querySelector('.most').style.display = 'none';
+    document.querySelector('.songs_list').style.display = 'flex';
+  }
+  
+  // Event listener to show the songs list when any .most ul li is clicked
+  document.querySelectorAll('.most ul li').forEach(li => {
+    li.addEventListener('click', showSongsList);
+  });
+  
