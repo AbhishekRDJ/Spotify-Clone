@@ -232,7 +232,7 @@ body {
 .most {
     /* background-color: red; */
     overflow-y: scroll;
-    display: none;
+    display: flex;
     width: 30vw;
     padding-bottom: 2.5rem;
 
@@ -240,7 +240,7 @@ body {
 
 .songs_list {
     /* background-color: red; */
-    display: flex;
+    display: none;
     overflow-y: scroll;
     /* display: flex; */
     border-radius: 8px;

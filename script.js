@@ -23,3 +23,30 @@
 
 console.log("get started with JavaScript")
 
+// on click to any playlist from left side the subsong will appear
+
+// console.log(document.querySelector(".most").children[0].children)
+// Select the '.most' container and all 'li' elements within it
+// Select elements
+const mostContainer = document.querySelector('.most');
+const songsListContainer = document.querySelector('.songs_list');
+const listItems = mostContainer.querySelectorAll('li');
+const homeButton = document.querySelector('#home_btn');
+
+// Function to show songs list and hide most container
+function showSongsList() {
+  mostContainer.style.display = 'none';
+  songsListContainer.style.display = 'flex';
+}
+
+// Function to show most container and hide songs list
+function showMostContainer() {
+  songsListContainer.style.display = 'none';
+  mostContainer.style.display = 'flex';
+}
+
+// Attach click event listeners
+listItems.forEach(li => {
+  li.addEventListener('click', showSongsList);
+});
+homeButton.addEventListener('click', showMostContainer);
