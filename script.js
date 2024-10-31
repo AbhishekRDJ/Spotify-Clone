@@ -63,9 +63,11 @@ listItems1.forEach((item, index) => {
 });
 
 // Array holding song data
+// Array holding song data
+// Array holding song data
 const songsData = [
     {
-      title: "Kalank Title Track",
+      title: "Saanson Ko (From 'Zid')",
       playlist: "Liked Songs",
       filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
     },
@@ -74,11 +76,12 @@ const songsData = [
       playlist: "Liked Songs",
       filePath: "path/to/song2.mp3"
     }
+    // Add more songs as needed
   ];
-  
   
   // Create an audio player to reuse for playing songs
   let currentAudio = new Audio();
+  let currentlyPlayingIndex = null; // Track the currently playing song index
   
   // Function to populate the songs list
   function populateSongsList() {
@@ -98,15 +101,27 @@ const songsData = [
             <div class="playlist_name"><p>${song.playlist}</p></div>
           </div>
           <div class="sub_btn">
-            <div class="subplay"><i class="fa-regular fa-circle-play"></i></div>
-            <div class="subpause"><i class="fa-solid fa-pause"></i></div>
+            <div class="subplay" style="display: flex;"><i class="fa-regular fa-circle-play"></i></div>
+            <div class="subpause" style="display: none;"><i class="fa-solid fa-pause"></i></div>
           </div>
         </div>
       `;
   
-      // Attach click event to play the song when this song_card is clicked
-      li.addEventListener('click', () => {
-        playSong(song.filePath);
+      // Play song when the subplay button or entire song card (li) is clicked
+      const subplayBtn = li.querySelector('.subplay');
+      const subpauseBtn = li.querySelector('.subpause');
+      
+      // Add click event listener to the entire song card
+      li.addEventListener('click', (e) => {
+        // Only trigger if not clicking on the subpause button
+        if (!e.target.closest('.subpause')) {
+          playSong(song.filePath, index, subplayBtn, subpauseBtn);
+        }
+      });
+  
+      // Pause song when the subpause button is clicked
+      subpauseBtn.addEventListener('click', () => {
+        pauseSong(subplayBtn, subpauseBtn);
       });
   
       songsListUl.appendChild(li);
@@ -114,12 +129,39 @@ const songsData = [
   }
   
   // Function to play a song
-  function playSong(filePath) {
-    if (currentAudio.src !== filePath) {
-      currentAudio.src = filePath; // Set the song file
+  function playSong(filePath, index, subplayBtn, subpauseBtn) {
+    // Pause currently playing song if another is selected
+    if (currentlyPlayingIndex !== null && currentlyPlayingIndex !== index) {
+      currentAudio.pause();
+      resetPlayPauseButtons();
     }
-    
+  
+    if (currentAudio.src !== filePath) {
+      currentAudio.src = filePath; // Set the new song file
+    }
+  
     currentAudio.play(); // Play the song
+    currentlyPlayingIndex = index; // Update currently playing index
+  
+    // Toggle play/pause buttons
+    subplayBtn.style.display = 'none';
+    subpauseBtn.style.display = 'flex';
+  }
+  
+  // Function to pause the song
+  function pauseSong(subplayBtn, subpauseBtn) {
+    currentAudio.pause(); // Pause the song
+    currentlyPlayingIndex = null; // Reset the currently playing index
+  
+    // Toggle play/pause buttons
+    subplayBtn.style.display = 'flex';
+    subpauseBtn.style.display = 'none';
+  }
+  
+  // Function to reset all play/pause buttons
+  function resetPlayPauseButtons() {
+    document.querySelectorAll('.subplay').forEach(btn => btn.style.display = 'flex');
+    document.querySelectorAll('.subpause').forEach(btn => btn.style.display = 'none');
   }
   
   // Function to handle switching views
