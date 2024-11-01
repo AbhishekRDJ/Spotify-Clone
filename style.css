@@ -708,12 +708,14 @@ button {
     width: 40vw;
     border-radius: 2px;
     margin: 0 10px;
+    cursor: pointer;
 }
 
 .progress {
     height: 100%;
     background-color: white;
     width: 40%;
+    cursor: pointer;
     border-radius: 2px;
 }
 
