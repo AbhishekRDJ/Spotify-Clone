@@ -263,7 +263,7 @@ const Sonu_Nigam = [
       title: "Kalank Title Track",
       playlist: "Liked Songs",
       singer: "Arijit Singh",
-      filePath: "songs\sonu_nigam\Ajay-Atul - Abhi Mujh Mein Kahin Best Lyric_Agneepath_Priyanka Chopra,Hrithik_Sonu Nigam [ ezmp3.cc ].mp3"
+      filePath: "songs/sonu_nigam\Ajay-Atul - Abhi Mujh Mein Kahin Best Lyric_Agneepath_Priyanka Chopra,Hrithik_Sonu Nigam [ ezmp3.cc ].mp3"
     },
     {
       title: "BESABRIYAAN",
