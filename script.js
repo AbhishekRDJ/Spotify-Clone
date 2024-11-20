@@ -478,3 +478,6 @@ const Sonu_Nigam = [
     populateSongsList(LikedSongsData);
   })
   
+
+
+  // starting the logic of click on  can card2 and playing its song

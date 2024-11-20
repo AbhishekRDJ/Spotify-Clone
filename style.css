@@ -559,7 +559,39 @@ button {
     padding: 10px;
     padding-bottom: 2.6rem;
 }
-
+.card2_wrap ul{
+    /* background-color: blue; */
+    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    /* justify-content: center; */
+    margin-left: 0rem;
+    margin-right: 0rem;
+    padding: 10px;
+    padding-bottom: 2.rem;
+}
+.card2_wrap ul li{
+    /* background-color: pink; */
+    width: 196px;
+    height: 260px;
+    padding: 5px;
+    flex-wrap: nowrap;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #797979;
+    gap: 1rem;
+    padding: 0 10px;
+}
+.card2_wrap ul li:hover {
+    background-color: #33333370;
+}
 .card2 {
     /* background-color: pink; */
     width: 200px;
