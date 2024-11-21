@@ -454,15 +454,37 @@ function updateProgressBar() {
   startTime.textContent = formatTime(currentAudio.currentTime);
 }
 
+// playPauseBtn.addEventListener('click', () => {
+//   if (currentAudio.paused) {
+//     currentAudio.play();
+//     playPauseBtn.style.display = 'none';
+//     pauseBtn.style.display = 'flex';
+//   } else {
+//     currentAudio.pause();
+//     playPauseBtn.style.display = 'flex';
+//     pauseBtn.style.display = 'none';
+//   }
+// });
 playPauseBtn.addEventListener('click', () => {
   if (currentAudio.paused) {
     currentAudio.play();
-    playPauseBtn.style.display = 'none';
-    pauseBtn.style.display = 'flex';
-  } else {
-    currentAudio.pause();
     playPauseBtn.style.display = 'flex';
     pauseBtn.style.display = 'none';
+  } else {
+    currentAudio.pause();
+    playPauseBtn.style.display = 'none';
+    pauseBtn.style.display = 'flex';
+  }
+});
+pauseBtn.addEventListener('click', () => {
+  if (currentAudio.paused) {
+    currentAudio.play();
+    playPauseBtn.style.display = 'flex';
+    pauseBtn.style.display = 'none';
+  } else {
+    currentAudio.pause();
+    playPauseBtn.style.display = 'none';
+    pauseBtn.style.display = 'flex';
   }
 });
 

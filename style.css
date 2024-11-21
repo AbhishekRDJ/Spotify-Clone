@@ -752,11 +752,11 @@ button {
 }
 
 #playing {
-    /* display: none; */
+    display: none;
 }
 
 #pause {
-    display: none;
+    display: flex;
 }
 
 /* Volume and settings section */
