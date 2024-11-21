@@ -16,7 +16,7 @@
 // }
 
 // // Change the gradient every 10 seconds for a very subtle transition
-// setInterval(setRandomGradient, 10000);
+// setInterval(setRandomGradient, 2000);
 
 // // Set initial gradient on page load
 // setRandomGradient();
@@ -37,19 +37,16 @@ const listRightCard = rightContainer.querySelectorAll("li")
 // console.log(listItems[0])
 const homeButton = document.querySelector('#home_btn');
 
-// Function to show songs list and hide most container
 function showSongsList() {
   mostContainer.style.display = 'none';
   songsListContainer.style.display = 'flex';
 }
 
-// Function to show most container and hide songs list
 function showMostContainer() {
   songsListContainer.style.display = 'none';
   mostContainer.style.display = 'flex';
 }
 
-// Attach click event listeners
 listItems.forEach(li => {
   li.addEventListener('click', showSongsList);
 });
@@ -60,7 +57,6 @@ homeButton.addEventListener('click', showMostContainer);
 // Select all 'li' elements within '.songs_list'
 const listItems1 = document.querySelectorAll('.songs_list ul li');
 
-// Iterate over each 'li' and set the number
 listItems1.forEach((item, index) => {
   const numberElement = item.querySelector('.song_number');
   numberElement.textContent = index + 1; // Set the text to the current index + 1
@@ -326,23 +322,21 @@ const Sonu_Nigam = [
 ];
 
 
-// Create an audio player to reuse for playing songs
-
 
 let currentAudio = new Audio();
 let currentlyPlayingIndex = null;
 
-// Elements for the footer music player
 const musicPlayer = document.querySelector('.music-player');
 const songTitleElement = musicPlayer.querySelector('.song-details .title');
 const artistElement = musicPlayer.querySelector('.song-details .artist');
+const progressBarContainer = musicPlayer.querySelector('.progress-bar-container');
+
 const progressBar = musicPlayer.querySelector('.progress-bar .progress');
 const startTime = musicPlayer.querySelector('.progress-bar-container .time:first-child');
 const endTime = musicPlayer.querySelector('.progress-bar-container .time:last-child');
 const playPauseBtn = musicPlayer.querySelector('#playing');
 const pauseBtn = musicPlayer.querySelector('#pause');
 
-// Function to populate the songs list
 function populateSongsList(data_playlist) {
   const songsListUl = document.querySelector('.songs_list ul');
   songsListUl.innerHTML = '';
@@ -382,7 +376,6 @@ function populateSongsList(data_playlist) {
   });
 }
 
-// Function to play a song
 function playSong(song, index, subplayBtn, subpauseBtn) {
   if (currentlyPlayingIndex !== null && currentlyPlayingIndex !== index) {
     currentAudio.pause();
@@ -397,7 +390,7 @@ function playSong(song, index, subplayBtn, subpauseBtn) {
   }
 
   currentAudio.play();
-  // console.log(index)
+
   currentlyPlayingIndex = index;
 
   subplayBtn.style.display = 'none';
@@ -419,7 +412,6 @@ function playSong2(song) {
   }
 
   currentAudio.play();
-  // console.log(index)
 
 
   updateFooterPlayer(song);
@@ -427,7 +419,6 @@ function playSong2(song) {
   currentAudio.addEventListener('timeupdate', updateProgressBar);
 }
 
-// Update footer player with current song details
 function updateFooterPlayer(song) {
   songTitleElement.textContent = song.title;
   artistElement.textContent = song.singer;
@@ -437,14 +428,12 @@ function updateFooterPlayer(song) {
   progressBar.style.width = '0%';
 }
 
-// Format time in MM:SS
 function formatTime(seconds) {
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
   return `${mins}:${secs}`;
 }
 
-// Function to pause the song
 function pauseSong(subplayBtn, subpauseBtn) {
   currentAudio.pause();
   currentlyPlayingIndex = null;
@@ -454,20 +443,17 @@ function pauseSong(subplayBtn, subpauseBtn) {
   pauseBtn.style.display = 'flex';
 }
 
-// Function to reset all play/pause buttons
 function resetPlayPauseButtons() {
   document.querySelectorAll('.subplay').forEach(btn => btn.style.display = 'flex');
   document.querySelectorAll('.subpause').forEach(btn => btn.style.display = 'none');
 }
 
-// Update the progress bar as the song plays
 function updateProgressBar() {
   const progressPercent = (currentAudio.currentTime / currentAudio.duration) * 100;
   progressBar.style.width = `${progressPercent}%`;
   startTime.textContent = formatTime(currentAudio.currentTime);
 }
 
-// Event listener for footer play/pause toggle
 playPauseBtn.addEventListener('click', () => {
   if (currentAudio.paused) {
     currentAudio.play();
@@ -479,6 +465,19 @@ playPauseBtn.addEventListener('click', () => {
     pauseBtn.style.display = 'none';
   }
 });
+
+progressBarContainer.addEventListener('click', (e) => {
+  const barWidth = progressBarContainer.offsetWidth; 
+  const clickX = e.offsetX;
+  const progressPercent = clickX / barWidth; 
+
+  if (currentAudio.duration) {
+    currentAudio.currentTime = progressPercent * currentAudio.duration;
+  }
+  updateProgressBar(); 
+});
+
+
 
 // Initial call to populate the list
 
@@ -643,10 +642,8 @@ const right_listed_song = [
   }
 ]
 function getRandomSong(songsArray) {
-  // Generate a random index between 0 and the length of the array - 1
   const randomIndex = Math.floor(Math.random() * songsArray.length);
-
-  // Return the song object at the random index
+  
   return songsArray[randomIndex];
 }
 
