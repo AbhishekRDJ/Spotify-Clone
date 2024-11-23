@@ -489,7 +489,7 @@ pauseBtn.addEventListener('click', () => {
 });
 
 progressBarContainer.addEventListener('click', (e) => {
-  const barWidth = progressBarContainer.offsetWidth; 
+  const barWidth = progressBarContainer.offsetWidth-50; 
   const clickX = e.offsetX;
   const progressPercent = clickX / barWidth; 
 
