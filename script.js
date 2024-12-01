@@ -685,3 +685,49 @@ listRightCard.forEach((song2, index2) => {
     }
   })
 })
+
+
+// add the logic of the footer music sound intensity increse or decrese 
+
+
+
+
+const volumeSlider = document.querySelector('.volume-slider');
+const volumeBar = volumeSlider.querySelector('.volume');
+const muteButton = document.querySelector('.settings button:first-child'); // Mute button
+let isMuted = false;
+let previousVolume = 0.5; 
+
+currentAudio.volume = 0.5; 
+volumeBar.style.width = `${currentAudio.volume * 100}%`;
+
+volumeSlider.addEventListener('click', (event) => {
+  const rect = volumeSlider.getBoundingClientRect();
+  const clickedPosition = event.clientX - rect.left;
+  const newVolume = Math.min(Math.max(clickedPosition / rect.width, 0), 1);
+  currentAudio.volume = newVolume;
+  volumeBar.style.width = `${newVolume * 100}%`;
+});
+
+muteButton.addEventListener('click', () => {
+  if (isMuted) {
+    currentAudio.volume = previousVolume;
+    muteButton.textContent = '🔊'; 
+  } else {
+    previousVolume = currentAudio.volume;
+    currentAudio.volume = 0;
+    muteButton.textContent = '🔈'; 
+  }
+  volumeBar.style.width = `${currentAudio.volume * 100}%`;
+  isMuted = !isMuted;
+});
+
+currentAudio.addEventListener('volumechange', () => {
+  volumeBar.style.width = `${currentAudio.volume * 100}%`;
+  if (currentAudio.volume === 0) {
+    muteButton.textContent = '🔈'; 
+  } else {
+    muteButton.textContent = '🔊'; 
+    isMuted = false;
+  }
+});

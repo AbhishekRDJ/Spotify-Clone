@@ -776,10 +776,19 @@ button {
 
 .volume-slider {
     height: 4px;
+    cursor: pointer;
     background-color: #444;
+    align-items: center;
+    display: flex;
+    border-radius: 100px;
     width: 80px;
     border-radius: 2px;
     margin: 0 10px;
+    padding: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    /* background-color: red; */
+    
     position: relative;
 }
 
