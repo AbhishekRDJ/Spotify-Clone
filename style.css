@@ -409,7 +409,7 @@ button {
     background-color: #121212;
     /* background-color: red; */
 
-    display: none;
+    display: flex;
     margin: 5px;
     border-radius: 8px;
     gap: 2rem;
@@ -942,6 +942,7 @@ button {
 
 .fa-circle-pause {
     font-size: 60px;
+    
 }
 
 .fa-square-plus {
@@ -967,6 +968,14 @@ button {
     align-items: center;
     justify-content: center;
     color: #1db954;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+.feature_song_play_btn:hover{
+    color: #21e967;
+    transform: scale(1.1); /* Makes the button appear larger */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhances the 3D effect */
+
 }
 
 .feature_song_list_btn {
@@ -1040,4 +1049,14 @@ button {
     font-size: 0.8rem;
     overflow: hidden;
     color: rgba(255, 255, 255, 0.6);
+}
+
+.hover_effect:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.hover_effect:active {
+    color: #b3b3b3;
+    cursor: pointer;
 }
