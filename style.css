@@ -1060,3 +1060,7 @@ button {
     color: #b3b3b3;
     cursor: pointer;
 }
+#lottie-container{
+    /* z-index: 100; */
+    width: 40px;
+}

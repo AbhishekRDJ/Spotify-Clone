@@ -408,6 +408,8 @@ function playSong2(song) {
     currentAudio.src = song.filePath;
     currentAudio.addEventListener('loadedmetadata', () => {
       endTime.textContent = formatTime(currentAudio.duration);
+
+
     });
   }
 
@@ -686,6 +688,13 @@ listRightCard.forEach((song2, index2) => {
       const randomSong = getRandomSong(Arijit_singh);
       console.log(randomSong)
       playSong2(randomSong);
+
+
+      //catchPlayingSong
+
+
+
+
       // make display none
 
       right_side.style.display = 'none'
@@ -703,13 +712,15 @@ listRightCard.forEach((song2, index2) => {
 
       const featureSongTitle = document.querySelector(".feature_song_title h1");
       featureSongTitle.textContent = descriptionContent;
+      catchPlayingSong(randomSong, song2)
 
     }
 
     else {
       const playing_song = song2;
       console.log(playing_song)
-      playSong2(right_listed_song[index2]);
+      const randomSong = right_listed_song[index2]
+      playSong2(randomSong);
       right_side.style.display = 'none'
       feature_song.style.display = "flex"
       setCustomGradient()
@@ -727,6 +738,7 @@ listRightCard.forEach((song2, index2) => {
       const featureSongTitle = document.querySelector(".feature_song_title h1");
       featureSongTitle.textContent = descriptionContent;
       document.querySelector('.feature_song_list').style.display = "none"
+      catchPlayingSong(randomSong, song2)
 
     }
   })
@@ -802,4 +814,35 @@ function setCustomGradient() {
 }
 
 
-// add the 
+// add the playing animation
+
+var animation = lottie.loadAnimation({
+  container: document.getElementById('lottie-container'), // the container element
+  renderer: 'svg', // the rendering method (svg, canvas, or html)
+  loop: true,      // whether the animation should loop
+  autoplay: true,  // whether the animation should start automatically
+  path: 'animation/Animation - 1733655375256.json', // the path to your JSON animation file
+});
+
+// select the playing song in feature section
+
+function catchPlayingSong(PlayingSong, SongIMG) {
+  const getClass = document.querySelector(".recent_playing_song")
+  const PlayingSongTitle = getClass.querySelector(".title")
+  let PlayingSongIMG = getClass.querySelector(".details img")
+  const PlayingSongArtist = getClass.querySelector(".artist")
+  const PlayingSongSource = getClass.querySelector(".Source")
+
+  console.log(PlayingSong.title)
+
+
+  PlayingSongTitle.textContent = PlayingSong.title
+  PlayingSongArtist.textContent = SongIMG.querySelector(".description").textContent;
+  PlayingSongSource.textContent = PlayingSong.singer
+  PlayingSongIMG.src = SongIMG.querySelector(".image-container img").src;
+
+}
+
+
+
+
