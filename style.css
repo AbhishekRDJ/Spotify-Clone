@@ -409,7 +409,7 @@ button {
     background-color: #121212;
     /* background-color: red; */
 
-    display: flex;
+    display: none;
     margin: 5px;
     border-radius: 8px;
     gap: 2rem;
@@ -425,6 +425,7 @@ button {
     max-height: 82%;
     margin-top: 11vh;
     overflow-x: hidden;
+    
 }
 
 .head_btn {
@@ -822,4 +823,29 @@ button {
 
 .artist {
     color: #828282;
+}
+
+
+.feature_song{
+    width: 70%;
+    background-color: #121212;
+    /* background-color: red; */
+
+    display: flex;
+    margin: 5px;
+    border-radius: 8px;
+    gap: 2rem;
+    padding: 20px;
+
+    flex-direction: column;
+    /* white-space: nowrap; */
+    /* Prevent wrapping */
+    overflow-y: scroll;
+    /* Hide any overflowed text */
+    text-overflow: ellipsis;
+
+    max-height: 82%;
+    margin-top: 11vh;
+    overflow-x: hidden;
+    
 }
