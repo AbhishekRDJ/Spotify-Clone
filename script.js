@@ -489,14 +489,14 @@ pauseBtn.addEventListener('click', () => {
 });
 
 progressBarContainer.addEventListener('click', (e) => {
-  const barWidth = progressBarContainer.offsetWidth-50; 
+  const barWidth = progressBarContainer.offsetWidth - 50;
   const clickX = e.offsetX;
-  const progressPercent = clickX / barWidth; 
+  const progressPercent = clickX / barWidth;
 
   if (currentAudio.duration) {
     currentAudio.currentTime = progressPercent * currentAudio.duration;
   }
-  updateProgressBar(); 
+  updateProgressBar();
 });
 
 
@@ -665,23 +665,69 @@ const right_listed_song = [
 ]
 function getRandomSong(songsArray) {
   const randomIndex = Math.floor(Math.random() * songsArray.length);
-  
+
   return songsArray[randomIndex];
 }
+const feature_song = document.querySelector('.feature_song')
+const right_side = document.querySelector('.right')
+const feature_song_img = document.querySelector('.feature_song_img img')
+const feature_song_info = document.querySelector('.feature_song_title h1')
 
 
 listRightCard.forEach((song2, index2) => {
   console.log(song2)
   console.log(index2)
   song2.addEventListener("click", () => {
-    if (index2 == 0 || index2 == 1 || index2 == 4 || index2 == 10) {
-      const randomSong = getRandomSong(Arijit_singh);
 
+
+    if (index2 == 0 || index2 == 1 || index2 == 4 || index2 == 10) {
+      const playing_song = song2;
+      console.log(playing_song)
+      const randomSong = getRandomSong(Arijit_singh);
+      console.log(randomSong)
       playSong2(randomSong);
+      // make display none
+
+      right_side.style.display = 'none'
+      feature_song.style.display = "flex"
+      setCustomGradient()
+      // make img fetch and assign
+
+      const get_img = playing_song.querySelector(".image-container img");
+      const imgUrl = get_img.src;
+      feature_song_img.src = imgUrl
+      // make title fetch and assign
+
+      const get_title = playing_song.querySelector(".description");
+      const descriptionContent = get_title.textContent.trim();
+
+      const featureSongTitle = document.querySelector(".feature_song_title h1");
+      featureSongTitle.textContent = descriptionContent;
+
     }
 
     else {
+      const playing_song = song2;
+      console.log(playing_song)
       playSong2(right_listed_song[index2]);
+      right_side.style.display = 'none'
+      feature_song.style.display = "flex"
+      setCustomGradient()
+
+      // make img fetch and assign
+
+      const get_img = playing_song.querySelector(".image-container img");
+      const imgUrl = get_img.src;
+      feature_song_img.src = imgUrl
+      // make title fetch and assign
+
+      const get_title = playing_song.querySelector(".description");
+      const descriptionContent = get_title.textContent.trim();
+
+      const featureSongTitle = document.querySelector(".feature_song_title h1");
+      featureSongTitle.textContent = descriptionContent;
+      document.querySelector('.feature_song_list').style.display = "none"
+
     }
   })
 })
@@ -696,9 +742,9 @@ const volumeSlider = document.querySelector('.volume-slider');
 const volumeBar = volumeSlider.querySelector('.volume');
 const muteButton = document.querySelector('.settings button:first-child'); // Mute button
 let isMuted = false;
-let previousVolume = 0.5; 
+let previousVolume = 0.5;
 
-currentAudio.volume = 0.5; 
+currentAudio.volume = 0.5;
 volumeBar.style.width = `${currentAudio.volume * 100}%`;
 
 volumeSlider.addEventListener('click', (event) => {
@@ -712,11 +758,11 @@ volumeSlider.addEventListener('click', (event) => {
 muteButton.addEventListener('click', () => {
   if (isMuted) {
     currentAudio.volume = previousVolume;
-    muteButton.textContent = '🔊'; 
+    muteButton.textContent = '🔊';
   } else {
     previousVolume = currentAudio.volume;
     currentAudio.volume = 0;
-    muteButton.textContent = '🔈'; 
+    muteButton.textContent = '🔈';
   }
   volumeBar.style.width = `${currentAudio.volume * 100}%`;
   isMuted = !isMuted;
@@ -725,9 +771,35 @@ muteButton.addEventListener('click', () => {
 currentAudio.addEventListener('volumechange', () => {
   volumeBar.style.width = `${currentAudio.volume * 100}%`;
   if (currentAudio.volume === 0) {
-    muteButton.textContent = '🔈'; 
+    muteButton.textContent = '🔈';
   } else {
-    muteButton.textContent = '🔊'; 
+    muteButton.textContent = '🔊';
     isMuted = false;
   }
 });
+
+//   color to feature song
+
+// Function to generate random pastel colors
+function getRandomPastelColor() {
+  // Generate soft pastel colors with higher base values (150-250)
+  const red = Math.floor(150 + Math.random() * 100);   // 150-250 range
+  const green = Math.floor(150 + Math.random() * 100); // 150-250 range
+  const blue = Math.floor(150 + Math.random() * 100);  // 150-250 range
+  return `rgb(${red}, ${green}, ${blue})`;
+}
+
+// Function to create a gradient with a bright top and dark bottom
+function setCustomGradient() {
+  // Generate a bright pastel color for the top
+  const brightColor = getRandomPastelColor();
+
+  // Generate a darker color for the bottom by reducing the intensity
+  const darkColor = `rgb(${Math.floor(Math.random() * 50)}, ${Math.floor(Math.random() * 50)}, ${Math.floor(Math.random() * 50)})`;
+
+  // Apply the gradient to the element
+  document.querySelector('.feature_song').style.background = `linear-gradient(to bottom, ${darkColor} 10%, ${brightColor} 90%)`;
+}
+
+
+// add the 
