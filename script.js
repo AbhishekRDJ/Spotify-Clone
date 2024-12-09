@@ -848,7 +848,3 @@ function catchPlayingSong(PlayingSong, SongIMG) {
   PlayingSongIMG.src = SongIMG.querySelector(".image-container img").src;
 
 }
-
-
-
-
