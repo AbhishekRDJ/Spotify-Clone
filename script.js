@@ -401,7 +401,7 @@ function playSong(song, index, subplayBtn, subpauseBtn) {
 
   subplayBtn.style.display = 'none';
   console.log(subplayBtn)
-  subpauseBtn.style.display = 'flex';
+  subpauseBtn.style.display ='flex';
 
   updateFooterPlayer(song);
 
