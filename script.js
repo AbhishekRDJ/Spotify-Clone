@@ -33,6 +33,8 @@ const songsListContainer = document.querySelector('.songs_list');
 const listItems = mostContainer.querySelectorAll('li');
 const rightContainer = document.querySelector(".card2_wrap")
 const listRightCard = rightContainer.querySelectorAll("li")
+const featureContainer = document.querySelector(".feature_song")
+const Right_Container = document.querySelector(".right")
 
 // console.log(listItems[0])
 const homeButton = document.querySelector('#home_btn');
@@ -45,6 +47,10 @@ function showSongsList() {
 function showMostContainer() {
   songsListContainer.style.display = 'none';
   mostContainer.style.display = 'flex';
+  featureContainer.style.display = 'none';
+  Right_Container.style.display = 'flex';
+
+
 }
 
 listItems.forEach(li => {
