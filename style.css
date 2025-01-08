@@ -80,6 +80,48 @@ body {
 
     border-radius: 50px;
 }
+/* Remove all default styles from the input field */
+.input_ele {
+    all: unset; /* Resets all styles */
+    width: 100%; /* Customize width as needed */
+    padding: 10px; /* Add some padding */
+    border: 1px solid #ccc; /* Border style */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    background-color: transparent; /* Transparent background */
+    outline: none; /* Remove outline on focus */
+}
+
+/* Prevent the background from changing to white on focus */
+.input_ele:focus {
+    background-color: transparent; /* Keep the background transparent */
+    border-color: #888; /* Optional: Change the border color on focus */
+}
+
+/* Add custom styles for the search button */
+#searchButton {
+    display: none;
+    background-color: #4CAF50; /* Button background */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Button padding */
+    border: none; /* Remove default button border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+#searchButton:hover {
+    background-color: #45a049; /* Darken on hover */
+}
+
+/* Optional: style for the search icon */
+/* .search_icon {
+    position: absolute;
+    left: 500px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 18px;
+} */
 
 .search_icon {
     color: #b3b3b3;
@@ -178,7 +220,7 @@ body {
     padding-left: 13vw;
 }
 
-.search_session {
+.search_session{
     /* background-color: red; */
     color: #f2f2f2;
     width: 24vw;
@@ -188,6 +230,7 @@ body {
     padding: 5px;
 
 }
+
 
 .hero {
     display: flex;
@@ -410,6 +453,7 @@ button {
     /* background-color: red; */
 
     display: flex;
+    /* display: none; */
     margin: 5px;
     border-radius: 8px;
     gap: 2rem;
@@ -818,11 +862,15 @@ button {
 
 .title {
     color: #dbdbdb;
-    margin: 5px 0px;
+    margin: 8px 4px;
+    width: 110%;
+
 }
 
 .artist {
     color: #828282;
+    margin: 8px 4px;
+    font-weight: 400;
 }
 
 
@@ -857,7 +905,7 @@ button {
 
 .head_container {
     /* background-color: #1db954; */
-    height: 80%;
+    height: 40%;
     margin: 20px;
     display: flex;
     flex-direction: row;
@@ -868,7 +916,8 @@ button {
 .feature_song_img {
 
     /* background-color: rgb(36, 174, 147); */
-    min-height: 80%;
+    min-height: 100%;
+    height: 80%;
     width: 16%;
     /* padding-left:10px ; */
     display: flex;
@@ -882,7 +931,11 @@ button {
 
     /* min-width: px; */
     border-radius: 8px;
-    width: 100%;
+    /* width: 100%; */
+    height: 50%;
+    margin-right: 200px;
+    margin-left: 20px;
+    margin: auto;
     justify-content: right;
 
 }
@@ -942,7 +995,7 @@ button {
 
 .fa-circle-pause {
     font-size: 60px;
-    
+
 }
 
 .fa-square-plus {
@@ -971,10 +1024,13 @@ button {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
-.feature_song_play_btn:hover{
+
+.feature_song_play_btn:hover {
     color: #21e967;
-    transform: scale(1.1); /* Makes the button appear larger */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhances the 3D effect */
+    transform: scale(1.1);
+    /* Makes the button appear larger */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    /* Enhances the 3D effect */
 
 }
 
@@ -1001,6 +1057,9 @@ button {
 .header,
 .song {
     display: grid;
+    /* background-color: red; */
+    gap: 5rem;
+    color: white;
     grid-template-columns: 5% 40% 35% 20%;
     padding: 10px 20px;
     align-items: center;
@@ -1032,7 +1091,11 @@ button {
     align-items: center;
     gap: 10px;
 }
-
+.Source{
+    /* background-color: rebeccapurple; */
+    display: flex;
+    justify-content: center;
+}
 .details img {
     width: 50px;
     height: 50px;
@@ -1060,7 +1123,96 @@ button {
     color: #b3b3b3;
     cursor: pointer;
 }
-#lottie-container{
+
+#lottie-container {
     /* z-index: 100; */
     width: 40px;
+    
+}
+#lottie-container svg{
+    fill: white;
+    filter: invert(1);
+    margin-left: 40px;
+    
+}
+
+.search_SONG_Container {
+    width: 70%;
+    background-color: #121212;
+    display: none;
+    margin: 5px;
+    border-radius: 8px;
+    /* gap: 2rem; */
+    height: 90%;
+    /* padding: 20px; */
+    flex-direction: column;
+    overflow-y: none;
+    max-height: 100%;
+    margin-top: 6vh;
+    overflow-x: hidden;
+    /* background-color: red;     */
+    border-radius: 10%;
+    padding-top: 0px;
+    animation: fadeIn 0.5s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    
+}
+.head_container1{
+    margin-bottom: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#resultsContainer {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    color: #fff;
+}
+
+#playerContainer {
+    width: 100%;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#audioPlayer {
+    width: 100%;
+    max-width: 500px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+#songInfo {
+    text-align: center;
+}
+
+#songTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f1f1f1;
+    margin-bottom: 10px;
+}
+
+#songArtist {
+    font-size: 16px;
+    color: #b3b3b3;
 }

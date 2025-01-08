@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "lottie-web": "^5.12.2"
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "lottie-web": "^5.12.2",
+    "ytdl-core": "^4.11.5"
   }
 }

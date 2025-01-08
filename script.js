@@ -49,6 +49,8 @@ function showMostContainer() {
   mostContainer.style.display = 'flex';
   featureContainer.style.display = 'none';
   Right_Container.style.display = 'flex';
+  document.querySelector('.search_SONG_Container').style.display = "none"
+  Right_Container.style.display = 'flex';
 
 
 }
@@ -401,7 +403,7 @@ function playSong(song, index, subplayBtn, subpauseBtn) {
 
   subplayBtn.style.display = 'none';
   console.log(subplayBtn)
-  subpauseBtn.style.display ='flex';
+  subpauseBtn.style.display = 'flex';
 
   updateFooterPlayer(song);
 
@@ -848,3 +850,112 @@ function catchPlayingSong(PlayingSong, SongIMG) {
   PlayingSongIMG.src = SongIMG.querySelector(".image-container img").src;
 
 }
+
+
+// working on the serach section of clone
+
+// import { searchSong } from './spotifyAPI.js';
+
+// function displayResults(tracks) {
+//   const tracksTable = document.getElementById('tracksTable');
+//   tracksTable.innerHTML = ''; // Clear previous results
+
+//   tracks.forEach((track, index) => {
+//     const row = document.createElement('tr');
+
+//     row.innerHTML = `
+//       <td>${index + 1}</td>
+//       <td>
+//         <div class="track-title-container">
+//           <img src="${track.album.images[0]?.url}" alt="${track.name}" class="album-art" />
+//           <div>
+//             <h4>${track.name}</h4>
+//             <p>${track.artists.map(artist => artist.name).join(', ')}</p>
+//           </div>
+//         </div>
+//       </td>
+//       <td>${track.album.name}</td>
+//       <td>${new Date(track.added_at).toLocaleDateString()}</td>
+//       <td>${convertMsToMinutesSeconds(track.duration_ms)}</td>
+//     `;
+
+//     tracksTable.appendChild(row);
+
+//     // Add click event to play the song (if preview URL is available)
+//     row.addEventListener('click', () => {
+//       if (track.preview_url) {
+//         const audio = new Audio(track.preview_url);
+//         audio.play();
+//       } else {
+//         alert('Preview not available for this track.');
+//       }
+//     });
+//   });
+// }
+
+// // Convert duration from milliseconds to mm:ss format
+// function convertMsToMinutesSeconds(ms) {
+//   const minutes = Math.floor(ms / 60000);
+//   const seconds = ((ms % 60000) / 1000).toFixed(0);
+//   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+// }
+
+// // Add event listener to search button
+// document.getElementById('searchButton').addEventListener('click', async () => {
+
+
+//   const query = document.getElementById('input').value;
+//   if (query) {
+//     document.querySelector(".right").style.display = "none";
+//     document.querySelector(".search_SONG_Container").style.display = "flex";
+//     const tracks = await searchSong(query);
+//     console.log(tracks)
+//     displayResults(tracks);
+//   }
+// });
+
+
+import { searchYouTube } from './Fetch_Youtube_music.js';
+// Initialize Audio object
+
+async function getAudioStream(videoId) {
+  const audioUrl = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
+  console.log(audioUrl);
+
+
+  currentAudio.pause(); // Pause current audio if playing
+  currentAudio.src = ""; // Clear current source
+  document.querySelector(".right").style.display = "none";
+  document.querySelector(".search_SONG_Container").style.display = "flex";
+  //     
+
+  currentAudio.src = audioUrl; // Set new audio source from backend
+  currentAudio.load(); // Load the new audio source
+  currentAudio.play(); // Start playing the audio
+
+}
+
+document.getElementById('input').addEventListener('keypress', async (event) => {
+  // Check if the pressed key is 'Enter' (key code 13)
+  if (event.key === 'Enter') {
+    const query = document.getElementById('input').value; // Get song title from input field
+    const videoResponse = await searchYouTube(query); // Search YouTube using video title
+    console.log(videoResponse);
+
+    if (videoResponse) {
+      const videoId = videoResponse.id.videoId;
+      const songTitle = videoResponse.snippet.title;
+
+      console.log(songTitle);
+      console.log(videoResponse.snippet.thumbnails.high.url)
+      document.querySelector('.feature_song_img img').src = `${videoResponse.snippet.thumbnails.high.url}`;
+      document.querySelector('.details img').src = `${videoResponse.snippet.thumbnails.high.url}`;
+      document.getElementById('songTitle').textContent = songTitle;
+      document.querySelector('.title').textContent = songTitle;
+      console.log(videoId); 
+      getAudioStream(videoId);
+    } else {
+      alert('No video found for the given song title.');
+    }
+  }
+});
