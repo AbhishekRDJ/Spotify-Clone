@@ -1,11 +1,20 @@
 const express = require('express');
 const { spawn } = require('child_process');
 const cors = require('cors'); // To handle cross-origin requests from frontend
+const path = require('path');
 
 const app = express();
 const PORT = 5500;
 
 app.use(cors());  // Enable CORS to allow frontend requests
+
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname)));
+
+// Route to render index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Route to stream audio from YouTube using yt-dlp
 app.get('/audio', async (req, res) => {

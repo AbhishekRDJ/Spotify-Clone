@@ -428,6 +428,25 @@ function playSong2(song) {
 
   currentAudio.addEventListener('timeupdate', updateProgressBar);
 }
+function playSong3(song) {
+
+
+  if (currentAudio.src !== song.filePath) {
+    currentAudio.src = song.filePath;
+    currentAudio.addEventListener('loadedmetadata', () => {
+      endTime.textContent = formatTime(currentAudio.duration);
+
+
+    });
+  }
+
+  currentAudio.play();
+
+
+  updateFooterPlayer(song);
+
+  currentAudio.addEventListener('timeupdate', updateProgressBar);
+}
 
 function updateFooterPlayer(song) {
   songTitleElement.textContent = song.title;
@@ -915,7 +934,7 @@ function catchPlayingSong(PlayingSong, SongIMG) {
 // });
 
 
-import { searchYouTube } from './Fetch_Youtube_music.js';
+import { searchYouTube, searchYouTube2, searchYouTube3 } from './Fetch_Youtube_music.js';
 // Initialize Audio object
 
 async function getAudioStream(videoId) {
@@ -932,30 +951,62 @@ async function getAudioStream(videoId) {
   currentAudio.src = audioUrl; // Set new audio source from backend
   currentAudio.load(); // Load the new audio source
   currentAudio.play(); // Start playing the audio
+  currentAudio.addEventListener('loadedmetadata', () => {
+    const duration = formatTime(currentAudio.duration);
+    document.querySelector('.TotalTime').textContent = duration;
+  });
+
+  currentAudio.addEventListener('timeupdate', updateProgressBar);
 
 }
 
+async function handleVideoResponse(videoResponse, query) {
+  const videoId = videoResponse.id.videoId;
+  const songTitle = videoResponse.snippet.title;
+
+  console.log(songTitle);
+  console.log(videoResponse.snippet.thumbnails.high.url);
+  document.querySelector('.feature_song_img img').src = videoResponse.snippet.thumbnails.high.url;
+  document.querySelector('.details img').src = videoResponse.snippet.thumbnails.high.url;
+  document.getElementById('songTitle').textContent = songTitle;
+  document.querySelector('.title').textContent = songTitle;
+  document.querySelector('.song-info img').src = videoResponse.snippet.thumbnails.high.url;
+  document.querySelector('.source1').textContent = query;
+
+  console.log(videoId);
+  getAudioStream(videoId);
+
+  const song = {
+    title: songTitle,
+    playlist: "Liked Songs",
+    singer: "Arijit Singh",
+    filePath: `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`
+  };
+  console.log(currentAudio);
+  playSong3(song);
+  console.log(currentAudio.currentTime);
+}
+
 document.getElementById('input').addEventListener('keypress', async (event) => {
-  // Check if the pressed key is 'Enter' (key code 13)
   if (event.key === 'Enter') {
-    const query = document.getElementById('input').value; // Get song title from input field
-    const videoResponse = await searchYouTube(query); // Search YouTube using video title
+    const query = document.getElementById('input').value;
+    const videoResponse = await searchYouTube(query);
     console.log(videoResponse);
 
     if (videoResponse) {
-      const videoId = videoResponse.id.videoId;
-      const songTitle = videoResponse.snippet.title;
-
-      console.log(songTitle);
-      console.log(videoResponse.snippet.thumbnails.high.url)
-      document.querySelector('.feature_song_img img').src = `${videoResponse.snippet.thumbnails.high.url}`;
-      document.querySelector('.details img').src = `${videoResponse.snippet.thumbnails.high.url}`;
-      document.getElementById('songTitle').textContent = songTitle;
-      document.querySelector('.title').textContent = songTitle;
-      console.log(videoId); 
-      getAudioStream(videoId);
+      await handleVideoResponse(videoResponse, query);
     } else {
       alert('No video found for the given song title.');
     }
+
+    document.querySelector('.fa-forward-step').addEventListener('click', async () => {
+      const videoResponse = await searchYouTube2(query);
+      await handleVideoResponse(videoResponse, query);
+    });
+
+    document.querySelector('.fa-backward-step').addEventListener('click', async () => {
+      const videoResponse = await searchYouTube3(query);
+      await handleVideoResponse(videoResponse, query);
+    });
   }
 });
