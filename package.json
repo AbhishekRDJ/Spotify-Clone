@@ -4,5 +4,8 @@
     "express": "^4.21.2",
     "lottie-web": "^5.12.2",
     "ytdl-core": "^4.11.5"
+  },
+  "scripts": {
+    "start": "node server.js"
   }
 }

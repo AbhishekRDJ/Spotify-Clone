@@ -80,37 +80,55 @@ body {
 
     border-radius: 50px;
 }
+
 /* Remove all default styles from the input field */
 .input_ele {
-    all: unset; /* Resets all styles */
-    width: 100%; /* Customize width as needed */
-    padding: 10px; /* Add some padding */
-    border: 1px solid #ccc; /* Border style */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    background-color: transparent; /* Transparent background */
-    outline: none; /* Remove outline on focus */
+    all: unset;
+    /* Resets all styles */
+    width: 100%;
+    /* Customize width as needed */
+    padding: 10px;
+    /* Add some padding */
+    border: 1px solid #ccc;
+    /* Border style */
+    border-radius: 5px;
+    /* Rounded corners */
+    font-size: 16px;
+    /* Font size */
+    background-color: transparent;
+    /* Transparent background */
+    outline: none;
+    /* Remove outline on focus */
 }
 
 /* Prevent the background from changing to white on focus */
 .input_ele:focus {
-    background-color: transparent; /* Keep the background transparent */
-    border-color: #888; /* Optional: Change the border color on focus */
+    background-color: transparent;
+    /* Keep the background transparent */
+    border-color: #888;
+    /* Optional: Change the border color on focus */
 }
 
 /* Add custom styles for the search button */
 #searchButton {
     display: none;
-    background-color: #4CAF50; /* Button background */
-    color: white; /* Text color */
-    padding: 10px 20px; /* Button padding */
-    border: none; /* Remove default button border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    background-color: #4CAF50;
+    /* Button background */
+    color: white;
+    /* Text color */
+    padding: 10px 20px;
+    /* Button padding */
+    border: none;
+    /* Remove default button border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
 }
 
 #searchButton:hover {
-    background-color: #45a049; /* Darken on hover */
+    background-color: #45a049;
+    /* Darken on hover */
 }
 
 /* Optional: style for the search icon */
@@ -220,7 +238,7 @@ body {
     padding-left: 13vw;
 }
 
-.search_session{
+.search_session {
     /* background-color: red; */
     color: #f2f2f2;
     width: 24vw;
@@ -992,6 +1010,9 @@ button {
     padding: 10px;
     justify-content: space-between;
 }
+#feature_song_controls1{
+    max-height: 75px;
+}
 
 .fa-circle-pause {
     font-size: 60px;
@@ -1091,11 +1112,13 @@ button {
     align-items: center;
     gap: 10px;
 }
-.Source{
+
+.Source {
     /* background-color: rebeccapurple; */
     display: flex;
     justify-content: center;
 }
+
 .details img {
     width: 50px;
     height: 50px;
@@ -1127,13 +1150,14 @@ button {
 #lottie-container {
     /* z-index: 100; */
     width: 40px;
-    
+
 }
-#lottie-container svg{
+
+#lottie-container svg {
     fill: white;
     filter: invert(1);
     margin-left: 40px;
-    
+
 }
 
 .search_SONG_Container {
@@ -1155,9 +1179,10 @@ button {
     padding-top: 0px;
     animation: fadeIn 0.5s ease-in-out;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    
+
 }
-.head_container1{
+
+.head_container1 {
     margin-bottom: 0;
 }
 
@@ -1215,4 +1240,105 @@ button {
 #songArtist {
     font-size: 16px;
     color: #b3b3b3;
+}
+
+/* css of gallery */
+
+.Gallery_card_detail {
+    max-width: 100%;
+    width: 90%;
+    min-height: 760px;
+    margin: 40px auto;
+    padding: 20px;
+
+    background: #181818;
+    border-radius: 10px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);
+}
+
+.playlist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5rem;
+    min-height: auto;
+    /* Allow table to expand with content */
+
+
+}
+
+.playlist-table thead {
+    border-bottom: 1px solid #282828;
+    /* Separator line */
+}
+
+.playlist-table th {
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #b3b3b3;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.playlist-table tbody tr {
+    border-bottom: 1px solid #282828;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.playlist-table tbody tr:hover {
+    background: #333333;
+    /* Slightly lighter for hover effect */
+}
+
+.playlist-table td {
+    padding: 15px;
+    font-size: 16px;
+    vertical-align: middle;
+    color: #fff;
+}
+.playlist-table td:nth-child(0) {
+    color: #b2b2b2; /* Change this to your desired color */
+}
+
+.playlist-table td:nth-child(3) {
+    color: #b2b2b2; /* Change this to your desired color */
+}
+.playlist-table td:nth-child(4) {
+    color: #b2b2b2; /* Change this to your desired color */
+}
+
+.playlist-table td .song-info1 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.song-info1 img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.artist {
+    font-size: 14px;
+    color: #b3b3b3;
+    /* Subtle color for artist name */
+    margin-top: 4px;
+}
+
+.playlist-table .time-column {
+    text-align: center;
+    color: #b3b3b3;
+}
+
+.playlist-table td:nth-child(1),
+.playlist-table td:nth-child(5) {
+    text-align: center;
+}
+
+.playlist-table tbody tr:last-child {
+    border-bottom: none;
+    /* Remove bottom border for the last row */
 }

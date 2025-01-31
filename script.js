@@ -53,6 +53,7 @@ function showMostContainer() {
   Right_Container.style.display = 'flex';
 
 
+
 }
 
 listItems.forEach(li => {
@@ -934,7 +935,7 @@ function catchPlayingSong(PlayingSong, SongIMG) {
 // });
 
 
-import { searchYouTube, searchYouTube2, searchYouTube3 } from './Fetch_Youtube_music.js';
+import { searchYouTube, searchYouTube2, searchYouTube3, searchYouTube4 } from './Fetch_Youtube_music.js';
 // Initialize Audio object
 
 async function getAudioStream(videoId) {
@@ -945,6 +946,7 @@ async function getAudioStream(videoId) {
   currentAudio.pause(); // Pause current audio if playing
   currentAudio.src = ""; // Clear current source
   document.querySelector(".right").style.display = "none";
+  document.querySelector(".feature_song").style.display = "none";
   document.querySelector(".search_SONG_Container").style.display = "flex";
   //     
 
@@ -986,6 +988,45 @@ async function handleVideoResponse(videoResponse, query) {
   playSong3(song);
   console.log(currentAudio.currentTime);
 }
+async function handleVideoResponse_Gallery(videoResponse, query) {
+
+  const tbody = document.querySelector('.playlist-table tbody');
+  tbody.innerHTML = ''; // Clear existing rows
+
+  videoResponse.forEach((video, index) => {
+    const videoId = video.id.videoId;
+    const songTitle = video.snippet.title;
+    const thumbnailUrl = video.snippet.thumbnails.high.url;
+    const channelTitle = video.snippet.channelTitle;
+    const publishTime = new Date(video.snippet.publishTime).toLocaleDateString();
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+                <div class="song-info1">
+                    <img src="${thumbnailUrl}" alt="${songTitle}">
+                    <span>${songTitle}</span>
+                </div>
+                <span class="artist">${channelTitle}</span>
+            </td>
+            <td>${songTitle}</td>
+            <td>${publishTime}</td>
+            <td>-:--</td>
+        `;
+    tbody.appendChild(tr);
+  });
+  document.querySelector('.song-info img').src = videoResponse.snippet.thumbnails.high.url;
+  document.querySelector('.details img').src = videoResponse.snippet.thumbnails.high.url;
+
+  document.querySelector('.title').textContent = songTitle;
+  document.querySelector('.source1').textContent = query;
+
+  // console.log(videoId);
+  // getAudioStream(videoId);
+
+
+}
 
 document.getElementById('input').addEventListener('keypress', async (event) => {
   if (event.key === 'Enter') {
@@ -1010,3 +1051,33 @@ document.getElementById('input').addEventListener('keypress', async (event) => {
     });
   }
 });
+
+
+
+
+// working on the gallery grid 
+const gallery = document.querySelector('.playlist');
+console.log(gallery);
+const galleryItems = gallery.querySelectorAll('.playlist_item');
+
+galleryItems.forEach(item => {
+  item.addEventListener('click', async () => {
+    // console.log(item);
+    document.querySelector(".playing_card").style.display = "none";
+    const query = item.querySelector('span').textContent;
+    console.log(query);
+    const videoResponse = await searchYouTube4(query);
+    console.log(videoResponse);
+
+    if (videoResponse) {
+      await handleVideoResponse_Gallery(videoResponse, query);
+    } else {
+      alert('No video found for the given song title.');
+    }
+    document.querySelector("#home_btn").addEventListener("click", () => {
+      document.querySelector(".playing_card").style.display = "flex";
+      document.querySelector(".Gallery_card_detail").style.display = "hidden";
+    });
+  });
+});
+
