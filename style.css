@@ -1313,6 +1313,13 @@ button {
     align-items: center;
     gap: 15px;
 }
+.animation_in_gallery{
+    display: flex;
+    color: white;
+    fill: white;
+    z-index: 10000;
+
+}
 
 .song-info1 img {
     width: 50px;

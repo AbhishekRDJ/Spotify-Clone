@@ -961,6 +961,29 @@ async function getAudioStream(videoId) {
   currentAudio.addEventListener('timeupdate', updateProgressBar);
 
 }
+async function getAudioStream1(videoId) {
+  const audioUrl = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
+  console.log(audioUrl);
+
+
+  currentAudio.pause(); // Pause current audio if playing
+  currentAudio.src = ""; // Clear current source
+  // document.querySelector(".right").style.display = "none";
+  // document.querySelector(".feature_song").style.display = "none";
+  // document.querySelector(".search_SONG_Container").style.display = "flex";
+  // //     
+
+  currentAudio.src = audioUrl; // Set new audio source from backend
+  currentAudio.load(); // Load the new audio source
+  currentAudio.play(); // Start playing the audio
+  currentAudio.addEventListener('loadedmetadata', () => {
+    const duration = formatTime(currentAudio.duration);
+    document.querySelector('.TotalTime').textContent = duration;
+  });
+
+  currentAudio.addEventListener('timeupdate', updateProgressBar);
+
+}
 
 async function handleVideoResponse(videoResponse, query) {
   const videoId = videoResponse.id.videoId;
@@ -988,8 +1011,11 @@ async function handleVideoResponse(videoResponse, query) {
   playSong3(song);
   console.log(currentAudio.currentTime);
 }
-async function handleVideoResponse_Gallery(videoResponse, query) {
 
+let currentAnimation = null;
+let currentLottieContainer = null;
+
+async function handleVideoResponse_Gallery(videoResponse, query) {
   const tbody = document.querySelector('.playlist-table tbody');
   tbody.innerHTML = ''; // Clear existing rows
 
@@ -999,33 +1025,56 @@ async function handleVideoResponse_Gallery(videoResponse, query) {
     const thumbnailUrl = video.snippet.thumbnails.high.url;
     const channelTitle = video.snippet.channelTitle;
     const publishTime = new Date(video.snippet.publishTime).toLocaleDateString();
+    const lottieContainerId = `lottie-container-${index + 1}`;
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-            <td>${index + 1}</td>
-            <td>
-                <div class="song-info1">
-                    <img src="${thumbnailUrl}" alt="${songTitle}">
-                    <span>${songTitle}</span>
-                </div>
-                <span class="artist">${channelTitle}</span>
-            </td>
-            <td>${songTitle}</td>
-            <td>${publishTime}</td>
-            <td>-:--</td>
-        `;
+      <td>${index + 1}</td>
+      <td class="animation_in_gallery"><div id="${lottieContainerId}" style="width: 40px; height: 80px; filter: invert(1);"></div></td>
+      <td>
+        <div class="song-info1">
+          <img src="${thumbnailUrl}" alt="${songTitle}">
+          <span>${songTitle}</span>
+        </div>
+        <span class="artist">${channelTitle}</span>
+      </td>
+      <td>${songTitle}</td>
+      <td>${publishTime}</td>
+      <td>-:--</td>
+    `;
     tbody.appendChild(tr);
+
+    tr.addEventListener('click', () => {
+      getAudioStream1(videoId);
+      if (currentAudio.src !== `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`) {
+        currentAudio.src = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
+        currentAudio.load();
+        currentAudio.play();
+        currentAudio.addEventListener('loadedmetadata', () => {
+          const duration = formatTime(currentAudio.duration);
+          document.querySelector('.TotalTime').textContent = duration;
+        });
+        currentAudio.addEventListener('timeupdate', updateProgressBar);
+      }
+      if (currentAnimation) {
+        currentAnimation.destroy();
+      }
+      // Load Lottie animation in the clicked row's lottie-container
+      currentLottieContainer = document.getElementById(lottieContainerId);
+      currentAnimation = lottie.loadAnimation({
+        container: currentLottieContainer, // the container element
+        renderer: 'svg', // the rendering method (svg, canvas, or html)
+        loop: true,      // whether the animation should loop
+        autoplay: true,  // whether the animation should start automatically
+        path: 'animation/Animation - 1733655375256.json' // the path to your JSON animation file
+      });
+    });
   });
-  document.querySelector('.song-info img').src = videoResponse.snippet.thumbnails.high.url;
-  document.querySelector('.details img').src = videoResponse.snippet.thumbnails.high.url;
 
-  document.querySelector('.title').textContent = songTitle;
-  document.querySelector('.source1').textContent = query;
-
-  // console.log(videoId);
-  // getAudioStream(videoId);
-
-
+  document.querySelector('#home_btn').addEventListener('click', () => {
+    document.querySelector('.playing_card').style.display = "flex";
+    document.querySelector('.Gallery_card_detail').style.display = "none";
+  });
 }
 
 document.getElementById('input').addEventListener('keypress', async (event) => {
