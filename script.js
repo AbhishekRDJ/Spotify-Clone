@@ -1112,7 +1112,9 @@ const galleryItems = gallery.querySelectorAll('.playlist_item');
 galleryItems.forEach(item => {
   item.addEventListener('click', async () => {
     // console.log(item);
+
     document.querySelector(".playing_card").style.display = "none";
+    document.querySelector(".Gallery_card_detail").style.display = "block"; // Show the gallery card detail
     const query = item.querySelector('span').textContent;
     console.log(query);
     const videoResponse = await searchYouTube4(query);

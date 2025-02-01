@@ -1010,7 +1010,8 @@ button {
     padding: 10px;
     justify-content: space-between;
 }
-#feature_song_controls1{
+
+#feature_song_controls1 {
     max-height: 75px;
 }
 
@@ -1250,7 +1251,8 @@ button {
     min-height: 760px;
     margin: 40px auto;
     padding: 20px;
-
+    display: none;
+    /* Initially hide the element */
     background: #181818;
     border-radius: 10px;
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);
@@ -1297,15 +1299,20 @@ button {
     vertical-align: middle;
     color: #fff;
 }
+
 .playlist-table td:nth-child(0) {
-    color: #b2b2b2; /* Change this to your desired color */
+    color: #b2b2b2;
+    /* Change this to your desired color */
 }
 
 .playlist-table td:nth-child(3) {
-    color: #b2b2b2; /* Change this to your desired color */
+    color: #b2b2b2;
+    /* Change this to your desired color */
 }
+
 .playlist-table td:nth-child(4) {
-    color: #b2b2b2; /* Change this to your desired color */
+    color: #b2b2b2;
+    /* Change this to your desired color */
 }
 
 .playlist-table td .song-info1 {
@@ -1313,7 +1320,8 @@ button {
     align-items: center;
     gap: 15px;
 }
-.animation_in_gallery{
+
+.animation_in_gallery {
     display: flex;
     color: white;
     fill: white;
