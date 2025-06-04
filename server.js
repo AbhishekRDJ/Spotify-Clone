@@ -2,7 +2,7 @@ const express = require('express');
 const { spawn } = require('child_process');
 const cors = require('cors'); // To handle cross-origin requests from frontend
 const path = require('path');
-
+const route = "https://spotify-clone-amk1.onrender.com/"
 const app = express();
 const PORT = 5500;
 
@@ -26,11 +26,11 @@ app.get('/audio', async (req, res) => {
 
   try {
     const ytDlpProcess = spawn('yt-dlp', [
-      '-f', 'bestaudio',  
-      '--extract-audio',  
-      '--audio-format', 'mp3',  
-      '-o', '-',  
-      videoUrl  
+      '-f', 'bestaudio',
+      '--extract-audio',
+      '--audio-format', 'mp3',
+      '-o', '-',
+      videoUrl
     ]);
 
     ytDlpProcess.stdout.pipe(res);
