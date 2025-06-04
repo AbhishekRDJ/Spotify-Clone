@@ -943,7 +943,7 @@ import { searchYouTube, searchYouTube2, searchYouTube3, searchYouTube4 } from '.
 // Initialize Audio object
 
 async function getAudioStream(videoId) {
-  const audioUrl = `https://spotify-clone-amk1.onrender.com/audio?url=https://www.youtube.com/watch?v=${videoId}`;
+  const audioUrl = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
   console.log(audioUrl);
 
 
@@ -966,7 +966,7 @@ async function getAudioStream(videoId) {
 
 }
 async function getAudioStream1(videoId) {
-  const audioUrl = `https://spotify-clone-amk1.onrender.com/audio?url=https://www.youtube.com/watch?v=${videoId}`;
+  const audioUrl = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
   console.log(audioUrl);
   // const audioUrl = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
 
@@ -1009,7 +1009,7 @@ async function handleVideoResponse(videoResponse, query) {
     title: songTitle,
     playlist: "Liked Songs",
     singer: "Arijit Singh",
-    filePath: `https://spotify-clone-amk1.onrender.com/audio?url=https://www.youtube.com/watch?v=${videoId}`
+    filePath: `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`
   };
   console.log(currentAudio);
   playSong3(song);
@@ -1050,8 +1050,8 @@ async function handleVideoResponse_Gallery(videoResponse, query) {
 
     tr.addEventListener('click', () => {
       getAudioStream1(videoId);
-      if (currentAudio.src !== `https://spotify-clone-amk1.onrender.com/audio?url=https://www.youtube.com/watch?v=${videoId}`) {
-        currentAudio.src = `https://spotify-clone-amk1.onrender.com/audio?url=https://www.youtube.com/watch?v=${videoId}`;
+      if (currentAudio.src !== `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`) {
+        currentAudio.src = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
         currentAudio.load();
         currentAudio.play();
         currentAudio.addEventListener('loadedmetadata', () => {
