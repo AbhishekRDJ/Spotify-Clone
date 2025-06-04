@@ -4,7 +4,7 @@ const cors = require('cors'); // To handle cross-origin requests from frontend
 const path = require('path');
 const route = "https://spotify-clone-amk1.onrender.com/"
 const app = express();
-const PORT = 5500;
+const PORT = route || 5500;
 
 app.use(cors());  // Enable CORS to allow frontend requests
 
