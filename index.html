@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spotify Web Clone - Stream and play music with playlists, search, and YouTube integration.">
     <title>Spotify - Web Player: Music for everyone</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -25,25 +26,21 @@
         </div>
         <div class="heading_center">
             <div class="home">
-                <button id="home_btn">
+                <button id="home_btn" aria-label="Go to Home">
                     <i class="fa-house fa-solid"></i>
                 </button>
             </div>
             <div class="search-section input">
 
                 <i class="fa-magnifying-glass fa-solid search_icon"></i>
-                <input class="input_ele" type="text" name="" placeholder="  Search for a song...            " id="input">
-                <button id="searchButton">Search</button>
+                <input class="input_ele" type="text" name="search" placeholder="  Search for a song..." id="input" aria-label="Search for a song">
+                <button id="searchButton" aria-label="Search">Search</button>
             </div>
         </div>
 
         <div class="right_head">
-            <div class="sign_up">
-                <h4>Sign Up</h4>
-            </div>
-            <div class="log_in">
-                <h4>Log In</h4>
-
+            <div class="profile-badge" aria-label="Profile" style="margin-right: 15px;">
+                <i class="fa-solid fa-circle-user" style="font-size: 32px; color: #b3b3b3; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#b3b3b3'"></i>
             </div>
         </div>
     </div>
@@ -197,56 +194,36 @@
             </div>
 
         </div>
-        <div class="feature_song_head search_SONG_Container">
-            <div class="head_container head_container1">
-                <div class="feature_song_img">
-                    <img src="https://seed-mix-image.spotifycdn.com/v6/img/artist/4YRxDV8wJFPHPTeXepOstw/en/default"
-                        alt="">
-                </div> 
-                <div id="resultsContainer">
-                    <div id="playerContainer">
-                        <div id="songInfo " class="feature_song_info">
-                            <h3 id="songTitle" class="feature_song_title"></h3>
-
-                        </div>
-                        <div class="feature_song_playlist">
-                            <img src="https://i.scdn.co/image/ab67757000003b8255c25988a6ac314394d3fbf5" alt="">
-                            playlist
-                        </div>
-                    </div>
+        <div class="search_SONG_Container" style="display: none; width: 70%; background-color: #121212; margin: 5px; border-radius: 8px; flex-direction: column; overflow-y: auto; max-height: 82%; margin-top: 11vh; overflow-x: hidden; padding-bottom: 80px;">
+            <div class="search_header" style="padding: 30px 20px; display: flex; align-items: center; gap: 20px; background: linear-gradient(to bottom, #2b2b2b, #121212); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div class="search_icon_box" style="width: 80px; height: 80px; background: #282828; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                    <i class="fa-solid fa-magnifying-glass" style="font-size: 36px; color: #1db954;"></i>
+                </div>
+                <div>
+                    <span style="font-size: 12px; text-transform: uppercase; color: #b3b3b3; font-weight: bold; letter-spacing: 1px;">Search Results</span>
+                    <h1 id="searchQueryTitle" style="color: #fff; margin-top: 5px; font-size: 32px; font-weight: 900;">Search for songs</h1>
                 </div>
             </div>
-            <div class="feature_song_controls">
-                <div class="feature_song_start_btn">
-                    <div class="feature_song_play_btn"><i class="fa-circle-pause fa-solid"></i></div>
-                    <div class="feature_song_add_btn"><i class="fa-regular fa-square-plus hover_effect"></i></div>
-                    <div class="feature_song_fucntion_btn"><i class="fa-ellipsis fa-solid hover_effect"></i></div>
-
-                </div>
-                <div class="feature_song_list_btn hover_effect">
-                    <p>list</p>
-                    <i class="fa-list fa-solid"></i>
-                </div>
-            </div>
-            <div class="recent_playing_song">
-                <ul class="songs">
-                    <li class="song">
-
-                        <div id="lottie-container" style="width: 40px; height: 80px; fill:white;"></div>
-
-                        <div class="details">
-                            <img src="https://via.placeholder.com/50" alt="Sajde">
-                            <div>
-                                <div class="title">Sajde</div>
-                                <div class="artist">Shankar-Ehsaan-Loy, Arijit Singh, Nihira Joshi Deshpande,
-                                    Gulzar
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Source source1">Kill Dil</div>
-
-                    </li>
-                </ul>
+            
+            <div class="search_results_list" style="padding: 20px;">
+                <table class="playlist-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th style="width: 70px;">Cover</th>
+                            <th>Title</th>
+                            <th>Artist / Channel</th>
+                            <th style="width: 100px; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="searchResultsBody">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #b3b3b3; padding: 40px 0;">
+                                Type a song title above and press Enter to search.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         
@@ -723,13 +700,11 @@
         <!-- Playback controls -->
         <div class="center_footer">
             <div class="playback-controls">
-                <button><i class="fa-backward-step fa-solid"></i></button> <!-- Previous icon -->
-                <button class="play-pause" id="pause"><i class="fa-circle-play fa-regular"></i></button>
-                <!-- Play icon (toggle with pause) -->
-                <button class="play-pause" id="playing"><i class="fa-pause fa-solid"></i></button>
-                <!-- Play icon (toggle with pause) -->
+                <button aria-label="Previous Track"><i class="fa-backward-step fa-solid"></i></button>
+                <button class="play-pause" id="pause" aria-label="Play"><i class="fa-circle-play fa-regular"></i></button>
+                <button class="play-pause" id="playing" aria-label="Pause"><i class="fa-pause fa-solid"></i></button>
 
-                <button><i class="fa-forward-step fa-solid"></i></button>
+                <button aria-label="Next Track"><i class="fa-forward-step fa-solid"></i></button>
 
             </div>
 
@@ -752,6 +727,9 @@
             <button>&#128470;</button> <!-- Fullscreen icon -->
         </div>
     </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" style="position: fixed; bottom: 100px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.1/lottie.min.js"></script>
     <script type="module" src="script.js"></script>

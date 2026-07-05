@@ -24,6 +24,9 @@ app.get('/audio', async (req, res) => {
   }
 
   try {
+    // Set headers BEFORE piping so the browser knows it's audio
+    res.setHeader('Content-Type', 'audio/mpeg');
+
     const ytDlpProcess = spawn('yt-dlp', [
       '-f', 'bestaudio',
       '--extract-audio',
@@ -34,21 +37,91 @@ app.get('/audio', async (req, res) => {
 
     ytDlpProcess.stdout.pipe(res);
 
+    // Capture stderr for debugging yt-dlp failures
+    let stderrData = '';
+    ytDlpProcess.stderr.on('data', (data) => {
+      stderrData += data.toString();
+    });
+
     ytDlpProcess.on('error', (err) => {
-      console.error('Error:', err);
-      res.status(500).send('Failed to fetch audio');
+      console.error('yt-dlp spawn error:', err.message);
+      if (!res.headersSent) {
+        res.status(500).send('Failed to start yt-dlp. Is it installed?');
+      }
     });
 
     ytDlpProcess.on('close', (code) => {
       if (code !== 0) {
         console.error(`yt-dlp process exited with code ${code}`);
-        res.status(500).send('Failed to fetch audio');
+        if (stderrData) console.error('yt-dlp stderr:', stderrData);
+        if (!res.headersSent) {
+          res.status(500).send('Failed to fetch audio');
+        } else {
+          // Headers already sent (pipe started), just end the response
+          res.end();
+        }
       }
     });
 
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).send('Error while processing the request');
+    if (!res.headersSent) {
+      res.status(500).send('Error while processing the request');
+    }
+  }
+
+});
+
+// Route to get direct stream URL from YouTube using yt-dlp (enables native browser seeking)
+app.get('/stream-url', async (req, res) => {
+  const videoUrl = req.query.url;
+
+  if (!videoUrl) {
+    return res.status(400).send('No URL provided');
+  }
+
+  try {
+    const ytDlpProcess = spawn('yt-dlp', [
+      '-g',
+      '-f', 'bestaudio',
+      videoUrl
+    ]);
+
+    let urlData = '';
+    let stderrData = '';
+
+    ytDlpProcess.stdout.on('data', (data) => {
+      urlData += data.toString();
+    });
+
+    ytDlpProcess.stderr.on('data', (data) => {
+      stderrData += data.toString();
+    });
+
+    ytDlpProcess.on('error', (err) => {
+      console.error('yt-dlp stream-url spawn error:', err.message);
+      if (!res.headersSent) {
+        res.status(500).send('Failed to start yt-dlp');
+      }
+    });
+
+    ytDlpProcess.on('close', (code) => {
+      if (code === 0) {
+        res.json({ url: urlData.trim() });
+      } else {
+        console.error(`yt-dlp stream-url exited with code ${code}`);
+        if (stderrData) console.error('yt-dlp stderr:', stderrData);
+        if (!res.headersSent) {
+          res.status(500).send('Failed to extract direct stream URL');
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Error:', error);
+    if (!res.headersSent) {
+      res.status(500).send('Error while processing the request');
+    }
   }
 });
 

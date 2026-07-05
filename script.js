@@ -1,356 +1,456 @@
-// function getRandomPastelColor() {
-//     // Generate a random color with a restricted range to avoid bright colors
-//     const red = Math.floor(150 + Math.random() * 100);   // 150-250 range for softer red
-//     const green = Math.floor(150 + Math.random() * 100); // 150-250 range for softer green
-//     const blue = Math.floor(150 + Math.random() * 100);  // 150-250 range for softer blue
-//     return `rgb(${red}, ${green}, ${blue})`;
-// }
+/**
+ * script.js
+ * Main application controller for Spotify Web Clone.
+ * 
+ * Clean, modular, responsive, state-driven front-end player logic.
+ */
 
-// function setRandomGradient() {
-//     // Get two random pastel colors
-//     const color1 = getRandomPastelColor();
-//     const color2 = getRandomPastelColor();
+import { searchYouTube } from './Fetch_Youtube_music.js';
+import {
+  likedSongsData, sandeepMaheshwariData, arijitSinghData,
+  arijitTopTrackData, sonuNigamData, rightListedSongData, playlistMap
+} from './songsData.js';
 
-//     // Apply a linear gradient background to the element with the class "gradient-background"
-//     document.querySelector('.right').style.background = `linear-gradient(to bottom, ${color1}, ${color2})`;
-// }
+// ============================================================
+// Constants & Configuration
+// ============================================================
+const SERVER_BASE_URL = `${window.location.protocol}//${window.location.hostname}:5500`;
+const LOTTIE_ANIMATION_PATH = 'animation/Animation - 1733655375256.json';
 
-// // Change the gradient every 10 seconds for a very subtle transition
-// setInterval(setRandomGradient, 2000);
-
-// // Set initial gradient on page load
-// setRandomGradient();
-
-console.log("get started with JavaScript")
-
-// on click to any playlist from left side the subsong will appear
-
-// console.log(document.querySelector(".most").children[0].children)
-// Select the '.most' container and all 'li' elements within it
-// Select elements
+// ============================================================
+// DOM Element References
+// ============================================================
 const mostContainer = document.querySelector('.most');
 const songsListContainer = document.querySelector('.songs_list');
 const listItems = mostContainer.querySelectorAll('li');
-const rightContainer = document.querySelector(".card2_wrap")
-const listRightCard = rightContainer.querySelectorAll("li")
-const featureContainer = document.querySelector(".feature_song")
-const Right_Container = document.querySelector(".right")
-
-// console.log(listItems[0])
+const rightContainer = document.querySelector(".card2_wrap");
+const listRightCard = rightContainer.querySelectorAll("li");
+const featureContainer = document.querySelector(".feature_song");
+const rightSide = document.querySelector(".right");
 const homeButton = document.querySelector('#home_btn');
-
-function showSongsList() {
-  mostContainer.style.display = 'none';
-  songsListContainer.style.display = 'flex';
-}
-
-function showMostContainer() {
-  songsListContainer.style.display = 'none';
-  mostContainer.style.display = 'flex';
-  featureContainer.style.display = 'none';
-  Right_Container.style.display = 'flex';
-  document.querySelector('.search_SONG_Container').style.display = "none"
-  Right_Container.style.display = 'flex';
-
-
-
-}
-
-listItems.forEach(li => {
-  li.addEventListener('click', showSongsList);
-});
-homeButton.addEventListener('click', showMostContainer);
-
-// numbering funcation below
-
-// Select all 'li' elements within '.songs_list'
-const listItems1 = document.querySelectorAll('.songs_list ul li');
-
-listItems1.forEach((item, index) => {
-  const numberElement = item.querySelector('.song_number');
-  numberElement.textContent = index + 1; // Set the text to the current index + 1
-});
-
-
-// Array holding song data
-const LikedSongsData = [
-  {
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-  },
-  {
-    title: "BESABRIYAAN",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/liked_Songs/BESABRIYAAN Full Video Song  M. S. DHONI - THE UNTOLD STORY  Sushant Singh Rajput.mp3"
-  },
-  {
-    title: "Chal Wahan Jaate Hain",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Chal Wahan Jaate Hain Full Song with LYRICS - Arijit Singh  Tiger Shroff, Kriti Sanon  T-Series.mp3"
-  },
-  {
-    title: "Dil Meri Na Sune Lyrical",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Dil Meri Na Sune Lyrical - Genius  Utkarsh Sharma, Ishita  Atif Aslam  Himesh Reshammiya.mp3"
-  },
-  {
-    title: "Mohe Rang Do Laal",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Mohe Rang Do Laal (Official Video Song)  Bajirao Mastani  Ranveer Singh & Deepika Padukone.mp3"
-  },
-  {
-    title: "Tere Pyaar Mein",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Tere Pyaar Mein (Song) Tu Jhoothi Main Makkaar Ranbir, Shraddha Pritam Arijit, Nikhita  Amitabh.mp3"
-  },
-  {
-    title: "The Humma Song",
-    playlist: "Liked Songs",
-    singer: "jubin nautiyal",
-    filePath: "songs/liked_Songs/The Humma Song  OK Jaanu  Shraddha Kapoor  Aditya Roy Kapur  @ARRahman, Badshah, Tanishk.mp3"
-  },
-  {
-    title: "WAJAH TUM HO ",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/liked_Songs/WAJAH TUM HO Full Video Song  HATE STORY 3 Songs  Zareen Khan, Karan Singh Grover  T-Series.mp3"
-  },
-  {
-    title: "Song Title 2",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "path/to/song2.mp3"
-  }
-  // Add more songs as needed
-];
-const sandeepMaheshwari = [
-  {
-    title: "BE FEARLESS - Motivational Video",
-    playlist: "sandeepMaheshwari",
-    singer: "sandeep Maheshwari",
-    filePath: "songs/sandeepMaheshwari/BE FEARLESS - Motivational Video By Sandeep Maheshwari.mp3"
-  },
-  {
-    title: "MORNING MOTIVATIONAL VIDEO",
-    playlist: "sandeepMaheshwari",
-    singer: "sandeep Maheshwari",
-    filePath: "songs/sandeepMaheshwari/MORNING MOTIVATIONAL VIDEO - Sandeep Maheshwari  DAILY MORNING AFFIRMATIONS Hindi.mp3"
-  },
-  {
-    title: "POWERFUL MOTIVATIONAL VIDEO By Sandeep Maheshwari",
-    playlist: "sandeepMaheshwari",
-    singer: "sandeep Maheshwari",
-    filePath: "songs/sandeepMaheshwari/POWERFUL MOTIVATIONAL VIDEO By Sandeep Maheshwari  Best Motivational Quotes.mp3"
-  }
-
-  // Add more songs as needed
-];
-const Arijit_singh = [
-  {
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-  },
-  {
-    title: "ANIMAL_ SATRANGA(Song)",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/Arijit_Singh/ANIMAL_ SATRANGA(Song) Ranbir Kapoor,Rashmika_Sandeep V_Arijit,Shreyas P,Siddharth-Garima _Bhushan K [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Chal Wahan Jaate Hain",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Chal Wahan Jaate Hain Full Song with LYRICS - Arijit Singh  Tiger Shroff, Kriti Sanon  T-Series.mp3"
-  },
-  {
-    title: "Dil Meri Na Sune Lyrical",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Dil Meri Na Sune Lyrical - Genius  Utkarsh Sharma, Ishita  Atif Aslam  Himesh Reshammiya.mp3"
-  },
-  {
-    title: "Mohe Rang Do Laal",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Mohe Rang Do Laal (Official Video Song)  Bajirao Mastani  Ranveer Singh & Deepika Padukone.mp3"
-  },
-  {
-    title: "Tere Pyaar Mein",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Tere Pyaar Mein (Song) Tu Jhoothi Main Makkaar Ranbir, Shraddha Pritam Arijit, Nikhita  Amitabh.mp3"
-  },
-  {
-    title: "Apna Bana Le",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/Arijit_Singh/Apna Bana Le - Bhediya _ Varun Dhawan, Kriti Sanon_ Sachin-Jigar, Arijit Singh, Amitabh Bhattacharya [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Sajni (Song)_ Arijit Singh ",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/Arijit_Singh/Sajni (Song)_ Arijit Singh, Ram Sampath  Laapataa Ladies   Aamir Khan Productions.mp3"
-  },
-  {
-    title: "Song Title 2",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "path/to/song2.mp3"
-  }
-  // Add more songs as needed
-];
-const Arijit_topTrack = [
-  {
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-  },
-  {
-    title: "BESABRIYAAN",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/liked_Songs/BESABRIYAAN Full Video Song  M. S. DHONI - THE UNTOLD STORY  Sushant Singh Rajput.mp3"
-  },
-  {
-    title: "Chal Wahan Jaate Hain",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Chal Wahan Jaate Hain Full Song with LYRICS - Arijit Singh  Tiger Shroff, Kriti Sanon  T-Series.mp3"
-  },
-  {
-    title: "Dil Meri Na Sune Lyrical",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Dil Meri Na Sune Lyrical - Genius  Utkarsh Sharma, Ishita  Atif Aslam  Himesh Reshammiya.mp3"
-  },
-  {
-    title: "Mohe Rang Do Laal",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Mohe Rang Do Laal (Official Video Song)  Bajirao Mastani  Ranveer Singh & Deepika Padukone.mp3"
-  },
-  {
-    title: "Tere Pyaar Mein",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Tere Pyaar Mein (Song) Tu Jhoothi Main Makkaar Ranbir, Shraddha Pritam Arijit, Nikhita  Amitabh.mp3"
-  },
-  {
-    title: "The Humma Song",
-    playlist: "Liked Songs",
-    singer: "jubin nautiyal",
-    filePath: "songs/liked_Songs/The Humma Song  OK Jaanu  Shraddha Kapoor  Aditya Roy Kapur  @ARRahman, Badshah, Tanishk.mp3"
-  },
-  {
-    title: "WAJAH TUM HO ",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/liked_Songs/WAJAH TUM HO Full Video Song  HATE STORY 3 Songs  Zareen Khan, Karan Singh Grover  T-Series.mp3"
-  },
-  {
-    title: "Song Title 2",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "path/to/song2.mp3"
-  }
-  // Add more songs as needed
-];
-const Sonu_Nigam = [
-  {
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/sonu_nigam/Ajay-Atul - Abhi Mujh Mein Kahin Best Lyric_Agneepath_Priyanka Chopra,Hrithik_Sonu Nigam [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "BESABRIYAAN",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/sonu_nigam/Kal Ho Naa Ho Full Video - Title Track_Shah Rukh Khan,Saif Ali,Preity_Sonu Nigam_Karan J [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Chal Wahan Jaate Hain",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/sonu_nigam/LYRICAL_ Main Agar Kahoon _ Om Shanti Om _ Shahrukh Khan,Deepika Padukone _ Sonu Nigam,Shreya Ghosal [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Dil Meri Na Sune Lyrical",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/sonu_nigam/Tumse Milke Dilka Jo Haal [Full Song] _ Main Hoon Na _ Shahrukh Khan [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Mohe Rang Do Laal",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/sonu_nigam/संदेशे आते है (4K) - Sandese Aate Hai Full 4K Video Song _ Border _ बॉर्डर - सनी देओल [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Tere Pyaar Mein",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Tere Pyaar Mein (Song) Tu Jhoothi Main Makkaar Ranbir, Shraddha Pritam Arijit, Nikhita  Amitabh.mp3"
-  },
-  {
-    title: "The Humma Song",
-    playlist: "Liked Songs",
-    singer: "jubin nautiyal",
-    filePath: "songs/liked_Songs/The Humma Song  OK Jaanu  Shraddha Kapoor  Aditya Roy Kapur  @ARRahman, Badshah, Tanishk.mp3"
-  },
-  {
-    title: "WAJAH TUM HO ",
-    playlist: "Liked Songs",
-    singer: "Armaan Malik",
-    filePath: "songs/liked_Songs/WAJAH TUM HO Full Video Song  HATE STORY 3 Songs  Zareen Khan, Karan Singh Grover  T-Series.mp3"
-  },
-  {
-    title: "Song Title 2",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "path/to/song2.mp3"
-  },
-  {
-    title: "Mere Dholna 3.0",
-    playlist: "Liked Songs",
-    singer: "Sonu Nigam",
-    filePath: "songs/sonu_nigam/BB3_ Mere Dholna 3.0 (Full Audio) (Sonu Nigam Version) Kartik,Sonu,Vidya,Madhuri,Amaal,Pritam,Sameer [ ezmp3.cc ].mp3"
-  }
-  // Add more songs as needed
-];
-
-
-
-let currentAudio = new Audio();
-let currentlyPlayingIndex = null;
 
 const musicPlayer = document.querySelector('.music-player');
 const songTitleElement = musicPlayer.querySelector('.song-details .title');
 const artistElement = musicPlayer.querySelector('.song-details .artist');
 const progressBarContainer = musicPlayer.querySelector('.progress-bar-container');
-
 const progressBar = musicPlayer.querySelector('.progress-bar .progress');
 const startTime = musicPlayer.querySelector('.progress-bar-container .time:first-child');
 const endTime = musicPlayer.querySelector('.progress-bar-container .time:last-child');
-const playPauseBtn = musicPlayer.querySelector('#playing');
-const pauseBtn = musicPlayer.querySelector('#pause');
+const playPauseBtn = musicPlayer.querySelector('#playing'); // Pause icon (active when playing)
+const pauseBtn = musicPlayer.querySelector('#pause');       // Play icon (active when paused)
+const prevBtn = musicPlayer.querySelector('[aria-label="Previous Track"]');
+const nextBtn = musicPlayer.querySelector('[aria-label="Next Track"]');
 
-function populateSongsList(data_playlist) {
+const volumeSlider = document.querySelector('.volume-slider');
+const volumeBar = volumeSlider.querySelector('.volume');
+const muteButton = document.querySelector('.settings button:first-child');
+const fullscreenBtn = document.querySelector('.settings button:last-child');
+
+const searchContainer = document.querySelector('.search_SONG_Container');
+const searchResultsBody = document.getElementById('searchResultsBody');
+const searchInput = document.getElementById('input');
+const searchButton = document.getElementById('searchButton');
+
+const gallery = document.querySelector('.playlist');
+const galleryItems = gallery.querySelectorAll('.playlist_item');
+
+// ============================================================
+// Global State Management
+// ============================================================
+let currentAudio = new Audio();
+let currentlyPlayingIndex = null;
+let currentPlayingRow = null;
+let playbackState = 'idle'; // 'idle', 'loading', 'playing', 'paused'
+let isMuted = false;
+let previousVolume = 0.5;
+
+let playbackQueue = [];    // Holds track objects in current active playlist
+let queueIndex = -1;       // Current track index in the active queue
+let currentSearchQuery = '';
+
+// Set default volume
+currentAudio.volume = 0.5;
+volumeBar.style.width = `${currentAudio.volume * 100}%`;
+
+// ============================================================
+// Visual State Controller (Buffering, Loading & Playback States)
+// ============================================================
+
+/**
+ * Transitions the UI to match the current playback state.
+ * Adds loading spinners, equalizer visualizers, or standard status play icons.
+ */
+function setPlaybackState(state) {
+  playbackState = state;
+
+  // Clear visual highlights on all rows/cards
+  document.querySelectorAll('tr').forEach(tr => tr.classList.remove('row-buffering', 'row-playing'));
+  document.querySelectorAll('.song_card').forEach(card => card.classList.remove('row-buffering', 'row-playing'));
+
+  // 1. Manage active row styling and icons
+  if (currentPlayingRow) {
+    if (state === 'loading') {
+      currentPlayingRow.classList.add('row-buffering');
+      const statusCol = currentPlayingRow.querySelector('.status-col');
+      if (statusCol) {
+        statusCol.innerHTML = '<div class="spinner"></div>';
+      }
+    } else if (state === 'playing') {
+      currentPlayingRow.classList.add('row-playing');
+      const statusCol = currentPlayingRow.querySelector('.status-col');
+      if (statusCol) {
+        statusCol.innerHTML = '<i class="fa-solid fa-volume-high" style="color: var(--spotify-green);"></i>';
+      }
+      
+      // Update subpause button display if local song card
+      const subplayBtn = currentPlayingRow.querySelector('.subplay');
+      const subpauseBtn = currentPlayingRow.querySelector('.subpause');
+      if (subplayBtn && subpauseBtn) {
+        subplayBtn.style.display = 'none';
+        subpauseBtn.style.display = 'flex';
+      }
+    } else if (state === 'paused') {
+      const statusCol = currentPlayingRow.querySelector('.status-col');
+      if (statusCol) {
+        statusCol.innerHTML = '<i class="fa-solid fa-play" style="color: #b3b3b3;"></i>';
+      }
+
+      // Update subplay button display if local song card
+      const subplayBtn = currentPlayingRow.querySelector('.subplay');
+      const subpauseBtn = currentPlayingRow.querySelector('.subpause');
+      if (subplayBtn && subpauseBtn) {
+        subplayBtn.style.display = 'flex';
+        subpauseBtn.style.display = 'none';
+      }
+    }
+  }
+
+  // 2. Manage footer control buttons
+  const pControls = musicPlayer.querySelector('.playback-controls');
+  let spinner = pControls.querySelector('.spinner');
+
+  if (state === 'loading') {
+    playPauseBtn.style.display = 'none';
+    pauseBtn.style.display = 'none';
+    if (!spinner) {
+      spinner = document.createElement('div');
+      spinner.className = 'spinner';
+      pControls.insertBefore(spinner, nextBtn);
+    }
+  } else {
+    if (spinner) spinner.remove();
+
+    if (state === 'playing') {
+      playPauseBtn.style.display = 'flex'; // Pause button visible
+      pauseBtn.style.display = 'none';    // Play button hidden
+    } else {
+      playPauseBtn.style.display = 'none'; // Pause button hidden
+      pauseBtn.style.display = 'flex';    // Play button visible
+    }
+  }
+}
+
+// Bind native Audio events to the state machine
+currentAudio.addEventListener('waiting', () => setPlaybackState('loading'));
+currentAudio.addEventListener('playing', () => setPlaybackState('playing'));
+currentAudio.addEventListener('pause', () => setPlaybackState('paused'));
+currentAudio.addEventListener('ended', () => playNextTrack());
+currentAudio.addEventListener('error', (e) => {
+  setPlaybackState('paused');
+  showToast('Error loading audio stream. Please try again.');
+  console.error('Audio element error:', e);
+});
+
+// ============================================================
+// Toast Notification Engine
+// ============================================================
+
+/** Displays a premium notification banner */
+function showToast(message) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <span>${message}</span>
+    <button class="toast-close" aria-label="Close">&times;</button>
+  `;
+
+  toast.querySelector('.toast-close').addEventListener('click', () => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 300);
+  });
+
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 10);
+
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }
+  }, 4000);
+}
+
+// ============================================================
+// Utility / Helper Functions
+// ============================================================
+
+function formatTime(seconds) {
+  if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+  return `${mins}:${secs}`;
+}
+
+function getRandomSong(songsArray) {
+  const randomIndex = Math.floor(Math.random() * songsArray.length);
+  return songsArray[randomIndex];
+}
+
+function getRandomPastelColor() {
+  const red = Math.floor(150 + Math.random() * 100);
+  const green = Math.floor(150 + Math.random() * 100);
+  const blue = Math.floor(150 + Math.random() * 100);
+  return `rgb(${red}, ${green}, ${blue})`;
+}
+
+function setCustomGradient() {
+  const brightColor = getRandomPastelColor();
+  const darkColor = `rgb(${Math.floor(Math.random() * 55)}, ${Math.floor(Math.random() * 55)}, ${Math.floor(Math.random() * 55)})`;
+  featureContainer.style.background = `linear-gradient(to bottom, ${darkColor} 10%, ${brightColor} 90%)`;
+}
+
+// ============================================================
+// Core Playback Logic
+// ============================================================
+
+/**
+ * Standard track playback wrapper.
+ * Sets the active audio stream source and triggers loading.
+ */
+async function playTrack(song, elementRef = null) {
+  if (elementRef) {
+    currentPlayingRow = elementRef;
+  }
+
+  // Update footer title details immediately
+  songTitleElement.textContent = song.title;
+  artistElement.textContent = song.singer;
+  startTime.textContent = formatTime(0);
+  progressBar.style.width = '0%';
+
+  let targetSrc = song.filePath;
+
+  // If this is a YouTube proxy URL, fetch the direct seekable URL
+  if (song.filePath && song.filePath.includes('/audio?url=')) {
+    setPlaybackState('loading');
+    try {
+      const videoUrl = song.filePath.split('/audio?url=')[1];
+      const response = await fetch(`${SERVER_BASE_URL}/stream-url?url=${videoUrl}`);
+      const data = await response.json();
+      if (data && data.url) {
+        targetSrc = data.url;
+      } else {
+        throw new Error('Failed to parse URL from stream-url response');
+      }
+    } catch (err) {
+      console.error('Error resolving direct stream URL:', err);
+      showToast('Error resolving stream link. Using fallback...');
+      targetSrc = song.filePath; // Fall back to direct audio pipe
+    }
+  }
+
+  if (currentAudio.src !== targetSrc) {
+    setPlaybackState('loading');
+    currentAudio.src = targetSrc;
+    currentAudio.load();
+  }
+
+  currentAudio.play().catch(err => {
+    console.error('Play failed:', err);
+    setPlaybackState('paused');
+  });
+
+  currentAudio.removeEventListener('timeupdate', updateProgressBar);
+  currentAudio.addEventListener('timeupdate', updateProgressBar);
+}
+
+/** Toggles play/pause state */
+function togglePlayPause() {
+  if (!currentAudio.src) return;
+  if (currentAudio.paused) {
+    currentAudio.play().catch(console.error);
+  } else {
+    currentAudio.pause();
+  }
+}
+
+/** Updates bottom progress bar fill and elapsed time text */
+function updateProgressBar() {
+  if (currentAudio.duration) {
+    const progressPercent = (currentAudio.currentTime / currentAudio.duration) * 100;
+    progressBar.style.width = `${progressPercent}%`;
+    startTime.textContent = formatTime(currentAudio.currentTime);
+  }
+}
+
+// ============================================================
+// Queue Management (Unified Next / Previous)
+// ============================================================
+
+/** Sets up the active list as the playing queue context */
+function setPlayingQueue(tracks, index) {
+  playbackQueue = tracks;
+  queueIndex = index;
+}
+
+/** Plays the track in the current queue at the specified index */
+async function playQueueTrack(index) {
+  if (index < 0 || index >= playbackQueue.length) return;
+  queueIndex = index;
+  const song = playbackQueue[index];
+
+  // Refresh active row references based on active view
+  if (songsListContainer.style.display === 'flex') {
+    const cards = songsListContainer.querySelectorAll('.song_card');
+    if (cards[index]) {
+      currentPlayingRow = cards[index];
+    }
+  } else if (searchContainer.style.display === 'flex') {
+    const rows = searchResultsBody.querySelectorAll('tr');
+    if (rows[index]) {
+      currentPlayingRow = rows[index];
+    }
+  }
+
+  playTrack(song, currentPlayingRow);
+}
+
+function playNextTrack() {
+  if (playbackQueue.length === 0 || queueIndex === -1) return;
+  let nextIndex = queueIndex + 1;
+  if (nextIndex >= playbackQueue.length) {
+    nextIndex = 0; // Loop back to start
+  }
+  playQueueTrack(nextIndex);
+}
+
+function playPrevTrack() {
+  if (playbackQueue.length === 0 || queueIndex === -1) return;
+  let prevIndex = queueIndex - 1;
+  if (prevIndex < 0) {
+    prevIndex = playbackQueue.length - 1; // Loop back to end
+  }
+  playQueueTrack(prevIndex);
+}
+
+// ============================================================
+// YouTube Search Results Handling
+// ============================================================
+
+/** Render dynamic list of matching results into the table body */
+function renderSearchResults(videos, query) {
+  searchResultsBody.innerHTML = '';
+  
+  const queryTitle = document.getElementById('searchQueryTitle');
+  if (queryTitle) {
+    queryTitle.textContent = `Results for "${query}"`;
+  }
+
+  // Format array to match track queue schema
+  const tracksList = videos.map(video => ({
+    title: video.snippet.title,
+    singer: video.snippet.channelTitle,
+    playlist: "YouTube Search",
+    filePath: `${SERVER_BASE_URL}/audio?url=https://www.youtube.com/watch?v=${video.id.videoId}`
+  }));
+
+  videos.forEach((video, index) => {
+    const tr = document.createElement('tr');
+    tr.style.cursor = 'pointer';
+    
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>
+        <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.title}" style="width: 48px; height: 48px; border-radius: 4px; object-fit: cover;">
+      </td>
+      <td>
+        <div class="song-info1">
+          <span style="font-weight: 500; color: #fff;">${video.snippet.title}</span>
+        </div>
+      </td>
+      <td style="color: #b3b3b3;">${video.snippet.channelTitle}</td>
+      <td class="status-col" style="text-align: center;">
+        <i class="fa-solid fa-play" style="color: #b3b3b3;"></i>
+      </td>
+    `;
+
+    tr.addEventListener('click', () => {
+      setPlayingQueue(tracksList, index);
+      playQueueTrack(index);
+    });
+
+    searchResultsBody.appendChild(tr);
+  });
+}
+
+/** Queries YouTube API and triggers the search view */
+async function performSearch() {
+  const query = searchInput.value;
+  if (!query.trim()) return;
+
+  // Toggle views
+  rightSide.style.display = "none";
+  featureContainer.style.display = "none";
+  searchContainer.style.display = "flex";
+
+  // Show inline loader
+  searchResultsBody.innerHTML = `
+    <tr>
+      <td colspan="5" style="text-align: center; padding: 50px 0;">
+        <div class="spinner" style="width: 32px; height: 32px;"></div>
+        <div style="margin-top: 15px; color: var(--text-secondary); font-size: 14px;">Searching YouTube database...</div>
+      </td>
+    </tr>
+  `;
+
+  try {
+    const videos = await searchYouTube(query, 8, null); // Return array of 8 videos
+    if (videos && videos.length > 0) {
+      currentSearchQuery = query;
+      renderSearchResults(videos, query);
+    } else {
+      searchResultsBody.innerHTML = `
+        <tr>
+          <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 50px 0;">
+            No results found. Try another search query.
+          </td>
+        </tr>
+      `;
+    }
+  } catch (error) {
+    console.error('YouTube search failed:', error);
+    searchResultsBody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; color: #ff5555; padding: 50px 0;">
+          Failed to fetch results. Ensure backend Node proxy server is active.
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// ============================================================
+// Render Local Playlists
+// ============================================================
+
+function populateSongsList(dataPlaylist) {
   const songsListUl = document.querySelector('.songs_list ul');
   songsListUl.innerHTML = '';
 
-  data_playlist.forEach((song, index) => {
+  dataPlaylist.forEach((song, index) => {
     const li = document.createElement('li');
     li.classList.add('song_card');
 
@@ -373,11 +473,13 @@ function populateSongsList(data_playlist) {
 
     li.addEventListener('click', (e) => {
       if (!e.target.closest('.subpause')) {
-        playSong(song, index, subplayBtn, subpauseBtn);
+        setPlayingQueue(dataPlaylist, index);
+        playQueueTrack(index);
       }
     });
 
-    subpauseBtn.addEventListener('click', () => {
+    subpauseBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       pauseSong(subplayBtn, subpauseBtn);
     });
 
@@ -385,412 +487,146 @@ function populateSongsList(data_playlist) {
   });
 }
 
-function playSong(song, index, subplayBtn, subpauseBtn) {
-  if (currentlyPlayingIndex !== null && currentlyPlayingIndex !== index) {
-    currentAudio.pause();
-    resetPlayPauseButtons();
-  }
-
-  if (currentAudio.src !== song.filePath) {
-    currentAudio.src = song.filePath;
-    currentAudio.addEventListener('loadedmetadata', () => {
-      endTime.textContent = formatTime(currentAudio.duration);
-    });
-  }
-
-  currentAudio.play();
-
-  currentlyPlayingIndex = index;
-
-  subplayBtn.style.display = 'none';
-  console.log(subplayBtn)
-  subpauseBtn.style.display = 'flex';
-
-  updateFooterPlayer(song);
-
-  currentAudio.addEventListener('timeupdate', updateProgressBar);
-}
-function playSong2(song) {
-
-
-  if (currentAudio.src !== song.filePath) {
-    currentAudio.src = song.filePath;
-    currentAudio.addEventListener('loadedmetadata', () => {
-      endTime.textContent = formatTime(currentAudio.duration);
-
-
-    });
-  }
-
-  currentAudio.play();
-
-
-  updateFooterPlayer(song);
-
-  currentAudio.addEventListener('timeupdate', updateProgressBar);
-}
-function playSong3(song) {
-
-
-  if (currentAudio.src !== song.filePath) {
-    currentAudio.src = song.filePath;
-    currentAudio.addEventListener('loadedmetadata', () => {
-      endTime.textContent = formatTime(currentAudio.duration);
-
-
-    });
-  }
-
-  currentAudio.play();
-
-
-  updateFooterPlayer(song);
-
-  currentAudio.addEventListener('timeupdate', updateProgressBar);
-}
-
-function updateFooterPlayer(song) {
-  songTitleElement.textContent = song.title;
-  artistElement.textContent = song.singer;
-  playPauseBtn.style.display = 'flex';
-  pauseBtn.style.display = 'none';
-  startTime.textContent = formatTime(0);
-  progressBar.style.width = '0%';
-}
-
-function formatTime(seconds) {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
-  return `${mins}:${secs}`;
-}
-
 function pauseSong(subplayBtn, subpauseBtn) {
   currentAudio.pause();
-  currentlyPlayingIndex = null;
-  subplayBtn.style.display = 'flex';
-  subpauseBtn.style.display = 'none';
-  playPauseBtn.style.display = 'none';
-  pauseBtn.style.display = 'flex';
+  if (subplayBtn) subplayBtn.style.display = 'flex';
+  if (subpauseBtn) subpauseBtn.style.display = 'none';
 }
 
-function resetPlayPauseButtons() {
-  document.querySelectorAll('.subplay').forEach(btn => btn.style.display = 'flex');
-  document.querySelectorAll('.subpause').forEach(btn => btn.style.display = 'none');
+// ============================================================
+// Sidebar / Dashboard Views Toggles
+// ============================================================
+
+function showSongsList() {
+  mostContainer.style.display = 'none';
+  songsListContainer.style.display = 'flex';
 }
 
-function updateProgressBar() {
-  const progressPercent = (currentAudio.currentTime / currentAudio.duration) * 100;
-  progressBar.style.width = `${progressPercent}%`;
-  startTime.textContent = formatTime(currentAudio.currentTime);
+function showMostContainer() {
+  songsListContainer.style.display = 'none';
+  mostContainer.style.display = 'flex';
+  featureContainer.style.display = 'none';
+  rightSide.style.display = 'flex';
+  searchContainer.style.display = "none";
+  
+  // Collapse detail tables
+  const playingCard = document.querySelector('.playing_card');
+  const galleryDetail = document.querySelector('.Gallery_card_detail');
+  if (playingCard) playingCard.style.display = "flex";
+  if (galleryDetail) galleryDetail.style.display = "none";
 }
 
-// playPauseBtn.addEventListener('click', () => {
-//   if (currentAudio.paused) {
-//     currentAudio.play();
-//     playPauseBtn.style.display = 'none';
-//     pauseBtn.style.display = 'flex';
-//   } else {
-//     currentAudio.pause();
-//     playPauseBtn.style.display = 'flex';
-//     pauseBtn.style.display = 'none';
-//   }
-// });
-playPauseBtn.addEventListener('click', () => {
-  if (currentAudio.paused) {
-    currentAudio.play();
-    playPauseBtn.style.display = 'flex';
-    pauseBtn.style.display = 'none';
+/** Handles clicking recommendations to play featured items */
+function showFeatureSong(song, cardElement, useRandomFromArijit) {
+  let trackToPlay;
+
+  if (useRandomFromArijit) {
+    trackToPlay = getRandomSong(arijitSinghData);
+    setPlayingQueue(arijitSinghData, arijitSinghData.indexOf(trackToPlay));
   } else {
-    currentAudio.pause();
-    playPauseBtn.style.display = 'none';
-    pauseBtn.style.display = 'flex';
+    trackToPlay = song;
+    setPlayingQueue(rightListedSongData, rightListedSongData.indexOf(trackToPlay));
+  }
+
+  playTrack(trackToPlay);
+
+  rightSide.style.display = 'none';
+  featureContainer.style.display = "flex";
+  setCustomGradient();
+
+  // Set cover art and texts
+  const imgSrc = cardElement.querySelector('.image-container img').src;
+  const featureSongImg = document.querySelector('.feature_song_img img');
+  if (featureSongImg) featureSongImg.src = imgSrc;
+
+  const descriptionContent = cardElement.querySelector(".description").textContent.trim();
+  const featureSongTitle = document.querySelector(".feature_song_title h1");
+  if (featureSongTitle) featureSongTitle.textContent = descriptionContent;
+
+  catchPlayingSong(trackToPlay, cardElement);
+}
+
+function catchPlayingSong(playingSong, songIMG) {
+  const getClass = document.querySelector(".recent_playing_song");
+  if (!getClass) return;
+
+  const playingSongTitle = getClass.querySelector(".title");
+  const playingSongIMG = getClass.querySelector(".details img");
+  const playingSongArtist = getClass.querySelector(".artist");
+  const playingSongSource = getClass.querySelector(".Source");
+
+  if (playingSongTitle) playingSongTitle.textContent = playingSong.title;
+  if (playingSongArtist) playingSongArtist.textContent = songIMG.querySelector(".description").textContent;
+  if (playingSongSource) playingSongSource.textContent = playingSong.singer;
+  if (playingSongIMG) playingSongIMG.src = songIMG.querySelector(".image-container img").src;
+}
+
+// ============================================================
+// Event Listeners Registration
+// ============================================================
+
+// --- Sidebar Navigation ---
+listItems.forEach(li => {
+  li.addEventListener('click', showSongsList);
+});
+homeButton.addEventListener('click', showMostContainer);
+
+// --- Sidebar Playlist click binding ---
+listItems.forEach((item, index) => {
+  if (index < playlistMap.length) {
+    item.addEventListener('click', () => {
+      populateSongsList(playlistMap[index]);
+    });
   }
 });
-pauseBtn.addEventListener('click', () => {
-  if (currentAudio.paused) {
-    currentAudio.play();
-    playPauseBtn.style.display = 'flex';
-    pauseBtn.style.display = 'none';
-  } else {
-    currentAudio.pause();
-    playPauseBtn.style.display = 'none';
-    pauseBtn.style.display = 'flex';
-  }
+
+// --- Playlist categories filter clicks (Dummy badges click toast) ---
+const playlistFilters = document.querySelectorAll('.playlist_btn button');
+playlistFilters.forEach(btn => {
+  btn.addEventListener('click', () => {
+    showToast(`Filtering by ${btn.textContent} coming soon!`);
+  });
 });
 
+// --- Plus Button (Sidebar toast) ---
+const plusBtn = document.querySelector('.plus_btn');
+if (plusBtn) {
+  plusBtn.addEventListener('click', () => {
+    showToast('Playlist creation feature is coming in the next release!');
+  });
+}
+
+// --- Recommendation Cards ---
+listRightCard.forEach((cardEl, index) => {
+  cardEl.addEventListener('click', () => {
+    const isArijitCard = (index === 0 || index === 1 || index === 4 || index === 10);
+    if (isArijitCard) {
+      showFeatureSong(null, cardEl, true);
+    } else {
+      showFeatureSong(rightListedSongData[index], cardEl, false);
+    }
+  });
+});
+
+// --- Footer Controls Playback ---
+playPauseBtn.addEventListener('click', togglePlayPause);
+pauseBtn.addEventListener('click', togglePlayPause);
+prevBtn.addEventListener('click', playPrevTrack);
+nextBtn.addEventListener('click', playNextTrack);
+
+// --- Seek Progress Bar ---
 progressBarContainer.addEventListener('click', (e) => {
-  const barWidth = progressBarContainer.offsetWidth - 50;
-  const clickX = e.offsetX;
+  if (!currentAudio.duration) return;
+  const barWidth = progressBarContainer.querySelector('.progress-bar').offsetWidth;
+  const rect = progressBarContainer.querySelector('.progress-bar').getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
   const progressPercent = clickX / barWidth;
 
-  if (currentAudio.duration) {
-    currentAudio.currentTime = progressPercent * currentAudio.duration;
-  }
+  currentAudio.currentTime = Math.min(Math.max(progressPercent * currentAudio.duration, 0), currentAudio.duration);
   updateProgressBar();
 });
 
-
-
-// Initial call to populate the list
-
-listItems[0].addEventListener("click", () => {
-
-  populateSongsList(LikedSongsData);
-})
-listItems[1].addEventListener("click", () => {
-
-  populateSongsList(sandeepMaheshwari);
-})
-listItems[2].addEventListener("click", () => {
-
-  populateSongsList(Arijit_singh);
-})
-listItems[3].addEventListener("click", () => {
-
-  populateSongsList(Arijit_topTrack);
-})
-listItems[4].addEventListener("click", () => {
-
-  populateSongsList(Sonu_Nigam);
-})
-
-
-// starting the logic of click on  can card2 and playing its song
-// console.log(listRightCard)
-
-// listRightCard[0].addEventListener("click", ()=>{
-//   song={
-//     title: "Kalank Title Track",
-//     playlist: "Liked Songs",
-//     singer: "Arijit Singh",
-//     filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-//   } 
-//   playSong2(song);
-// })
-
-// new logic
-const right_listed_song = [
-  {
-
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-
-  },
-  {
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-
-
-  },
-  {
-    title: "Tujhe Kitna Chahne Lage",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/Arijit_Singh/LYRICAL_ Tujhe Kitna Chahne Lage  Kabir Singh  Mithoon Feat. Arijit Singh  Shahid Kapoor, Kiara A.mp3"
-
-  },
-  {
-    title: "Mere Dholna 3.0",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/BB3_ Mere Dholna 3.0 (Full Audio) (Sonu Nigam Version) Kartik,Sonu,Vidya,Madhuri,Amaal,Pritam,Sameer [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "Tujhe Kitna Chahne Lage",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/Arijit_Singh/LYRICAL_ Tujhe Kitna Chahne Lage  Kabir Singh  Mithoon Feat. Arijit Singh  Shahid Kapoor, Kiara A.mp3"
-
-  },
-  {
-    title: "Sajni (Song)_ Arijit Singh",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Sajni (Song)_ Arijit Singh, Ram Sampath  Laapataa Ladies   Aamir Khan Productions.mp3"
-
-  },
-  {
-    title: "Kalank Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/liked_Songs/Kalank Title Track - Lyrical  Alia Bhatt , Varun Dhawan  Arijit Singh  Pritam Amitabh.mp3"
-
-
-  },
-  {
-    title: "Vande Mataram",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Vande Mataram Full Video _ Disney's ABCD 2 _ Varun Dhawan & Shraddha Kapoor _ Daler Mehndi _ Badshah [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "Tere Sang Yaara",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Tere Sang Yaara - Full Video _ Rustom _ Akshay Kumar & Ileana D'cruz _ Arko ft. Atif Aslam _ Manoj M [ ezmp3.cc ].mp3"
-
-  },
-  {
-
-    title: "Badtameez Dil Full Song ",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Badtameez Dil Full Song HD Yeh Jawaani Hai Deewani _ PRITAM _ Ranbir Kapoor, Deepika Padukone [ ezmp3.cc ].mp3"
-  },
-  {
-    title: "Badtameez Dil Full Song",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Badtameez Dil Full Song HD Yeh Jawaani Hai Deewani _ PRITAM _ Ranbir Kapoor, Deepika Padukone [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "Arijit Singh LIVE",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Arijit Singh LIVE at  GIMA Awards 2017 [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "Bhool Bhulaiyaa 3",
-    playlist: "Liked Songs",
-    singer: "Diljit",
-    filePath: "songs/right_listed_song/Bhool Bhulaiyaa 3 - Title Track _ Kartik A _ Pitbull, Diljit, Neeraj S, Tanishk, Pritam _ Bhushan K [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "gini - Sukoon",
-    playlist: "Liked Songs",
-    singer: "gini",
-    filePath: "songs/right_listed_song/gini - Sukoon _ Official Music Video [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "Hamari Adhuri Kahani Title Track",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/Hamari Adhuri Kahani Title Track Full Video - Emraan Hashmi,Vidya Balan_Arijit Singh [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "ANIMAL_ SATRANGA",
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: "songs/right_listed_song/ANIMAL_ SATRANGA(Song) Ranbir Kapoor,Rashmika_Sandeep V_Arijit,Shreyas P,Siddharth-Garima _Bhushan K [ ezmp3.cc ].mp3"
-
-  },
-  {
-    title: "Ghar Se Nikalte Hi Song",
-    playlist: "Liked Songs",
-    singer: "Arman Malik",
-    filePath: "songs/right_listed_song/Ghar Se Nikalte Hi Song _ Amaal Mallik Feat. Armaan Malik _ Bhushan Kumar _ Angel [ ezmp3.cc ].mp3"
-
-  }
-]
-function getRandomSong(songsArray) {
-  const randomIndex = Math.floor(Math.random() * songsArray.length);
-
-  return songsArray[randomIndex];
-}
-const feature_song = document.querySelector('.feature_song')
-const right_side = document.querySelector('.right')
-const feature_song_img = document.querySelector('.feature_song_img img')
-const feature_song_info = document.querySelector('.feature_song_title h1')
-
-
-listRightCard.forEach((song2, index2) => {
-  console.log(song2)
-  console.log(index2)
-  song2.addEventListener("click", () => {
-
-
-    if (index2 == 0 || index2 == 1 || index2 == 4 || index2 == 10) {
-      const playing_song = song2;
-      console.log(playing_song)
-      const randomSong = getRandomSong(Arijit_singh);
-      console.log(randomSong)
-      playSong2(randomSong);
-
-
-      //catchPlayingSong
-
-
-
-
-      // make display none
-
-      right_side.style.display = 'none'
-      feature_song.style.display = "flex"
-      setCustomGradient()
-      // make img fetch and assign
-
-      const imgSrc = song2.querySelector('.image-container img').src;
-
-      // Assign the img src link to the feature_song_img element
-      const featureSongImg = document.querySelector('.feature_song_img img');
-      featureSongImg.src = imgSrc;
-      // make title fetch and assign
-
-      const get_title = playing_song.querySelector(".description");
-      const descriptionContent = get_title.textContent.trim();
-
-      const featureSongTitle = document.querySelector(".feature_song_title h1");
-      featureSongTitle.textContent = descriptionContent;
-      catchPlayingSong(randomSong, song2)
-
-    }
-
-    else {
-      const playing_song = song2;
-      console.log(playing_song)
-      const randomSong = right_listed_song[index2]
-      playSong2(randomSong);
-      right_side.style.display = 'none'
-      feature_song.style.display = "flex"
-      setCustomGradient()
-
-      // make img fetch and assign
-      const imgSrc = song2.querySelector('.image-container img').src;
-
-      // Assign the img src link to the feature_song_img element
-      const featureSongImg = document.querySelector('.feature_song_img img');
-      featureSongImg.src = imgSrc;
-
-      // make title fetch and assign
-
-      const get_title = playing_song.querySelector(".description");
-      const descriptionContent = get_title.textContent.trim();
-
-      const featureSongTitle = document.querySelector(".feature_song_title h1");
-      featureSongTitle.textContent = descriptionContent;
-      document.querySelector('.feature_song_list').style.display = "none"
-      catchPlayingSong(randomSong, song2)
-
-    }
-  })
-})
-
-
-// add the logic of the footer music sound intensity increse or decrese 
-
-
-
-
-const volumeSlider = document.querySelector('.volume-slider');
-const volumeBar = volumeSlider.querySelector('.volume');
-const muteButton = document.querySelector('.settings button:first-child'); // Mute button
-let isMuted = false;
-let previousVolume = 0.5;
-
-currentAudio.volume = 0.5;
-volumeBar.style.width = `${currentAudio.volume * 100}%`;
-
+// --- Volume Slider Adjustments ---
 volumeSlider.addEventListener('click', (event) => {
   const rect = volumeSlider.getBoundingClientRect();
   const clickedPosition = event.clientX - rect.left;
@@ -812,327 +648,106 @@ muteButton.addEventListener('click', () => {
   isMuted = !isMuted;
 });
 
-currentAudio.addEventListener('volumechange', () => {
-  volumeBar.style.width = `${currentAudio.volume * 100}%`;
-  if (currentAudio.volume === 0) {
-    muteButton.textContent = '🔈';
-  } else {
-    muteButton.textContent = '🔊';
-    isMuted = false;
-  }
+fullscreenBtn.addEventListener('click', () => {
+  showToast('Fullscreen lyrics view coming soon!');
 });
 
-//   color to feature song
-
-// Function to generate random pastel colors
-function getRandomPastelColor() {
-  // Generate soft pastel colors with higher base values (150-250)
-  const red = Math.floor(150 + Math.random() * 100);   // 150-250 range
-  const green = Math.floor(150 + Math.random() * 100); // 150-250 range
-  const blue = Math.floor(150 + Math.random() * 100);  // 150-250 range
-  return `rgb(${red}, ${green}, ${blue})`;
-}
-
-// Function to create a gradient with a bright top and dark bottom
-function setCustomGradient() {
-  // Generate a bright pastel color for the top
-  const brightColor = getRandomPastelColor();
-
-  // Generate a darker color for the bottom by reducing the intensity
-  const darkColor = `rgb(${Math.floor(Math.random() * 50)}, ${Math.floor(Math.random() * 50)}, ${Math.floor(Math.random() * 50)})`;
-
-  // Apply the gradient to the element
-  document.querySelector('.feature_song').style.background = `linear-gradient(to bottom, ${darkColor} 10%, ${brightColor} 90%)`;
-}
-
-
-// add the playing animation
-
-var animation = lottie.loadAnimation({
-  container: document.getElementById('lottie-container'), // the container element
-  renderer: 'svg', // the rendering method (svg, canvas, or html)
-  loop: true,      // whether the animation should loop
-  autoplay: true,  // whether the animation should start automatically
-  path: 'animation/Animation - 1733655375256.json', // the path to your JSON animation file
-});
-
-// select the playing song in feature section
-
-function catchPlayingSong(PlayingSong, SongIMG) {
-  const getClass = document.querySelector(".recent_playing_song")
-  const PlayingSongTitle = getClass.querySelector(".title")
-  let PlayingSongIMG = getClass.querySelector(".details img")
-  const PlayingSongArtist = getClass.querySelector(".artist")
-  const PlayingSongSource = getClass.querySelector(".Source")
-
-  console.log(PlayingSong.title)
-
-
-  PlayingSongTitle.textContent = PlayingSong.title
-  PlayingSongArtist.textContent = SongIMG.querySelector(".description").textContent;
-  PlayingSongSource.textContent = PlayingSong.singer
-  PlayingSongIMG.src = SongIMG.querySelector(".image-container img").src;
-
-}
-
-
-// working on the serach section of clone
-
-// import { searchSong } from './spotifyAPI.js';
-
-// function displayResults(tracks) {
-//   const tracksTable = document.getElementById('tracksTable');
-//   tracksTable.innerHTML = ''; // Clear previous results
-
-//   tracks.forEach((track, index) => {
-//     const row = document.createElement('tr');
-
-//     row.innerHTML = `
-//       <td>${index + 1}</td>
-//       <td>
-//         <div class="track-title-container">
-//           <img src="${track.album.images[0]?.url}" alt="${track.name}" class="album-art" />
-//           <div>
-//             <h4>${track.name}</h4>
-//             <p>${track.artists.map(artist => artist.name).join(', ')}</p>
-//           </div>
-//         </div>
-//       </td>
-//       <td>${track.album.name}</td>
-//       <td>${new Date(track.added_at).toLocaleDateString()}</td>
-//       <td>${convertMsToMinutesSeconds(track.duration_ms)}</td>
-//     `;
-
-//     tracksTable.appendChild(row);
-
-//     // Add click event to play the song (if preview URL is available)
-//     row.addEventListener('click', () => {
-//       if (track.preview_url) {
-//         const audio = new Audio(track.preview_url);
-//         audio.play();
-//       } else {
-//         alert('Preview not available for this track.');
-//       }
-//     });
-//   });
-// }
-
-// // Convert duration from milliseconds to mm:ss format
-// function convertMsToMinutesSeconds(ms) {
-//   const minutes = Math.floor(ms / 60000);
-//   const seconds = ((ms % 60000) / 1000).toFixed(0);
-//   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-// }
-
-// // Add event listener to search button
-// document.getElementById('searchButton').addEventListener('click', async () => {
-
-
-//   const query = document.getElementById('input').value;
-//   if (query) {
-//     document.querySelector(".right").style.display = "none";
-//     document.querySelector(".search_SONG_Container").style.display = "flex";
-//     const tracks = await searchSong(query);
-//     console.log(tracks)
-//     displayResults(tracks);
-//   }
-// });
-
-
-import { searchYouTube, searchYouTube2, searchYouTube3, searchYouTube4 } from './Fetch_Youtube_music.js';
-// Initialize Audio object
-
-async function getAudioStream(videoId) {
-  const audioUrl = `https://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
-  console.log(audioUrl);
-
-
-  currentAudio.pause(); // Pause current audio if playing
-  currentAudio.src = ""; // Clear current source
-  document.querySelector(".right").style.display = "none";
-  document.querySelector(".feature_song").style.display = "none";
-  document.querySelector(".search_SONG_Container").style.display = "flex";
-  //     
-
-  currentAudio.src = audioUrl; // Set new audio source from backend
-  currentAudio.load(); // Load the new audio source
-  currentAudio.play(); // Start playing the audio
-  currentAudio.addEventListener('loadedmetadata', () => {
-    const duration = formatTime(currentAudio.duration);
-    document.querySelector('.TotalTime').textContent = duration;
-  });
-
-  currentAudio.addEventListener('timeupdate', updateProgressBar);
-
-}
-async function getAudioStream1(videoId) {
-  const audioUrl = `https://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
-  console.log(audioUrl);
-  // const audioUrl = `http://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
-
-  currentAudio.pause(); // Pause current audio if playing
-  currentAudio.src = ""; // Clear current source
-  // document.querySelector(".right").style.display = "none";
-  // document.querySelector(".feature_song").style.display = "none";
-  // document.querySelector(".search_SONG_Container").style.display = "flex";
-  // //     
-
-  currentAudio.src = audioUrl; // Set new audio source from backend
-  currentAudio.load(); // Load the new audio source
-  currentAudio.play(); // Start playing the audio
-  currentAudio.addEventListener('loadedmetadata', () => {
-    const duration = formatTime(currentAudio.duration);
-    document.querySelector('.TotalTime').textContent = duration;
-  });
-
-  currentAudio.addEventListener('timeupdate', updateProgressBar);
-
-}
-
-async function handleVideoResponse(videoResponse, query) {
-  const videoId = videoResponse.id.videoId;
-  const songTitle = videoResponse.snippet.title;
-
-  console.log(songTitle);
-  console.log(videoResponse.snippet.thumbnails.high.url);
-  document.querySelector('.feature_song_img img').src = videoResponse.snippet.thumbnails.high.url;
-  document.querySelector('.details img').src = videoResponse.snippet.thumbnails.high.url;
-  document.getElementById('songTitle').textContent = songTitle;
-  document.querySelector('.title').textContent = songTitle;
-  document.querySelector('.song-info img').src = videoResponse.snippet.thumbnails.high.url;
-  document.querySelector('.source1').textContent = query;
-
-  console.log(videoId);
-  getAudioStream(videoId);
-
-  const song = {
-    title: songTitle,
-    playlist: "Liked Songs",
-    singer: "Arijit Singh",
-    filePath: `https://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`
-  };
-  console.log(currentAudio);
-  playSong3(song);
-  console.log(currentAudio.currentTime);
-}
-
-let currentAnimation = null;
-let currentLottieContainer = null;
-
-async function handleVideoResponse_Gallery(videoResponse, query) {
-  const tbody = document.querySelector('.playlist-table tbody');
-  tbody.innerHTML = ''; // Clear existing rows
-
-  videoResponse.forEach((video, index) => {
-    const videoId = video.id.videoId;
-    const songTitle = video.snippet.title;
-    const thumbnailUrl = video.snippet.thumbnails.high.url;
-    const channelTitle = video.snippet.channelTitle;
-    const publishTime = new Date(video.snippet.publishTime).toLocaleDateString();
-    const lottieContainerId = `lottie-container-${index + 1}`;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${index + 1}</td>
-      <td class="animation_in_gallery"><div id="${lottieContainerId}" style="width: 40px; height: 80px; filter: invert(1);"></div></td>
-      <td>
-        <div class="song-info1">
-          <img src="${thumbnailUrl}" alt="${songTitle}">
-          <span>${songTitle}</span>
-        </div>
-        <span class="artist">${channelTitle}</span>
-      </td>
-      <td>${songTitle}</td>
-      <td>${publishTime}</td>
-      <td>-:--</td>
-    `;
-    tbody.appendChild(tr);
-
-    tr.addEventListener('click', () => {
-      getAudioStream1(videoId);
-      if (currentAudio.src !== `https://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`) {
-        currentAudio.src = `https://localhost:5500/audio?url=https://www.youtube.com/watch?v=${videoId}`;
-        currentAudio.load();
-        currentAudio.play();
-        currentAudio.addEventListener('loadedmetadata', () => {
-          const duration = formatTime(currentAudio.duration);
-          document.querySelector('.TotalTime').textContent = duration;
-        });
-        currentAudio.addEventListener('timeupdate', updateProgressBar);
-      }
-      if (currentAnimation) {
-        currentAnimation.destroy();
-      }
-      // Load Lottie animation in the clicked row's lottie-container
-      currentLottieContainer = document.getElementById(lottieContainerId);
-      currentAnimation = lottie.loadAnimation({
-        container: currentLottieContainer, // the container element
-        renderer: 'svg', // the rendering method (svg, canvas, or html)
-        loop: true,      // whether the animation should loop
-        autoplay: true,  // whether the animation should start automatically
-        path: 'animation/Animation - 1733655375256.json' // the path to your JSON animation file
-      });
-    });
-  });
-
-  document.querySelector('#home_btn').addEventListener('click', () => {
-    document.querySelector('.playing_card').style.display = "flex";
-    document.querySelector('.Gallery_card_detail').style.display = "none";
-  });
-}
-
-document.getElementById('input').addEventListener('keypress', async (event) => {
+// --- Search Bar Input Event Bindings ---
+searchInput.addEventListener('keypress', (event) => {
   if (event.key === 'Enter') {
-    const query = document.getElementById('input').value;
-    const videoResponse = await searchYouTube(query);
-    console.log(videoResponse);
-
-    if (videoResponse) {
-      await handleVideoResponse(videoResponse, query);
-    } else {
-      alert('No video found for the given song title.');
-    }
-
-    document.querySelector('.fa-forward-step').addEventListener('click', async () => {
-      const videoResponse = await searchYouTube2(query);
-      await handleVideoResponse(videoResponse, query);
-    });
-
-    document.querySelector('.fa-backward-step').addEventListener('click', async () => {
-      const videoResponse = await searchYouTube3(query);
-      await handleVideoResponse(videoResponse, query);
-    });
+    performSearch();
   }
 });
+searchButton.addEventListener('click', performSearch);
 
-
-
-
-// working on the gallery grid 
-const gallery = document.querySelector('.playlist');
-console.log(gallery);
-const galleryItems = gallery.querySelectorAll('.playlist_item');
-
+// --- Gallery Grid Playlist Items ---
 galleryItems.forEach(item => {
   item.addEventListener('click', async () => {
-    // console.log(item);
+    const playingCard = document.querySelector(".playing_card");
+    const galleryDetail = document.querySelector(".Gallery_card_detail");
 
-    document.querySelector(".playing_card").style.display = "none";
-    document.querySelector(".Gallery_card_detail").style.display = "block"; // Show the gallery card detail
+    if (playingCard) playingCard.style.display = "none";
+    if (galleryDetail) galleryDetail.style.display = "block";
+
     const query = item.querySelector('span').textContent;
-    console.log(query);
-    const videoResponse = await searchYouTube4(query);
-    console.log(videoResponse);
 
-    if (videoResponse) {
-      await handleVideoResponse_Gallery(videoResponse, query);
-    } else {
-      alert('No video found for the given song title.');
+    // Show inline spinner inside gallery table
+    const tbody = document.querySelector('.playlist-table tbody');
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; padding: 40px 0;">
+          <div class="spinner" style="width: 24px; height: 24px;"></div>
+          <div style="margin-top: 10px; color: #b3b3b3;">Loading gallery tracks...</div>
+        </td>
+      </tr>
+    `;
+
+    try {
+      const videos = await searchYouTube(query, 6, null); // Array of 6 tracks
+      if (videos) {
+        // Format to play queue schemas
+        const tracksList = videos.map(video => ({
+          title: video.snippet.title,
+          singer: video.snippet.channelTitle,
+          playlist: query,
+          filePath: `${SERVER_BASE_URL}/audio?url=https://www.youtube.com/watch?v=${video.id.videoId}`
+        }));
+
+        tbody.innerHTML = '';
+        videos.forEach((video, index) => {
+          const tr = document.createElement('tr');
+          const publishTime = new Date(video.snippet.publishTime).toLocaleDateString();
+
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td class="status-col" style="text-align: center;"><i class="fa-solid fa-play" style="color: #b3b3b3;"></i></td>
+            <td>
+              <div class="song-info1">
+                <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.title}" style="width: 48px; height: 48px; border-radius: 4px; object-fit: cover;">
+                <span>${video.snippet.title}</span>
+              </div>
+              <span class="artist" style="display: block; margin-top: 2px;">${video.snippet.channelTitle}</span>
+            </td>
+            <td>${query}</td>
+            <td>${publishTime}</td>
+          `;
+
+          tr.addEventListener('click', () => {
+            setPlayingQueue(tracksList, index);
+            playQueueTrack(index);
+          });
+
+          tbody.appendChild(tr);
+        });
+      }
+    } catch (error) {
+      console.error('Gallery loading failed:', error);
     }
-    document.querySelector("#home_btn").addEventListener("click", () => {
-      document.querySelector(".playing_card").style.display = "flex";
-      document.querySelector(".Gallery_card_detail").style.display = "hidden";
-    });
   });
 });
 
+// ============================================================
+// Global Keyboard Navigation Shortcuts
+// ============================================================
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  switch (e.key) {
+    case ' ':
+      e.preventDefault();
+      togglePlayPause();
+      break;
+    case 'm':
+    case 'M':
+      muteButton.click();
+      break;
+    case 'ArrowRight':
+      if (currentAudio.duration) {
+        currentAudio.currentTime = Math.min(currentAudio.currentTime + 5, currentAudio.duration);
+      }
+      break;
+    case 'ArrowLeft':
+      currentAudio.currentTime = Math.max(currentAudio.currentTime - 5, 0);
+      break;
+  }
+});
