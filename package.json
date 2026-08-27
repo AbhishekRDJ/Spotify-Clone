@@ -1,11 +1,16 @@
 {
+  "name": "spotify-clone",
+  "version": "1.0.0",
+  "description": "A Spotify-themed web music player with YouTube streaming",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.2",
     "lottie-web": "^5.12.2",
     "ytdl-core": "^4.11.5"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   }
 }

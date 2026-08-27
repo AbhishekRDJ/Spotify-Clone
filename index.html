@@ -10,721 +10,747 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              spotify: {
+                green: '#1db954',
+                hover: '#21e967',
+                base: '#121212',
+                card: '#181818',
+                cardHover: '#282828',
+                bg: '#000000',
+                subdued: '#b3b3b3',
+                lightGrey: '#282828'
+              }
+            }
+          }
+        }
+      }
+    </script>
 </head>
 
-<body>
-    <div class="heading">
-        <div class="logo">
-            <svg role="img" fill="white" viewBox="0 0 24 24" aria-label="Spotify" aria-hidden="false" height="32"
-                data-encore-id="logoSpotify" class="dDJltW Svg-sc-6c3c1v-0">
-                <title>Spotify</title>
-                <path
-                    d="M13.427.01C6.805-.253 1.224 4.902.961 11.524.698 18.147 5.853 23.728 12.476 23.99c6.622.263 12.203-4.892 12.466-11.514S20.049.272 13.427.01m5.066 17.579a.717.717 0 0 1-.977.268 14.4 14.4 0 0 0-5.138-1.747 14.4 14.4 0 0 0-5.42.263.717.717 0 0 1-.338-1.392c1.95-.474 3.955-.571 5.958-.29 2.003.282 3.903.928 5.647 1.92a.717.717 0 0 1 .268.978m1.577-3.15a.93.93 0 0 1-1.262.376 17.7 17.7 0 0 0-5.972-1.96 17.7 17.7 0 0 0-6.281.238.93.93 0 0 1-1.11-.71.93.93 0 0 1 .71-1.11 19.5 19.5 0 0 1 6.94-.262 19.5 19.5 0 0 1 6.599 2.165c.452.245.62.81.376 1.263m1.748-3.551a1.147 1.147 0 0 1-1.546.488 21.4 21.4 0 0 0-6.918-2.208 21.4 21.4 0 0 0-7.259.215 1.146 1.146 0 0 1-.456-2.246 23.7 23.7 0 0 1 8.034-.24 23.7 23.7 0 0 1 7.657 2.445c.561.292.78.984.488 1.546m13.612-.036-.832-.247c-1.67-.495-2.14-.681-2.14-1.353 0-.637.708-1.327 2.264-1.327 1.539 0 2.839.752 3.51 1.31.116.096.24.052.24-.098V6.935c0-.097-.027-.15-.098-.203-.83-.62-2.272-1.07-3.723-1.07-2.953 0-4.722 1.68-4.722 3.59 0 2.157 1.371 2.91 3.626 3.546l.973.274c1.689.478 1.998.902 1.998 1.556 0 1.097-.831 1.433-2.07 1.433-1.556 0-3.457-.911-4.35-2.025-.08-.098-.177-.053-.177.062v2.423c0 .097.01.141.08.22.743.814 2.52 1.53 4.59 1.53 2.546 0 4.456-1.485 4.456-3.784 0-1.787-1.052-2.865-3.625-3.635m10.107-1.76c-1.68 0-2.653 1.026-3.219 2.052V9.376c0-.08-.044-.124-.124-.124h-2.22c-.079 0-.123.044-.123.124V20.72c0 .08.044.124.124.124h2.22c.079 0 .123-.044.123-.124v-4.536c.566 1.025 1.521 2.034 3.237 2.034 2.264 0 3.89-1.955 3.89-4.581s-1.644-4.545-3.908-4.545m-.654 6.986c-1.185 0-2.211-1.167-2.618-2.458.407-1.362 1.344-2.405 2.618-2.405 1.211 0 2.051.92 2.051 2.423s-.84 2.44-2.051 2.44m40.633-6.826h-2.264c-.08 0-.115.017-.15.097l-2.282 5.483-2.29-5.483c-.035-.08-.07-.097-.15-.097h-3.661v-.584c0-.955.645-1.397 1.476-1.397.496 0 1.035.256 1.415.486.089.053.15-.008.115-.088l-.796-1.901a.26.26 0 0 0-.124-.133c-.389-.203-1.025-.38-1.644-.38-1.875 0-2.954 1.432-2.954 3.254v.743h-1.503c-.08 0-.124.044-.124.124v1.768c0 .08.044.124.124.124h1.503v6.668c0 .08.044.123.124.123h2.264c.08 0 .124-.044.124-.123v-6.668h1.936l2.812 6.11-1.512 3.325c-.044.098.009.142.097.142h2.414c.08 0 .116-.018.15-.097l4.997-11.355c.035-.08-.009-.141-.097-.141M54.964 9.04c-2.865 0-4.837 2.025-4.837 4.616 0 2.573 1.971 4.616 4.837 4.616 2.856 0 4.846-2.043 4.846-4.616 0-2.591-1.99-4.616-4.846-4.616m.008 7.065c-1.37 0-2.343-1.043-2.343-2.45 0-1.405.973-2.449 2.343-2.449 1.362 0 2.335 1.043 2.335 2.45 0 1.406-.973 2.45-2.335 2.45m33.541-6.334a1.24 1.24 0 0 0-.483-.471 1.4 1.4 0 0 0-.693-.17q-.384 0-.693.17a1.24 1.24 0 0 0-.484.471q-.174.302-.174.681 0 .375.174.677.175.3.484.471t.693.17.693-.17.483-.471.175-.676q0-.38-.175-.682m-.211 1.247a1 1 0 0 1-.394.39 1.15 1.15 0 0 1-.571.14 1.16 1.16 0 0 1-.576-.14 1 1 0 0 1-.391-.39 1.14 1.14 0 0 1-.14-.566q0-.316.14-.562t.391-.388.576-.14q.32 0 .57.14.253.141.395.39t.142.565q0 .312-.142.56m-19.835-5.78c-.85 0-1.468.6-1.468 1.396s.619 1.397 1.468 1.397c.866 0 1.485-.6 1.485-1.397 0-.796-.619-1.397-1.485-1.397m19.329 5.19a.31.31 0 0 0 .134-.262q0-.168-.132-.266-.132-.099-.381-.099h-.588v1.229h.284v-.489h.154l.374.489h.35l-.41-.518a.5.5 0 0 0 .215-.084m-.424-.109h-.26v-.3h.27q.12 0 .184.036a.12.12 0 0 1 .065.116.12.12 0 0 1-.067.111.4.4 0 0 1-.192.037M69.607 9.252h-2.263c-.08 0-.124.044-.124.124v8.56c0 .08.044.123.124.123h2.263c.08 0 .124-.044.124-.123v-8.56c0-.08-.044-.124-.124-.124m-3.333 6.605a2.1 2.1 0 0 1-1.053.257c-.725 0-1.185-.425-1.185-1.362v-3.484h2.211c.08 0 .124-.044.124-.124V9.376c0-.08-.044-.124-.124-.124h-2.21V6.944c0-.097-.063-.15-.15-.08l-3.954 3.113c-.053.044-.07.088-.07.16v1.007c0 .08.044.124.123.124h1.539v3.855c0 2.087 1.203 3.06 2.918 3.06.743 0 1.46-.194 1.884-.442.062-.035.07-.07.07-.133v-1.68c0-.088-.044-.115-.123-.07"
-                    transform="translate(-0.95,0)"></path>
-            </svg>
-        </div>
-        <div class="heading_center">
-            <div class="home">
-                <button id="home_btn" aria-label="Go to Home">
-                    <i class="fa-house fa-solid"></i>
-                </button>
-            </div>
-            <div class="search-section input">
+<body class="bg-black text-white h-screen flex flex-col font-sans select-none overflow-hidden">
 
-                <i class="fa-magnifying-glass fa-solid search_icon"></i>
-                <input class="input_ele" type="text" name="search" placeholder="  Search for a song..." id="input" aria-label="Search for a song">
-                <button id="searchButton" aria-label="Search">Search</button>
+    <!-- ============================================================ -->
+    <!-- Mobile Drawer Backdrop -->
+    <!-- ============================================================ -->
+    <div id="drawer-backdrop" class="fixed inset-0 bg-black/70 z-[60] hidden opacity-0 transition-opacity duration-300" aria-hidden="true"></div>
+
+    <!-- ============================================================ -->
+    <!-- Mobile Slide-Out Sidebar Drawer -->
+    <!-- ============================================================ -->
+    <div id="mobile-drawer" class="fixed top-0 left-0 h-full w-[300px] bg-[#121212] z-[70] flex flex-col p-5 gap-4 overflow-y-auto transform -translate-x-full transition-transform duration-300 ease-out shadow-2xl">
+        <!-- Drawer Header -->
+        <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+                <svg role="img" fill="white" viewBox="0 0 24 24" aria-label="Spotify" height="28">
+                    <path d="M13.427.01C6.805-.253 1.224 4.902.961 11.524.698 18.147 5.853 23.728 12.476 23.99c6.622.263 12.203-4.892 12.466-11.514S20.049.272 13.427.01m5.066 17.579a.717.717 0 0 1-.977.268 14.4 14.4 0 0 0-5.138-1.747 14.4 14.4 0 0 0-5.42.263.717.717 0 0 1-.338-1.392c1.95-.474 3.955-.571 5.958-.29 2.003.282 3.903.928 5.647 1.92a.717.717 0 0 1 .268.978m1.577-3.15a.93.93 0 0 1-1.262.376 17.7 17.7 0 0 0-5.972-1.96 17.7 17.7 0 0 0-6.281.238.93.93 0 0 1-1.11-.71.93.93 0 0 1 .71-1.11 19.5 19.5 0 0 1 6.94-.262 19.5 19.5 0 0 1 6.599 2.165c.452.245.62.81.376 1.263m1.748-3.551a1.147 1.147 0 0 1-1.546.488 21.4 21.4 0 0 0-6.918-2.208 21.4 21.4 0 0 0-7.259.215 1.146 1.146 0 0 1-.456-2.246 23.7 23.7 0 0 1 8.034-.24 23.7 23.7 0 0 1 7.657 2.445c.561.292.78.984.488 1.546"></path>
+                </svg>
+                <span class="text-white font-bold text-sm">Your Library</span>
             </div>
+            <button id="drawer-close-btn" class="text-spotify-subdued hover:text-white text-xl transition focus:outline-none" aria-label="Close menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
         </div>
 
-        <div class="right_head">
-            <div class="profile-badge" aria-label="Profile" style="margin-right: 15px;">
-                <i class="fa-solid fa-circle-user" style="font-size: 32px; color: #b3b3b3; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#b3b3b3'"></i>
+        <!-- Drawer Library Playlists (mirrors the desktop sidebar) -->
+        <div class="flex flex-col gap-2">
+            <div id="drawer-most" class="flex flex-col gap-1">
+                <div class="drawer-lib-item flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition cursor-pointer group" data-playlist-index="0">
+                    <img class="w-11 h-11 rounded-md object-cover mr-3" src="https://misc.scdn.co/liked-songs/liked-songs-64.png" alt="Liked Songs">
+                    <div>
+                        <p class="text-sm font-semibold text-white group-hover:text-spotify-green transition">Liked Songs</p>
+                        <p class="text-xs text-spotify-subdued mt-0.5">Playlist • 8 Songs</p>
+                    </div>
+                </div>
+                <div class="drawer-lib-item flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition cursor-pointer group" data-playlist-index="1">
+                    <img class="w-11 h-11 rounded-md object-cover mr-3" src="https://i.scdn.co/image/ab6765630000bdcf68228abc335566da3a616015" alt="Sandeep Maheshwari">
+                    <div>
+                        <p class="text-sm font-semibold text-white group-hover:text-spotify-green transition">Sandeep Maheshwari</p>
+                        <p class="text-xs text-spotify-subdued mt-0.5">Podcast • Audible</p>
+                    </div>
+                </div>
+                <div class="drawer-lib-item flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition cursor-pointer group" data-playlist-index="2">
+                    <img class="w-11 h-11 rounded-md object-cover mr-3" src="https://i.scdn.co/image/ab6761610000101f5ba2d75eb08a2d672f9b69b7" alt="Arijit Singh">
+                    <div>
+                        <p class="text-sm font-semibold text-white group-hover:text-spotify-green transition">Arijit Singh</p>
+                        <p class="text-xs text-spotify-subdued mt-0.5">Artist • Tracks</p>
+                    </div>
+                </div>
+                <div class="drawer-lib-item flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition cursor-pointer group" data-playlist-index="3">
+                    <img class="w-11 h-11 rounded-md object-cover mr-3" src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72c13b320a2f0682a9d278da946" alt="Arijit Top Tracks">
+                    <div>
+                        <p class="text-sm font-semibold text-white group-hover:text-spotify-green transition">Arijit Top Tracks</p>
+                        <p class="text-xs text-spotify-subdued mt-0.5">Playlist • Songs</p>
+                    </div>
+                </div>
+                <div class="drawer-lib-item flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition cursor-pointer group" data-playlist-index="4">
+                    <img class="w-11 h-11 rounded-md object-cover mr-3" src="https://i.scdn.co/image/ab6761610000101fbc959d7569618ec2af2210f5" alt="Sonu Nigam">
+                    <div>
+                        <p class="text-sm font-semibold text-white group-hover:text-spotify-green transition">Sonu Nigam</p>
+                        <p class="text-xs text-spotify-subdued mt-0.5">Artist • Tracks</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-
-        <div class="left">
-            <div class="lib">
-                <div class="logo_lib">
-                    <svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 24 24"
-                        class="bneLcE Svg-sc-ytk21e-0">
-                        <path
-                            d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z">
-                        </path>
-                    </svg>
-                </div>
-                <h3>Your Library</h3>
-                <div class="plus_btn">
-                    <svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 16 16"
-                        class="dYnaPI Svg-sc-ytk21e-0">
-                        <path
-                            d="M15.25 8a.75.75 0 0 1-.75.75H8.75v5.75a.75.75 0 0 1-1.5 0V8.75H1.5a.75.75 0 0 1 0-1.5h5.75V1.5a.75.75 0 0 1 1.5 0v5.75h5.75a.75.75 0 0 1 .75.75z">
-                        </path>
-                    </svg>
-
-                </div>
-            </div>
-            <div class="playlist_btn">
-                <button>Playlists</button>
-                <button>Artists</button>
-                <button>YT Music</button>
-                <button>Albums</button>
-                <button>Podcasts & Shows</button>
-            </div>
-
-            <div class="search_session">
-                <div><i class="fa-magnifying-glass fa-solid search_icon search_session_icon"></i>
-                </div>
-                <div class="hero">
-                    <i class="fa-list fa-solid"></i>
-                    <h4>recent</h4>
-                </div>
-            </div>
-            <div class="most">
-                <ul>
-                    <li>
-                        <div class="card">
-                            <div class="play-button"></div>
-                            <img src="https://misc.scdn.co/liked-songs/liked-songs-64.png" alt="Podcast Thumbnail">
-                            <div class="card-content">
-                                <p class="card-title">Liked Songs</p>
-                                <p class="card-subtitle">Playlist • 125 Songs</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card">
-                            <div class="play-button"></div>
-                            <img src="https://i.scdn.co/image/ab6765630000bdcf68228abc335566da3a616015"
-                                alt="Podcast Thumbnail">
-                            <div class="card-content">
-                                <p class="card-title">Sandeep Maheshwari Complete</p>
-                                <p class="card-subtitle">Podcast • Audible</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card">
-                            <div class="play-button"></div>
-                            <img src="https://i.scdn.co/image/ab6761610000101f5ba2d75eb08a2d672f9b69b7"
-                                alt="Podcast Thumbnail">
-                            <div class="card-content">
-                                <p class="card-title">Arijit Singh</p>
-                                <p class="card-subtitle">Artist • </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card">
-                            <div class="play-button"></div>
-                            <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72c13b320a2f0682a9d278da946"
-                                alt="Podcast Thumbnail">
-                            <div class="card-content">
-                                <p class="card-title">Arijit Singh - Top Track</p>
-                                <p class="card-subtitle">Playlist • Songs</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="card">
-                            <div class="play-button"></div>
-                            <img src="https://i.scdn.co/image/ab6761610000101fbc959d7569618ec2af2210f5"
-                                alt="Podcast Thumbnail">
-                            <div class="card-content">
-                                <p class="card-title">Sonu Nigam </p>
-                                <p class="card-subtitle">Artist • Songs</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="songs_list">
-                <ul>
-                    <li>
-                        <div class="song_card">
-                            <div class="number">
-                                <h3 class="song_number"></h3> <!-- Updated to use a class for the number -->
-                            </div>
-                            <div class="song_title">
-                                <div class="card_title">
-                                    <p>Saanson Ko (From "Zid")</p>
-                                    <div class="playlist_name">
-                                        <p>Liked Songs</p>
-                                    </div>
-                                </div>
-                                <div class="sub_btn">
-                                    <div class="subplay">
-                                        <i class="fa-circle-play fa-regular"></i>
-                                    </div>
-                                    <div class="subpause">
-                                        <i class="fa-pause fa-solid"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="song_card">
-                            <div class="number">
-                                <h3 class="song_number"></h3> <!-- Updated to use a class for the number -->
-                            </div>
-                            <div class="song_title">
-                                <div class="card_title">
-                                    <p>Saanson Ko (From "Zid")</p>
-                                    <div class="playlist_name">
-                                        <p>Liked Songs</p>
-                                    </div>
-                                </div>
-                                <div class="sub_btn">
-                                    <div class="subplay">
-                                        <i class="fa-circle-play fa-regular"></i>
-                                    </div>
-                                    <div class="subpause">
-                                        <i class="fa-pause fa-solid"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
+    <!-- ============================================================ -->
+    <!-- Full-Screen Now Playing Panel (Mobile) -->
+    <!-- ============================================================ -->
+    <div id="now-playing-fullscreen" class="fixed inset-0 z-[80] bg-gradient-to-b from-[#1e1e1e] to-black flex flex-col p-6 transform translate-y-full transition-transform duration-300 ease-out">
+        <!-- Drag handle -->
+        <div class="flex justify-center mb-4">
+            <div class="w-10 h-1 bg-white/30 rounded-full"></div>
         </div>
-        <div class="search_SONG_Container" style="display: none; width: 70%; background-color: #121212; margin: 5px; border-radius: 8px; flex-direction: column; overflow-y: auto; max-height: 82%; margin-top: 11vh; overflow-x: hidden; padding-bottom: 80px;">
-            <div class="search_header" style="padding: 30px 20px; display: flex; align-items: center; gap: 20px; background: linear-gradient(to bottom, #2b2b2b, #121212); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                <div class="search_icon_box" style="width: 80px; height: 80px; background: #282828; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-                    <i class="fa-solid fa-magnifying-glass" style="font-size: 36px; color: #1db954;"></i>
+        <!-- Close / collapse button -->
+        <button id="np-collapse-btn" class="self-start text-white/70 hover:text-white mb-4 focus:outline-none" aria-label="Close now playing">
+            <i class="fa-solid fa-chevron-down text-xl"></i>
+        </button>
+        <!-- Album art -->
+        <div class="flex-1 flex flex-col items-center justify-center gap-6">
+            <img id="np-album-art" src="https://i.scdn.co/image/ab67616d00001e0271959cec830d7f25df3fc12c" alt="Album Art" class="w-64 h-64 rounded-xl shadow-2xl object-cover">
+            <div class="text-center w-full">
+                <div id="np-title" class="text-white text-2xl font-bold truncate">Now Playing</div>
+                <div id="np-artist" class="text-spotify-subdued text-sm mt-1 truncate">Artist</div>
+            </div>
+            <!-- Controls -->
+            <div class="flex flex-col items-center gap-4 w-full">
+                <!-- Progress -->
+                <div id="np-progress-container" class="flex items-center gap-3 w-full text-xs text-spotify-subdued">
+                    <span id="np-start-time">0:00</span>
+                    <div id="np-progress-bar" class="relative h-1 bg-[#4f4f4f] flex-1 rounded-full cursor-pointer">
+                        <div id="np-progress" class="relative h-full bg-white rounded-full transition-colors duration-200"></div>
+                    </div>
+                    <span id="np-end-time">0:00</span>
                 </div>
-                <div>
-                    <span style="font-size: 12px; text-transform: uppercase; color: #b3b3b3; font-weight: bold; letter-spacing: 1px;">Search Results</span>
-                    <h1 id="searchQueryTitle" style="color: #fff; margin-top: 5px; font-size: 32px; font-weight: 900;">Search for songs</h1>
+                <!-- Buttons -->
+                <div class="flex items-center justify-center gap-8">
+                    <button id="np-prev-btn" class="text-[#b3b3b3] hover:text-white text-2xl transition focus:outline-none" aria-label="Previous">
+                        <i class="fa-backward-step fa-solid"></i>
+                    </button>
+                    <button id="np-play-btn" class="w-16 h-16 rounded-full bg-white hover:scale-105 text-black flex items-center justify-center shadow-lg transition focus:outline-none" aria-label="Play/Pause">
+                        <i class="fa-circle-play fa-regular text-2xl"></i>
+                    </button>
+                    <button id="np-next-btn" class="text-[#b3b3b3] hover:text-white text-2xl transition focus:outline-none" aria-label="Next">
+                        <i class="fa-forward-step fa-solid"></i>
+                    </button>
                 </div>
             </div>
-            
-            <div class="search_results_list" style="padding: 20px;">
-                <table class="playlist-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 50px;">#</th>
-                            <th style="width: 70px;">Cover</th>
-                            <th>Title</th>
-                            <th>Artist / Channel</th>
-                            <th style="width: 100px; text-align: center;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="searchResultsBody">
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: #b3b3b3; padding: 40px 0;">
-                                Type a song title above and press Enter to search.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Top Navigation Header -->
+    <!-- ============================================================ -->
+    <div class="flex justify-between items-center bg-[#090909] px-4 md:px-6 py-4 h-[64px] md:h-[75px] fixed top-0 left-0 w-full z-40">
+        <!-- Left: hamburger (mobile) + logo -->
+        <div class="flex items-center gap-3">
+            <!-- Hamburger (mobile only) -->
+            <button id="hamburger-btn" class="md:hidden text-spotify-subdued hover:text-white text-xl focus:outline-none" aria-label="Open library menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="logo flex items-center cursor-pointer shrink-0">
+                <svg role="img" fill="white" viewBox="0 0 24 24" aria-label="Spotify" aria-hidden="false" height="28"
+                    data-encore-id="logoSpotify">
+                    <title>Spotify</title>
+                    <path
+                        d="M13.427.01C6.805-.253 1.224 4.902.961 11.524.698 18.147 5.853 23.728 12.476 23.99c6.622.263 12.203-4.892 12.466-11.514S20.049.272 13.427.01m5.066 17.579a.717.717 0 0 1-.977.268 14.4 14.4 0 0 0-5.138-1.747 14.4 14.4 0 0 0-5.42.263.717.717 0 0 1-.338-1.392c1.95-.474 3.955-.571 5.958-.29 2.003.282 3.903.928 5.647 1.92a.717.717 0 0 1 .268.978m1.577-3.15a.93.93 0 0 1-1.262.376 17.7 17.7 0 0 0-5.972-1.96 17.7 17.7 0 0 0-6.281.238.93.93 0 0 1-1.11-.71.93.93 0 0 1 .71-1.11 19.5 19.5 0 0 1 6.94-.262 19.5 19.5 0 0 1 6.599 2.165c.452.245.62.81.376 1.263m1.748-3.551a1.147 1.147 0 0 1-1.546.488 21.4 21.4 0 0 0-6.918-2.208 21.4 21.4 0 0 0-7.259.215 1.146 1.146 0 0 1-.456-2.246 23.7 23.7 0 0 1 8.034-.24 23.7 23.7 0 0 1 7.657 2.445c.561.292.78.984.488 1.546m13.612-.036-.832-.247c-1.67-.495-2.14-.681-2.14-1.353 0-.637.708-1.327 2.264-1.327 1.539 0 2.839.752 3.51 1.31.116.096.24.052.24-.098V6.935c0-.097-.027-.15-.098-.203-.83-.62-2.272-1.07-3.723-1.07-2.953 0-4.722 1.68-4.722 3.59 0 2.157 1.371 2.91 3.626 3.546l.973.274c1.689.478 1.998.902 1.998 1.556 0 1.097-.831 1.433-2.07 1.433-1.556 0-3.457-.911-4.35-2.025-.08-.098-.177-.053-.177.062v2.423c0 .097.01.141.08.22.743.814 2.52 1.53 4.59 1.53 2.546 0 4.456-1.485 4.456-3.784 0-1.787-1.052-2.865-3.625-3.635m10.107-1.76c-1.68 0-2.653 1.026-3.219 2.052V9.376c0-.08-.044-.124-.124-.124h-2.22c-.079 0-.123.044-.123.124V20.72c0 .08.044.124.124.124h2.22c.079 0 .123-.044.123-.124v-4.536c.566 1.025 1.521 2.034 3.237 2.034 2.264 0 3.89-1.955 3.89-4.581s-1.644-4.545-3.908-4.545m-.654 6.986c-1.185 0-2.211-1.167-2.618-2.458.407-1.362 1.344-2.405 2.618-2.405 1.211 0 2.051.92 2.051 2.423s-.84 2.44-2.051 2.44m40.633-6.826h-2.264c-.08 0-.115.017-.15.097l-2.282 5.483-2.29-5.483c-.035-.08-.07-.097-.15-.097h-3.661v-.584c0-.955.645-1.397 1.476-1.397.496 0 1.035.256 1.415.486.089.053.15-.008.115-.088l-.796-1.901a.26.26 0 0 0-.124-.133c-.389-.203-1.025-.38-1.644-.38-1.875 0-2.954 1.432-2.954 3.254v.743h-1.503c-.08 0-.124.044-.124.124v1.768c0 .08.044.124.124.124h1.503v6.668c0 .08.044.123.124.123h2.264c.08 0 .124-.044.124-.123v-6.668h1.936l2.812 6.11-1.512 3.325c-.044.098.009.142.097.142h2.414c.08 0 .116-.018.15-.097l4.997-11.355c.035-.08-.009-.141-.097-.141M54.964 9.04c-2.865 0-4.837 2.025-4.837 4.616 0 2.573 1.971 4.616 4.837 4.616 2.856 0 4.846-2.043 4.846-4.616 0-2.591-1.99-4.616-4.846-4.616m.008 7.065c-1.37 0-2.343-1.043-2.343-2.45 0-1.405.973-2.449 2.343-2.449 1.362 0 2.335 1.043 2.335 2.45 0 1.406-.973 2.45-2.335 2.45m33.541-6.334a1.24 1.24 0 0 0-.483-.471 1.4 1.4 0 0 0-.693-.17q-.384 0-.693.17a1.24 1.24 0 0 0-.484.471q-.174.302-.174.681 0 .375.174.677.175.3.484.471t.693.17.693-.17.483-.471.175-.676q0-.38-.175-.682m-.211 1.247a1 1 0 0 1-.394.39 1.15 1.15 0 0 1-.571.14 1.16 1.16 0 0 1-.576-.14 1 1 0 0 1-.391-.39 1.14 1.14 0 0 1-.14-.566q0-.316.14-.562t.391-.388.576-.14q.32 0 .57.14.253.141.395.39t.142.565q0 .312-.142.56m-19.835-5.78c-.85 0-1.468.6-1.468 1.396s.619 1.397 1.468 1.397c.866 0 1.485-.6 1.485-1.397 0-.796-.619-1.397-1.485-1.397m19.329 5.19a.31.31 0 0 0 .134-.262q0-.168-.132-.266-.132-.099-.381-.099h-.588v1.229h.284v-.489h.154l.374.489h.35l-.41-.518a.5.5 0 0 0 .215-.084m-.424-.109h-.26v-.3h.27q.12 0 .184.036a.12.12 0 0 1 .065.116.12.12 0 0 1-.067.111.4.4 0 0 1-.192.037M69.607 9.252h-2.263c-.08 0-.124.044-.124.124v8.56c0 .08.044.123.124.123h2.263c.08 0 .124-.044.124-.123v-8.56c0-.08-.044-.124-.124-.124m-3.333 6.605a2.1 2.1 0 0 1-1.053.257c-.725 0-1.185-.425-1.185-1.362v-3.484h2.211c.08 0 .124-.044.124-.124V9.376c0-.08-.044-.124-.124-.124h-2.21V6.944c0-.097-.063-.15-.15-.08l-3.954 3.113c-.053.044-.07.088-.07.16v1.007c0 .08.044.124.123.124h1.539v3.855c0 2.087 1.203 3.06 2.918 3.06.743 0 1.46-.194 1.884-.442.062-.035.07-.07.07-.133v-1.68c0-.088-.044-.115-.123-.07"
+                        transform="translate(-0.95,0)"></path>
+                </svg>
             </div>
         </div>
         
-        <div class="right">
-            <div class="head_btn">
-
-                <button>All</button>
-                <button>Music</button>
-                <button>PodCast</button>
-
+        <!-- Center: Search bar (hidden on mobile, shown on desktop) -->
+        <div id="search-bar" class="hidden md:flex items-center gap-4 bg-spotify-base px-5 py-2.5 rounded-full border border-transparent hover:border-[#282828] focus-within:border-white transition duration-200 w-[420px] max-w-full">
+            <button id="home_btn" aria-label="Go to Home" class="text-spotify-subdued hover:text-white active:scale-90 transition duration-150 focus:outline-none">
+                <i class="fa-house fa-solid text-lg"></i>
+            </button>
+            <div class="flex items-center flex-1">
+                <i class="fa-magnifying-glass fa-solid text-spotify-subdued mr-2 text-sm"></i>
+                <input class="bg-transparent border-none text-white text-sm focus:outline-none w-full placeholder:text-neutral-500" type="text" name="search" placeholder="Search for a song..." id="input" aria-label="Search for a song">
             </div>
-            <div class="playlist">
-                <div class="playlist_item">
-                    <img src="https://misc.scdn.co/liked-songs/liked-songs-64.png" alt="Liked Songs">
-                    <span>Liked Songs</span>
+            <button id="searchButton" aria-label="Search" class="text-xs bg-spotify-green hover:bg-spotify-hover text-black font-semibold px-4 py-1.5 rounded-full transition duration-150 focus:outline-none">Search</button>
+        </div>
+
+        <!-- Right: mobile search icon + profile -->
+        <div class="flex items-center gap-3 shrink-0">
+            <!-- Mobile search toggle -->
+            <button id="mobile-search-toggle" class="md:hidden text-spotify-subdued hover:text-white text-lg focus:outline-none" aria-label="Search">
+                <i class="fa-magnifying-glass fa-solid"></i>
+            </button>
+            <div class="profile-badge cursor-pointer p-1" aria-label="Profile">
+                <i class="fa-solid fa-circle-user text-3xl text-spotify-subdued hover:text-white transition duration-200"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Expandable Search Bar (slides down from header) -->
+    <div id="mobile-search-bar" class="md:hidden fixed top-[64px] left-0 w-full bg-[#090909] px-4 py-3 z-30 border-b border-[#1a1a1a] transform -translate-y-full opacity-0 transition-all duration-200 ease-out pointer-events-none">
+        <div class="flex items-center gap-3 bg-[#242424] px-4 py-2.5 rounded-full">
+            <button id="mobile-home-btn" aria-label="Go to Home" class="text-spotify-subdued hover:text-white transition focus:outline-none">
+                <i class="fa-house fa-solid"></i>
+            </button>
+            <i class="fa-magnifying-glass fa-solid text-spotify-subdued text-sm"></i>
+            <input id="mobile-input" class="bg-transparent border-none text-white text-sm focus:outline-none flex-1 placeholder:text-neutral-500" type="text" placeholder="Search for a song..." aria-label="Search for a song">
+            <button id="mobile-search-btn" aria-label="Search" class="text-xs bg-spotify-green text-black font-semibold px-3 py-1 rounded-full transition focus:outline-none">Go</button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="flex gap-2 p-2 pt-[74px] md:pt-[85px] pb-[130px] md:pb-[105px] h-full overflow-hidden w-full">
+
+        <!-- Left Sidebar (Library) -->
+        <div class="left w-[340px] shrink-0 bg-spotify-base p-5 flex-col gap-6 rounded-lg overflow-y-auto max-h-full scrollbar-thin hidden md:flex">
+            <div class="flex items-center justify-between text-neutral-400 font-bold hover:text-white transition duration-200 cursor-pointer">
+                <div class="lib flex items-center gap-3">
+                    <svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                        <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
+                    </svg>
+                    <h3 class="text-sm font-semibold tracking-wide">Your Library</h3>
                 </div>
-                <div class="playlist_item">
-                    <img src="https://i.scdn.co/image/ab6761610000e5eb5ba2d75eb08a2d672f9b69b7" alt="Arijit Singh">
-                    <span>Arijit Singh</span>
+                <div class="plus_btn text-neutral-400 hover:text-white active:scale-90 transition p-1">
+                    <svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 16 16" class="w-4 h-4 fill-current">
+                        <path d="M15.25 8a.75.75 0 0 1-.75.75H8.75v5.75a.75.75 0 0 1-1.5 0V8.75H1.5a.75.75 0 0 1 0-1.5h5.75V1.5a.75.75 0 0 1 1.5 0v5.75h5.75a.75.75 0 0 1 .75.75z"></path>
+                    </svg>
                 </div>
-                <div class="playlist_item">
-                    <img src="https://i.scdn.co/image/ab67616d0000b273f47f8b461b0843859d654a70" alt="Dangal Soundtrack">
-                    <span>Dangal (Original Motion Picture Soundtrack)</span>
+            </div>
+            
+            <div class="playlist_btn flex gap-2 overflow-x-auto pb-2 scrollbar-none shrink-0">
+                <button class="px-4 py-1.5 bg-[#282828] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 whitespace-nowrap focus:outline-none">Playlists</button>
+                <button class="px-4 py-1.5 bg-[#282828] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 whitespace-nowrap focus:outline-none">Artists</button>
+                <button class="px-4 py-1.5 bg-[#282828] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 whitespace-nowrap focus:outline-none">YT Music</button>
+                <button class="px-4 py-1.5 bg-[#282828] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 whitespace-nowrap focus:outline-none">Albums</button>
+            </div>
+
+            <div class="search_session flex justify-between items-center text-neutral-400 text-xs py-1">
+                <div class="hover:text-white transition cursor-pointer p-1"><i class="fa-magnifying-glass fa-solid"></i></div>
+                <div class="hero flex items-center gap-1.5 hover:text-white transition cursor-pointer p-1">
+                    <i class="fa-list fa-solid"></i>
+                    <h4 class="font-medium">recent</h4>
                 </div>
-                <div class="playlist_item">
-                    <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000d72c9cefb90625effe24858f828a"
-                        alt="Song">
-                    <span>Kuch bhi nahi hai ye jahan Tu hai toh hai isme zindagi ✨💗</span>
-                </div>
-                <div class="playlist_item">
-                    <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72c538315026a35fed83b262956"
-                        alt="Iron Man Soundtracks">
-                    <span>IRON MAN 1, 2, 3 SOUNDTRACKS</span>
-                </div>
-                <div class="playlist_item">
-                    <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8413b320a2f0682a9d278da946"
-                        alt="Top Tracks">
-                    <span>Arijit Singh - Top Tracks</span>
-                </div>
-                <div class="playlist_item">
-                    <img src="https://i.scdn.co/image/ab6765630000ba8a68228abc335566da3a616015" alt="Most Listened">
-                    <span>EP 19 Business Mastery Series | By Sandeep Maheshwari | Hindi</span>
-                </div>
-                <div class="playlist_item">
-                    <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72c212140d15baa01a159fa69d1" alt="2010s Mix">
-                    <span>2010s Mix</span>
+            </div>
+            
+            <!-- Sidebar Navigation lists -->
+            <div class="most flex flex-col gap-2 overflow-y-auto flex-1 scrollbar-thin">
+                <ul>
+                    <li class="mb-2">
+                        <div class="card flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition duration-200 cursor-pointer relative group">
+                            <img class="w-12 h-12 rounded-md object-cover mr-3.5" src="https://misc.scdn.co/liked-songs/liked-songs-64.png" alt="Liked Songs">
+                            <div class="card-content overflow-hidden flex-1">
+                                <p class="card-title text-sm font-semibold truncate text-white group-hover:text-spotify-green transition">Liked Songs</p>
+                                <p class="card-subtitle text-xs text-spotify-subdued truncate mt-1">Playlist • 125 Songs</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <div class="card flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition duration-200 cursor-pointer relative group">
+                            <img class="w-12 h-12 rounded-md object-cover mr-3.5" src="https://i.scdn.co/image/ab6765630000bdcf68228abc335566da3a616015" alt="Sandeep Maheshwari">
+                            <div class="card-content overflow-hidden flex-1">
+                                <p class="card-title text-sm font-semibold truncate text-white group-hover:text-spotify-green transition">Sandeep Maheshwari</p>
+                                <p class="card-subtitle text-xs text-spotify-subdued truncate mt-1">Podcast • Audible</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <div class="card flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition duration-200 cursor-pointer relative group">
+                            <img class="w-12 h-12 rounded-md object-cover mr-3.5" src="https://i.scdn.co/image/ab6761610000101f5ba2d75eb08a2d672f9b69b7" alt="Arijit Singh">
+                            <div class="card-content overflow-hidden flex-1">
+                                <p class="card-title text-sm font-semibold truncate text-white group-hover:text-spotify-green transition">Arijit Singh</p>
+                                <p class="card-subtitle text-xs text-spotify-subdued truncate mt-1">Artist • Tracks</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <div class="card flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition duration-200 cursor-pointer relative group">
+                            <img class="w-12 h-12 rounded-md object-cover mr-3.5" src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72c13b320a2f0682a9d278da946" alt="Arijit Top Tracks">
+                            <div class="card-content overflow-hidden flex-1">
+                                <p class="card-title text-sm font-semibold truncate text-white group-hover:text-spotify-green transition">Arijit Top Tracks</p>
+                                <p class="card-subtitle text-xs text-spotify-subdued truncate mt-1">Playlist • Songs</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <div class="card flex items-center p-2.5 rounded-md hover:bg-spotify-cardHover transition duration-200 cursor-pointer relative group">
+                            <img class="w-12 h-12 rounded-md object-cover mr-3.5" src="https://i.scdn.co/image/ab6761610000101fbc959d7569618ec2af2210f5" alt="Sonu Nigam">
+                            <div class="card-content overflow-hidden flex-1">
+                                <p class="card-title text-sm font-semibold truncate text-white group-hover:text-spotify-green transition">Sonu Nigam</p>
+                                <p class="card-subtitle text-xs text-spotify-subdued truncate mt-1">Artist • Tracks</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Song List Row Panel -->
+            <div class="songs_list hidden flex-col gap-2 overflow-y-auto flex-1 scrollbar-thin">
+                <ul>
+                    <!-- JavaScript populates playlist rows dynamically here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Content Section -->
+        <div class="right flex-1 bg-spotify-base p-6 rounded-lg overflow-y-auto max-h-full flex flex-col gap-6 relative scrollbar-thin">
+            <div class="head_btn flex gap-2 sticky top-0 bg-spotify-base py-2 z-10">
+                <button class="px-4 py-1.5 bg-[#2a2a2a] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 focus:outline-none">All</button>
+                <button class="px-4 py-1.5 bg-[#2a2a2a] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 focus:outline-none">Music</button>
+                <button class="px-4 py-1.5 bg-[#2a2a2a] text-xs font-semibold rounded-full hover:bg-[#323232] transition duration-200 focus:outline-none">Podcasts</button>
+            </div>
+            
+            <!-- Recently Played Section (populated by JS from localStorage) -->
+            <div id="recently-played-section" class="flex flex-col gap-3" style="display:none">
+                <h2 class="text-xl font-bold tracking-tight">Recently Played</h2>
+                <div class="recently-played-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <!-- Populated by JS -->
                 </div>
             </div>
 
-            <div class="playing_card">
-                <h2>Made for You Abhishek</h2>
+            <!-- Dashboard Main Recommended Grid -->
+            <div class="playing_card flex flex-col gap-4">
+                <h2 class="text-xl font-bold tracking-tight">Made for You</h2>
                 <div class="card2_wrap">
-                    <ul>
+                    <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebcb6926f44f620555ba444fca/1/en/default"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://dailymix-images.scdn.co/v2/img/ab6761610000e5ebcb6926f44f620555ba444fca/1/en/default" alt="Daily Mix 1" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Pritam, Arijit Singh, Darshan Raval and more
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://seed-mix-image.spotifycdn.com/v6/img/artist/4YRxDV8wJFPHPTeXepOstw/en/default"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://seed-mix-image.spotifycdn.com/v6/img/artist/4YRxDV8wJFPHPTeXepOstw/en/default" alt="Arijit Mix" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Armaan Malik, Mohit Chauhan, Darshan Raval
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02c5545f737b16ad5ee767b62a"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02c5545f737b16ad5ee767b62a" alt="Mithoon Mix" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Sachet-Parampara, Vishal Mishra, Mithoon
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67706f000000022ffd7dd5695e74a352352638"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67706f000000022ffd7dd5695e74a352352638" alt="Trending India" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Trending Now India
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb3db0499a689aa9b4a47ebba3/2/en/default"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb3db0499a689aa9b4a47ebba3/2/en/default" alt="Daily Mix 2" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Daily Mix 2, Sachet-Parampara, Vishal Mishra
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02d5f4378b1ffc9119fdc7306d"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02d5f4378b1ffc9119fdc7306d" alt="Laapataa Ladies" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Ram Sampath, Arijit Singh, Prashant Pandey
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e029eb6c1861d8c058e7052df1e"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e029eb6c1861d8c058e7052df1e" alt="Kalank" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Kalank (Original Motion Picture Soundtrack) </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Kalank (Original Motion Picture Soundtrack)
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e024634da1d297644a35619f4fc"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e024634da1d297644a35619f4fc" alt="ABCD 2" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    ABCD 2 (Original Motion Picture Soundtrack) </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    ABCD 2 (Original Motion Picture Soundtrack)
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e023a2753349e18d67b45e5b24d"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e023a2753349e18d67b45e5b24d" alt="Rustom" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
                                     Rustom (Original Motion Picture Soundtrack)
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67706f00000002f7e4e7042bb034207862cb18"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67706f00000002f7e4e7042bb034207862cb18" alt="10s Hindi" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    All Out 10's Hindi </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    All Out 10's Hindi
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67706f0000000277ede2a3bba3060652445007"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67706f0000000277ede2a3bba3060652445007" alt="10s Telugu" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    All Out 10s Telugu </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    All Out 10s Telugu
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02614a583a490e23b29821b2ed"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02614a583a490e23b29821b2ed" alt="Arijit Groove" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Groove With Arijit Singh </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Groove With Arijit Singh
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67706f00000002d103472321eb33a2016d11b3"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67706f00000002d103472321eb33a2016d11b3" alt="Hot Hits" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Hot Hits Hindi </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Hot Hits Hindi
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67706f000000026c8c3332b634364af0311c0f"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67706f000000026c8c3332b634364af0311c0f" alt="Indie India" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Indie India </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Indie India
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02b0f9ceb59927ab76fe6269be"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02b0f9ceb59927ab76fe6269be" alt="Hamari Adhuri" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Hamari Adhuri Kahani (Original Motion Picture Soundtrack) </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Hamari Adhuri Kahani (Original Motion Picture Soundtrack)
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02021d7017f73387b008eab271"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02021d7017f73387b008eab271" alt="Satranga" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Satranga (From "ANIMAL") </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Satranga (From "ANIMAL")
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div class="card2">
-                                <div class="image-container">
-                                    <img src="https://i.scdn.co/image/ab67616100005174c5911f22814f270d5004ae53"
-                                        alt="Artist Image">
-                                    <!-- <div class="overlay">
-                                        <span class="title">Daily Mix 1</span>
-                                        <button class="play-button">&#9658;</button>
-                                    </div> -->
+                            <div class="card2 bg-spotify-card hover:bg-spotify-cardHover p-4 rounded-lg flex flex-col gap-3 cursor-pointer group transition duration-300 relative h-full">
+                                <div class="image-container relative overflow-hidden rounded-md shadow-lg">
+                                    <img src="https://i.scdn.co/image/ab67616100005174c5911f22814f270d5004ae53" alt="Armaan Malik" class="w-full aspect-square object-cover rounded-md">
+                                    <div class="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-spotify-green flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition duration-300 hover:scale-105 text-black">
+                                        <i class="fa-solid fa-play text-sm ml-0.5"></i>
+                                    </div>
                                 </div>
-                                <div class="description">
-                                    Armaan Malik </div>
+                                <div class="description text-xs text-spotify-subdued line-clamp-2 leading-relaxed">
+                                    Armaan Malik
+                                </div>
                             </div>
                         </li>
                     </ul>
-
                 </div>
-
             </div>
-            <div class="Gallery_card_detail">
-                <div class="feature_song_controls" id="feature_song_controls1">
-                    <div class="feature_song_start_btn">
-                        <div class="feature_song_play_btn"><i class="fa-circle-pause fa-solid"></i></div>
-                        <div class="feature_song_add_btn"><i class="fa-regular fa-square-plus hover_effect"></i></div>
-                        <div class="feature_song_fucntion_btn"><i class="fa-ellipsis fa-solid hover_effect"></i></div>
 
+            <!-- Gallery Card Detail Panel (Populated on playlist click) -->
+            <div class="Gallery_card_detail hidden w-full bg-[#181818] p-5 rounded-lg">
+                <div class="feature_song_controls flex items-center justify-between p-4 h-[75px] text-[#b3b3b3]">
+                    <div class="feature_song_start_btn flex items-center gap-6">
+                        <button class="w-14 h-14 bg-spotify-green hover:bg-[#21e967] hover:scale-105 text-black rounded-full flex items-center justify-center transition shadow-lg text-2xl focus:outline-none"><i class="fa-circle-pause fa-solid"></i></button>
+                        <button class="text-2xl hover:text-white transition focus:outline-none"><i class="fa-regular fa-square-plus hover_effect"></i></button>
+                        <button class="text-2xl hover:text-white transition focus:outline-none"><i class="fa-ellipsis fa-solid hover_effect"></i></button>
                     </div>
-                    <div class="feature_song_list_btn hover_effect">
+                    <div class="feature_song_list_btn flex items-center gap-2.5 hover:text-white transition cursor-pointer text-sm font-semibold">
                         <p>list</p>
                         <i class="fa-list fa-solid"></i>
                     </div>
                 </div>
-                <table class="playlist-table">
+                <table class="playlist-table w-full border-collapse text-left mt-4">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Album</th>
-                            <th>Date added</th>
-                            <th class="time-column">⏱</th>
+                        <tr class="border-b border-[#282828] text-spotify-subdued text-xs uppercase tracking-wider">
+                            <th class="px-4 py-2 font-semibold w-12">#</th>
+                            <th class="px-4 py-2 font-semibold">Title</th>
+                            <th class="px-4 py-2 font-semibold">Album</th>
+                            <th class="px-4 py-2 font-semibold">Date added</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="animation_in_gallery"><div id="lottie-container" style="width: 40px; height: 80px; filter:invert(1);"></div></td>
-                            <td>
-                                <div class="song-info1">
-                                    <img src="https://via.placeholder.com/50" alt="Humnava Mere">
-                                    <span>Humnava Mere</span>
-                                </div>
-                                <span class="artist">Jubin Nautiyal, Rocky - Shiv</span>
-                            </td>
-                            <td>Humnava Mere</td>
-                            <td>2 weeks ago</td>
-                            <td>5:28</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <div class="song-info1">
-                                    <img src="https://via.placeholder.com/50" alt="O Saathi">
-                                    <span>O Saathi</span>
-                                </div>
-                                <span class="artist">Atif Aslam, Arko</span>
-                            </td>
-                            <td>O Saathi (From "Baaghi 2")</td>
-                            <td>Dec 8, 2024</td>
-                            <td>4:11</td>
-                        </tr>
+                    <tbody class="divide-y divide-[#282828]/40">
+                        <!-- Dynamic rows populated via JS -->
                     </tbody>
                 </table>
-
             </div>
-        </div>
-        <div class="feature_song"> 
-            <div class="feature_song_head">
-                <div class="head_container">
-                    <div class="feature_song_img">
-                        <img src="https://seed-mix-image.spotifycdn.com/v6/img/artist/4YRxDV8wJFPHPTeXepOstw/en/default"
-                            alt="">
+
+            <!-- Artist Page Details / Feature Songs View -->
+            <div class="feature_song hidden flex-col bg-spotify-base rounded-lg pb-8">
+                <div class="search_header px-6 py-8 flex items-center gap-6 bg-gradient-to-b from-[#2b2b2b] to-spotify-base border-b border-white/5">
+                    <div class="feature_song_img shrink-0">
+                        <img class="w-36 h-36 rounded-lg object-cover shadow-2xl" src="https://seed-mix-image.spotifycdn.com/v6/img/artist/4YRxDV8wJFPHPTeXepOstw/en/default" alt="">
                     </div>
                     <div class="feature_song_info">
-                        <div class="feature_song_title">
+                        <div class="feature_song_title text-white text-3xl font-bold tracking-tight">
                             <h1>Arijit Singh</h1>
                         </div>
-                        <div class="feature_song_playlist">
-                            <img src="https://i.scdn.co/image/ab67757000003b8255c25988a6ac314394d3fbf5" alt="">
+                        <div class="feature_song_playlist flex items-center text-white text-xs mt-2 font-semibold">
+                            <img class="w-6 h-6 rounded-full mr-2" src="https://i.scdn.co/image/ab67757000003b8255c25988a6ac314394d3fbf5" alt="">
                             playlist
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="feature_song_playlists">
-                <div class="feature_song_controls">
-                    <div class="feature_song_start_btn">
-                        <div class="feature_song_play_btn"><i class="fa-circle-pause fa-solid"></i></div>
-                        <div class="feature_song_add_btn"><i class="fa-regular fa-square-plus hover_effect"></i></div>
-                        <div class="feature_song_fucntion_btn"><i class="fa-ellipsis fa-solid hover_effect"></i></div>
-
+                <div class="feature_song_playlists flex flex-col">
+                    <div class="feature_song_controls flex justify-between items-center px-6 py-4">
+                        <div class="feature_song_start_btn flex items-center gap-6">
+                            <button class="w-14 h-14 bg-spotify-green hover:bg-[#21e967] hover:scale-105 text-black rounded-full flex items-center justify-center transition shadow-lg text-2xl focus:outline-none"><i class="fa-circle-pause fa-solid"></i></button>
+                            <button class="text-2xl text-spotify-subdued hover:text-white transition focus:outline-none"><i class="fa-regular fa-square-plus hover_effect"></i></button>
+                            <button class="text-2xl text-spotify-subdued hover:text-white transition focus:outline-none"><i class="fa-ellipsis fa-solid hover_effect"></i></button>
+                        </div>
+                        <div class="feature_song_list_btn flex items-center gap-2.5 hover:text-white transition cursor-pointer text-sm font-semibold">
+                            <p>list</p>
+                            <i class="fa-list fa-solid"></i>
+                        </div>
                     </div>
-                    <div class="feature_song_list_btn hover_effect">
-                        <p>list</p>
-                        <i class="fa-list fa-solid"></i>
-                    </div>
-                </div>
-                <div class="recent_playing_song">
-                    <ul class="songs">
-                        <li class="song">
-
-                            <div id="lottie-container" style="width: 40px; height: 80px;"></div>
-
-                            <div class="details">
-                                <img src="https://via.placeholder.com/50" alt="Sajde">
-                                <div>
-                                    <div class="title">Sajde</div>
-                                    <div class="artist">Shankar-Ehsaan-Loy, Arijit Singh, Nihira Joshi Deshpande,
-                                        Gulzar
+                    <div class="recent_playing_song px-6">
+                        <ul class="songs">
+                            <li class="song flex items-center justify-between p-3 rounded-md hover:bg-white/10 transition duration-200 cursor-pointer">
+                                <div id="lottie-container" style="width: 40px; height: 80px;"></div>
+                                <div class="details flex items-center gap-4 flex-1 ml-4">
+                                    <img class="w-12 h-12 rounded object-cover" src="https://via.placeholder.com/50" alt="Sajde">
+                                    <div>
+                                        <div class="title text-sm font-semibold text-white">Sajde</div>
+                                        <div class="artist text-xs text-spotify-subdued mt-1">Shankar-Ehsaan-Loy, Arijit Singh, Nihira Joshi Deshpande, Gulzar</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="Source">Kill Dil</div>
-
-                        </li>
-                    </ul>
-                </div>
-                <div class="feature_song_list">
-
-                    <div class="header">
-                        <div>#</div>
-                        <div>Title</div>
-                        <div>Album</div>
-                        <div>Time</div>
+                                <div class="Source text-sm text-spotify-subdued">Kill Dil</div>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="songs">
-                        <li class="song">
-                            <div>1</div>
-                            <div class="details">
-                                <img src="https://via.placeholder.com/50" alt="Sajde">
-                                <div>
-                                    <div class="title">Sajde</div>
-                                    <div class="artist">Shankar-Ehsaan-Loy, Arijit Singh, Nihira Joshi Deshpande, Gulzar
-                                    </div>
-                                </div>
-                            </div>
-                            <div>Kill Dil</div>
-                            <div>5:25</div>
-                        </li>
-                        <li class="song">
-                            <div>2</div>
-                            <div class="details">
-                                <img src="https://via.placeholder.com/50" alt="Asal Mein">
-                                <div>
-                                    <div class="title">Asal Mein</div>
-                                    <div class="artist">Darshan Raval</div>
-                                </div>
-                            </div>
-                            <div>Asal Mein</div>
-                            <div>3:44</div>
-                        </li>
-                        <li class="song">
-                            <div>3</div>
-                            <div class="details">
-                                <img src="https://via.placeholder.com/50" alt="Daryaa">
-                                <div>
-                                    <div class="title">Daryaa</div>
-                                    <div class="artist">Amit Trivedi, Shellee, Ammy Virk, Shahid Mallya</div>
-                                </div>
-                            </div>
-                            <div>Manmarziyaan</div>
-                            <div>4:21</div>
-                        </li>
-                    </ul>
+                    <div class="feature_song_list px-6 mt-4">
+                        <div class="header grid grid-cols-[5%_45%_35%_15%] gap-4 text-spotify-subdued text-xs uppercase tracking-wider py-2 font-semibold border-b border-[#282828]">
+                            <div>#</div>
+                            <div>Title</div>
+                            <div>Album</div>
+                            <div class="text-right">Time</div>
+                        </div>
+                        <ul class="songs divide-y divide-[#282828]/30">
+                            <!-- Populated via JS -->
+                        </ul>
+                    </div>
                 </div>
             </div>
 
+            <!-- YouTube Search Results Table -->
+            <div class="search_SONG_Container hidden flex-col bg-spotify-base rounded-lg pb-8">
+                <div class="search_header px-6 py-8 flex items-center gap-6 bg-gradient-to-b from-[#2b2b2b] to-spotify-base border-b border-white/5">
+                    <div class="search_icon_box w-20 h-20 bg-spotify-card flex items-center justify-center rounded-lg shadow-2xl text-spotify-green shrink-0">
+                        <i class="fa-solid fa-magnifying-glass text-4xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-spotify-subdued uppercase font-bold tracking-wider">Search Results</span>
+                        <h1 id="searchQueryTitle" class="text-white text-3xl font-extrabold tracking-tight mt-1">Search for songs</h1>
+                    </div>
+                </div>
+                
+                <div class="search_results_list px-6 mt-4">
+                    <table class="playlist-table w-full border-collapse text-left">
+                        <thead>
+                            <tr class="border-b border-[#282828] text-spotify-subdued text-xs uppercase tracking-wider">
+                                <th class="px-4 py-2 font-semibold w-12">#</th>
+                                <th class="px-4 py-2 font-semibold w-20">Cover</th>
+                                <th class="px-4 py-2 font-semibold">Title</th>
+                                <th class="px-4 py-2 font-semibold">Artist / Channel</th>
+                                <th class="px-4 py-2 font-semibold w-24 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchResultsBody" class="divide-y divide-[#282828]/40">
+                            <tr>
+                                <td colspan="5" class="text-center text-spotify-subdued py-10">
+                                    Type a song title above and press Enter to search.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="music-player">
-        <!-- Song info section -->
-        <div class="song-info">
-            <img src="https://i.scdn.co/image/ab67616d00001e0271959cec830d7f25df3fc12c" alt="Album Cover"
-                class="album-cover">
-            <div class="song-details">
-                <div class="title">Wajah Tum Ho</div>
-                <div class="artist">Armaan Malik</div>
+
+    <!-- ============================================================ -->
+    <!-- Mobile Bottom Navigation Bar -->
+    <!-- ============================================================ -->
+    <div id="mobile-bottom-nav" class="md:hidden fixed bottom-[68px] left-0 w-full bg-[#0d0d0d] border-t border-[#1a1a1a] flex items-center justify-around py-2 z-40">
+        <button id="mob-nav-home" class="flex flex-col items-center gap-1 text-white focus:outline-none" aria-label="Home">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[10px] font-medium">Home</span>
+        </button>
+        <button id="mob-nav-search" class="flex flex-col items-center gap-1 text-spotify-subdued hover:text-white transition focus:outline-none" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass text-lg"></i>
+            <span class="text-[10px] font-medium">Search</span>
+        </button>
+        <button id="mob-nav-library" class="flex flex-col items-center gap-1 text-spotify-subdued hover:text-white transition focus:outline-none" aria-label="Your Library">
+            <i class="fa-solid fa-book-open text-lg"></i>
+            <span class="text-[10px] font-medium">Library</span>
+        </button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- Bottom Audio Streaming Media Player -->
+    <!-- ============================================================ -->
+    <div class="music-player fixed bottom-0 left-0 w-full h-[68px] md:h-[90px] bg-[#121212] border-t border-[#282828] flex justify-between items-center px-3 md:px-6 z-50 text-white shadow-xl">
+        <!-- Song Details Section (tappable on mobile to open full-screen player) -->
+        <div id="mini-player-info" class="song-info flex items-center w-[40%] md:w-[30%] min-w-[120px] cursor-pointer" aria-label="Open now playing">
+            <img id="player-album-art" src="https://i.scdn.co/image/ab67616d00001e0271959cec830d7f25df3fc12c" alt="Album Cover" class="album-cover w-[44px] h-[44px] md:w-[56px] md:h-[56px] rounded object-cover mr-2 md:mr-4 shadow-lg border border-[#282828] shrink-0">
+            <div class="song-details flex flex-col overflow-hidden max-w-[100px] md:max-w-[160px]">
+                <div class="title text-xs md:text-sm font-semibold truncate hover:underline cursor-pointer text-white">Wajah Tum Ho</div>
+                <div class="artist text-[10px] md:text-xs text-spotify-subdued truncate hover:underline hover:text-white cursor-pointer mt-0.5">Armaan Malik</div>
             </div>
         </div>
 
-        <!-- Playback controls -->
-        <div class="center_footer">
-            <div class="playback-controls">
-                <button aria-label="Previous Track"><i class="fa-backward-step fa-solid"></i></button>
-                <button class="play-pause" id="pause" aria-label="Play"><i class="fa-circle-play fa-regular"></i></button>
-                <button class="play-pause" id="playing" aria-label="Pause"><i class="fa-pause fa-solid"></i></button>
-
-                <button aria-label="Next Track"><i class="fa-forward-step fa-solid"></i></button>
-
+        <!-- Playback Controls (center on desktop, compact on mobile) -->
+        <div class="center_footer flex flex-col items-center gap-1 md:gap-2 flex-1 max-w-[55vw] md:max-w-[45vw]">
+            <div class="playback-controls flex items-center gap-3 md:gap-5">
+                <!-- Shuffle (desktop only) -->
+                <button id="shuffle-btn" aria-label="Shuffle" class="hidden md:block text-[#b3b3b3] hover:text-white active:scale-95 transition text-sm focus:outline-none">
+                    <i class="fa-solid fa-shuffle"></i>
+                </button>
+                <button aria-label="Previous Track" class="text-[#b3b3b3] hover:text-white active:scale-95 transition text-sm md:text-base focus:outline-none">
+                    <i class="fa-backward-step fa-solid"></i>
+                </button>
+                <button class="play-pause w-7 h-7 md:w-8 md:h-8 rounded-full bg-white hover:scale-105 text-black flex items-center justify-center shadow-md transition focus:outline-none" id="pause" aria-label="Play">
+                    <i class="fa-circle-play fa-regular text-base md:text-lg ml-0.5"></i>
+                </button>
+                <button class="play-pause w-7 h-7 md:w-8 md:h-8 rounded-full bg-white hover:scale-105 text-black flex items-center justify-center shadow-md transition focus:outline-none" id="playing" aria-label="Pause" style="display:none">
+                    <i class="fa-pause fa-solid text-xs md:text-sm"></i>
+                </button>
+                <button aria-label="Next Track" class="text-[#b3b3b3] hover:text-white active:scale-95 transition text-sm md:text-base focus:outline-none">
+                    <i class="fa-forward-step fa-solid"></i>
+                </button>
+                <!-- Repeat (desktop only) -->
+                <button id="repeat-btn" aria-label="Repeat" class="hidden md:block text-[#b3b3b3] hover:text-white active:scale-95 transition text-sm focus:outline-none">
+                    <i class="fa-solid fa-repeat"></i>
+                </button>
             </div>
 
-            <!-- Progress bar section -->
-            <div class="progress-bar-container">
-                <span class="time">4:59</span>
-                <div class="progress-bar">
-                    <div class="progress"></div>
+            <!-- Seek Slider (hidden on small mobile, shown on md+) -->
+            <div class="progress-bar-container hidden md:flex items-center gap-2 w-full text-[11px] text-spotify-subdued">
+                <span class="time min-w-[32px] text-right font-medium">0:00</span>
+                <div class="progress-bar relative h-1 bg-[#4f4f4f] flex-1 rounded-full cursor-pointer hover:bg-neutral-600 transition">
+                    <div class="progress relative h-full bg-white rounded-full transition-colors duration-200"></div>
                 </div>
-                <span class="time TotalTime">5:57</span>
+                <span class="time TotalTime min-w-[32px] text-left font-medium">0:00</span>
+            </div>
+            <!-- Mobile mini progress bar (thin line, no labels) -->
+            <div class="mobile-progress-bar-container md:hidden flex items-center w-full">
+                <div class="progress-bar relative h-0.5 bg-[#4f4f4f] flex-1 rounded-full cursor-pointer">
+                    <div class="progress relative h-full bg-white rounded-full"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Volume and settings section -->
-        <div class="settings">
-            <button>&#128264;</button> <!-- Mute icon -->
-            <div class="volume-slider">
-                <div class="volume"></div>
+        <!-- Volume Controls and Settings Section (desktop only) -->
+        <div class="settings hidden md:flex items-center justify-end gap-3 w-[30%] min-w-[150px]">
+            <button aria-label="Mute" class="text-[#b3b3b3] hover:text-white transition focus:outline-none text-base">
+                <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <div class="volume-slider relative h-1 bg-[#4f4f4f] w-20 rounded-full cursor-pointer hover:bg-neutral-600 transition">
+                <div class="volume relative h-full bg-white rounded-full transition-colors duration-200"></div>
             </div>
-            <button>&#128470;</button> <!-- Fullscreen icon -->
+            <button aria-label="Fullscreen Lyrics" class="text-[#b3b3b3] hover:text-white transition focus:outline-none text-base">
+                <i class="fa-solid fa-up-right-and-down-left-from-center text-xs"></i>
+            </button>
+        </div>
+
+        <!-- Mobile: right side heart + expand icon -->
+        <div class="md:hidden flex items-center gap-4 shrink-0">
+            <button id="mobile-expand-player" class="text-spotify-subdued hover:text-white transition focus:outline-none" aria-label="Expand player">
+                <i class="fa-solid fa-chevron-up text-sm"></i>
+            </button>
         </div>
     </div>
 

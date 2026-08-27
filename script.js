@@ -1,8 +1,9 @@
 /**
  * script.js
  * Main application controller for Spotify Web Clone.
- * 
+ *
  * Clean, modular, responsive, state-driven front-end player logic.
+ * Mobile-responsive with drawer, bottom nav, and full-screen now-playing panel.
  */
 
 import { searchYouTube } from './Fetch_Youtube_music.js';
@@ -14,7 +15,14 @@ import {
 // ============================================================
 // Constants & Configuration
 // ============================================================
-const SERVER_BASE_URL = `${window.location.protocol}//${window.location.hostname}:5500`;
+// Auto-detect backend URL: localhost in dev, same origin in production
+const SERVER_BASE_URL = (() => {
+  const h = window.location.hostname;
+  if (h === 'localhost' || h === '127.0.0.1') {
+    return `${window.location.protocol}//${h}:5500`;
+  }
+  return window.location.origin;
+})();
 const LOTTIE_ANIMATION_PATH = 'animation/Animation - 1733655375256.json';
 
 // ============================================================
@@ -26,23 +34,23 @@ const listItems = mostContainer.querySelectorAll('li');
 const rightContainer = document.querySelector(".card2_wrap");
 const listRightCard = rightContainer.querySelectorAll("li");
 const featureContainer = document.querySelector(".feature_song");
-const rightSide = document.querySelector(".right");
 const homeButton = document.querySelector('#home_btn');
 
 const musicPlayer = document.querySelector('.music-player');
 const songTitleElement = musicPlayer.querySelector('.song-details .title');
 const artistElement = musicPlayer.querySelector('.song-details .artist');
+// Use the desktop progress bar container (hidden md:flex)
 const progressBarContainer = musicPlayer.querySelector('.progress-bar-container');
 const progressBar = musicPlayer.querySelector('.progress-bar .progress');
-const startTime = musicPlayer.querySelector('.progress-bar-container .time:first-child');
-const endTime = musicPlayer.querySelector('.progress-bar-container .time:last-child');
+const startTime = progressBarContainer ? progressBarContainer.querySelector('.time:first-child') : null;
+const endTime = progressBarContainer ? progressBarContainer.querySelector('.time:last-child') : null;
 const playPauseBtn = musicPlayer.querySelector('#playing'); // Pause icon (active when playing)
 const pauseBtn = musicPlayer.querySelector('#pause');       // Play icon (active when paused)
 const prevBtn = musicPlayer.querySelector('[aria-label="Previous Track"]');
 const nextBtn = musicPlayer.querySelector('[aria-label="Next Track"]');
 
 const volumeSlider = document.querySelector('.volume-slider');
-const volumeBar = volumeSlider.querySelector('.volume');
+const volumeBar = volumeSlider ? volumeSlider.querySelector('.volume') : null;
 const muteButton = document.querySelector('.settings button:first-child');
 const fullscreenBtn = document.querySelector('.settings button:last-child');
 
@@ -52,7 +60,38 @@ const searchInput = document.getElementById('input');
 const searchButton = document.getElementById('searchButton');
 
 const gallery = document.querySelector('.playlist');
-const galleryItems = gallery.querySelectorAll('.playlist_item');
+const galleryItems = gallery ? gallery.querySelectorAll('.playlist_item') : [];
+
+// --- Mobile UI DOM References ---
+const hamburgerBtn     = document.getElementById('hamburger-btn');
+const mobileDrawer     = document.getElementById('mobile-drawer');
+const drawerBackdrop   = document.getElementById('drawer-backdrop');
+const drawerCloseBtn   = document.getElementById('drawer-close-btn');
+const mobileSearchToggle  = document.getElementById('mobile-search-toggle');
+const mobileSearchBar     = document.getElementById('mobile-search-bar');
+const mobileInput         = document.getElementById('mobile-input');
+const mobileSearchBtn     = document.getElementById('mobile-search-btn');
+const mobileHomeBtn       = document.getElementById('mobile-home-btn');
+const mobNavHome          = document.getElementById('mob-nav-home');
+const mobNavSearch        = document.getElementById('mob-nav-search');
+const mobNavLibrary       = document.getElementById('mob-nav-library');
+const nowPlayingPanel     = document.getElementById('now-playing-fullscreen');
+const npCollapseBtn       = document.getElementById('np-collapse-btn');
+const npAlbumArt          = document.getElementById('np-album-art');
+const npTitle             = document.getElementById('np-title');
+const npArtist            = document.getElementById('np-artist');
+const npProgress          = document.getElementById('np-progress');
+const npProgressBar       = document.getElementById('np-progress-bar');
+const npStartTime         = document.getElementById('np-start-time');
+const npEndTime           = document.getElementById('np-end-time');
+const npPlayBtn           = document.getElementById('np-play-btn');
+const npPrevBtn           = document.getElementById('np-prev-btn');
+const npNextBtn           = document.getElementById('np-next-btn');
+const miniPlayerInfo      = document.getElementById('mini-player-info');
+const playerAlbumArt      = document.getElementById('player-album-art');
+const mobileExpandPlayer  = document.getElementById('mobile-expand-player');
+const shuffleBtn          = document.getElementById('shuffle-btn');
+const repeatBtn           = document.getElementById('repeat-btn');
 
 // ============================================================
 // Global State Management
@@ -68,9 +107,18 @@ let playbackQueue = [];    // Holds track objects in current active playlist
 let queueIndex = -1;       // Current track index in the active queue
 let currentSearchQuery = '';
 
+// Mobile UI state
+let isDrawerOpen = false;
+let isMobileSearchOpen = false;
+let isNowPlayingOpen = false;
+
+// Playback feature state
+let isShuffleOn = false;
+let repeatMode = 'off'; // 'off', 'all', 'one'
+
 // Set default volume
 currentAudio.volume = 0.5;
-volumeBar.style.width = `${currentAudio.volume * 100}%`;
+if (volumeBar) volumeBar.style.width = `${currentAudio.volume * 100}%`;
 
 // ============================================================
 // Visual State Controller (Buffering, Loading & Playback States)
@@ -146,6 +194,20 @@ function setPlaybackState(state) {
     } else {
       playPauseBtn.style.display = 'none'; // Pause button hidden
       pauseBtn.style.display = 'flex';    // Play button visible
+    }
+  }
+
+  // 3. Sync mobile Now Playing panel button icon (Bug Fix #5)
+  if (npPlayBtn) {
+    const npIcon = npPlayBtn.querySelector('i');
+    if (state === 'playing') {
+      if (npIcon) {
+        npIcon.className = 'fa-pause fa-solid text-2xl';
+      }
+    } else {
+      if (npIcon) {
+        npIcon.className = 'fa-circle-play fa-regular text-2xl';
+      }
     }
   }
 }
@@ -238,8 +300,17 @@ async function playTrack(song, elementRef = null) {
   // Update footer title details immediately
   songTitleElement.textContent = song.title;
   artistElement.textContent = song.singer;
-  startTime.textContent = formatTime(0);
+  if (startTime) startTime.textContent = formatTime(0);
   progressBar.style.width = '0%';
+
+  // Update Now Playing panel
+  if (npTitle) npTitle.textContent = song.title;
+  if (npArtist) npArtist.textContent = song.singer;
+  if (npProgress) npProgress.style.width = '0%';
+  if (npStartTime) npStartTime.textContent = '0:00';
+
+  // Save to recently played in localStorage
+  saveRecentlyPlayed(song);
 
   let targetSrc = song.filePath;
 
@@ -292,7 +363,10 @@ function updateProgressBar() {
   if (currentAudio.duration) {
     const progressPercent = (currentAudio.currentTime / currentAudio.duration) * 100;
     progressBar.style.width = `${progressPercent}%`;
-    startTime.textContent = formatTime(currentAudio.currentTime);
+    if (startTime) startTime.textContent = formatTime(currentAudio.currentTime);
+    // Also update now-playing panel
+    if (npProgress) npProgress.style.width = `${progressPercent}%`;
+    if (npStartTime) npStartTime.textContent = formatTime(currentAudio.currentTime);
   }
 }
 
@@ -330,9 +404,30 @@ async function playQueueTrack(index) {
 
 function playNextTrack() {
   if (playbackQueue.length === 0 || queueIndex === -1) return;
+
+  // Repeat one: restart the same track
+  if (repeatMode === 'one') {
+    currentAudio.currentTime = 0;
+    currentAudio.play().catch(console.error);
+    return;
+  }
+
+  // Shuffle: pick random next index
+  if (isShuffleOn && playbackQueue.length > 1) {
+    let randomIndex;
+    do { randomIndex = Math.floor(Math.random() * playbackQueue.length); }
+    while (randomIndex === queueIndex);
+    playQueueTrack(randomIndex);
+    return;
+  }
+
   let nextIndex = queueIndex + 1;
   if (nextIndex >= playbackQueue.length) {
-    nextIndex = 0; // Loop back to start
+    if (repeatMode === 'all') {
+      nextIndex = 0; // Loop back to start
+    } else {
+      return; // Stop at end if no repeat
+    }
   }
   playQueueTrack(nextIndex);
 }
@@ -369,20 +464,20 @@ function renderSearchResults(videos, query) {
 
   videos.forEach((video, index) => {
     const tr = document.createElement('tr');
-    tr.style.cursor = 'pointer';
+    tr.className = 'border-b border-spotify-lightGrey/20 hover:bg-spotify-cardHover/70 transition duration-200 cursor-pointer';
     
     tr.innerHTML = `
-      <td>${index + 1}</td>
-      <td>
-        <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.title}" style="width: 48px; height: 48px; border-radius: 4px; object-fit: cover;">
+      <td class="px-4 py-3.5 text-sm text-spotify-subdued align-middle">${index + 1}</td>
+      <td class="px-4 py-3.5 align-middle">
+        <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.title}" class="w-12 h-12 rounded object-cover shadow">
       </td>
-      <td>
-        <div class="song-info1">
-          <span style="font-weight: 500; color: #fff;">${video.snippet.title}</span>
+      <td class="px-4 py-3.5 align-middle">
+        <div class="song-info1 truncate max-w-[280px]">
+          <span class="font-medium text-white block truncate">${video.snippet.title}</span>
         </div>
       </td>
-      <td style="color: #b3b3b3;">${video.snippet.channelTitle}</td>
-      <td class="status-col" style="text-align: center;">
+      <td class="px-4 py-3.5 align-middle text-spotify-subdued text-sm truncate max-w-[180px]">${video.snippet.channelTitle}</td>
+      <td class="status-col px-4 py-3.5 align-middle text-center">
         <i class="fa-solid fa-play" style="color: #b3b3b3;"></i>
       </td>
     `;
@@ -401,17 +496,24 @@ async function performSearch() {
   const query = searchInput.value;
   if (!query.trim()) return;
 
-  // Toggle views
-  rightSide.style.display = "none";
-  featureContainer.style.display = "none";
-  searchContainer.style.display = "flex";
+  // Toggle views — hide home grid, show search results
+  // NOTE: rightSide (.right) is the PARENT of searchContainer — never hide the parent!
+  const playingCard = document.querySelector('.playing_card');
+  const galleryDetail = document.querySelector('.Gallery_card_detail');
+  const recentlyPlayed = document.getElementById('recently-played-section');
+
+  if (playingCard) playingCard.style.display = 'none';
+  if (galleryDetail) galleryDetail.style.display = 'none';
+  if (recentlyPlayed) recentlyPlayed.style.display = 'none';
+  featureContainer.style.display = 'none';
+  searchContainer.style.display = 'flex';
 
   // Show inline loader
   searchResultsBody.innerHTML = `
     <tr>
       <td colspan="5" style="text-align: center; padding: 50px 0;">
         <div class="spinner" style="width: 32px; height: 32px;"></div>
-        <div style="margin-top: 15px; color: var(--text-secondary); font-size: 14px;">Searching YouTube database...</div>
+        <div style="margin-top: 15px; color: #b3b3b3; font-size: 14px;">Searching YouTube database...</div>
       </td>
     </tr>
   `;
@@ -424,7 +526,7 @@ async function performSearch() {
     } else {
       searchResultsBody.innerHTML = `
         <tr>
-          <td colspan="5" style="text-align: center; color: var(--text-secondary); padding: 50px 0;">
+          <td colspan="5" style="text-align: center; color: #b3b3b3; padding: 50px 0;">
             No results found. Try another search query.
           </td>
         </tr>
@@ -452,18 +554,18 @@ function populateSongsList(dataPlaylist) {
 
   dataPlaylist.forEach((song, index) => {
     const li = document.createElement('li');
-    li.classList.add('song_card');
+    li.className = 'song_card flex items-center justify-between p-2.5 rounded-md hover:bg-spotify-cardHover transition duration-200 cursor-pointer group relative mb-2';
 
     li.innerHTML = `
-        <div class="number"><h3 class="song_number">${index + 1}</h3></div>
-        <div class="song_title">
-          <div class="card_title">
-            <p>${song.title}</p>
-            <div class="playlist_name"><p>${song.playlist}</p></div>
+        <div class="number w-8 text-center text-sm text-spotify-subdued font-medium"><h3 class="song_number">${index + 1}</h3></div>
+        <div class="song_title flex-1 ml-2 overflow-hidden flex justify-between items-center">
+          <div class="card_title overflow-hidden flex-1 mr-4">
+            <p class="text-sm font-semibold truncate text-white group-hover:text-spotify-green transition">${song.title}</p>
+            <div class="playlist_name text-xs text-spotify-subdued truncate mt-1"><p>${song.playlist}</p></div>
           </div>
-          <div class="sub_btn">
-            <div class="subplay" style="display: flex;"><i class="fa-regular fa-circle-play"></i></div>
-            <div class="subpause" style="display: none;"><i class="fa-solid fa-pause"></i></div>
+          <div class="sub_btn mr-2 shrink-0">
+            <div class="subplay" style="display: flex;"><i class="fa-regular fa-circle-play text-lg text-spotify-subdued hover:text-white hover:scale-105 transition"></i></div>
+            <div class="subpause" style="display: none;"><i class="fa-solid fa-pause text-base text-spotify-green hover:scale-105 transition"></i></div>
           </div>
         </div>
       `;
@@ -506,14 +608,16 @@ function showMostContainer() {
   songsListContainer.style.display = 'none';
   mostContainer.style.display = 'flex';
   featureContainer.style.display = 'none';
-  rightSide.style.display = 'flex';
-  searchContainer.style.display = "none";
-  
-  // Collapse detail tables
+  searchContainer.style.display = 'none';
+
+  // Show the home grid, hide detail panels
   const playingCard = document.querySelector('.playing_card');
   const galleryDetail = document.querySelector('.Gallery_card_detail');
-  if (playingCard) playingCard.style.display = "flex";
-  if (galleryDetail) galleryDetail.style.display = "none";
+  if (playingCard) playingCard.style.display = 'flex';
+  if (galleryDetail) galleryDetail.style.display = 'none';
+
+  // Restore recently played if it has data
+  renderRecentlyPlayed();
 }
 
 /** Handles clicking recommendations to play featured items */
@@ -530,8 +634,16 @@ function showFeatureSong(song, cardElement, useRandomFromArijit) {
 
   playTrack(trackToPlay);
 
-  rightSide.style.display = 'none';
-  featureContainer.style.display = "flex";
+  // Hide the home grid, show the feature panel
+  // NOTE: rightSide (.right) is the parent of featureContainer — never hide the parent!
+  const playingCard = document.querySelector('.playing_card');
+  const galleryDetail = document.querySelector('.Gallery_card_detail');
+  const recentlyPlayed = document.getElementById('recently-played-section');
+  if (playingCard) playingCard.style.display = 'none';
+  if (galleryDetail) galleryDetail.style.display = 'none';
+  if (recentlyPlayed) recentlyPlayed.style.display = 'none';
+  searchContainer.style.display = 'none';
+  featureContainer.style.display = 'flex';
   setCustomGradient();
 
   // Set cover art and texts
@@ -626,27 +738,36 @@ progressBarContainer.addEventListener('click', (e) => {
   updateProgressBar();
 });
 
-// --- Volume Slider Adjustments ---
-volumeSlider.addEventListener('click', (event) => {
-  const rect = volumeSlider.getBoundingClientRect();
-  const clickedPosition = event.clientX - rect.left;
-  const newVolume = Math.min(Math.max(clickedPosition / rect.width, 0), 1);
-  currentAudio.volume = newVolume;
-  volumeBar.style.width = `${newVolume * 100}%`;
+currentAudio.addEventListener('loadedmetadata', () => {
+  if (endTime) endTime.textContent = formatTime(currentAudio.duration);
+  if (npEndTime) npEndTime.textContent = formatTime(currentAudio.duration);
 });
 
-muteButton.addEventListener('click', () => {
-  if (isMuted) {
-    currentAudio.volume = previousVolume;
-    muteButton.textContent = '🔊';
-  } else {
-    previousVolume = currentAudio.volume;
-    currentAudio.volume = 0;
-    muteButton.textContent = '🔈';
-  }
-  volumeBar.style.width = `${currentAudio.volume * 100}%`;
-  isMuted = !isMuted;
-});
+// --- Volume Slider Adjustments ---
+if (volumeSlider) {
+  volumeSlider.addEventListener('click', (event) => {
+    const rect = volumeSlider.getBoundingClientRect();
+    const clickedPosition = event.clientX - rect.left;
+    const newVolume = Math.min(Math.max(clickedPosition / rect.width, 0), 1);
+    currentAudio.volume = newVolume;
+    if (volumeBar) volumeBar.style.width = `${newVolume * 100}%`;
+  });
+}
+
+if (muteButton) {
+  muteButton.addEventListener('click', () => {
+    if (isMuted) {
+      currentAudio.volume = previousVolume;
+      muteButton.querySelector('i').className = 'fa-solid fa-volume-high';
+    } else {
+      previousVolume = currentAudio.volume;
+      currentAudio.volume = 0;
+      muteButton.querySelector('i').className = 'fa-solid fa-volume-xmark';
+    }
+    if (volumeBar) volumeBar.style.width = `${currentAudio.volume * 100}%`;
+    isMuted = !isMuted;
+  });
+}
 
 fullscreenBtn.addEventListener('click', () => {
   showToast('Fullscreen lyrics view coming soon!');
@@ -739,7 +860,7 @@ document.addEventListener('keydown', (e) => {
       break;
     case 'm':
     case 'M':
-      muteButton.click();
+      if (muteButton) muteButton.click();
       break;
     case 'ArrowRight':
       if (currentAudio.duration) {
@@ -751,3 +872,288 @@ document.addEventListener('keydown', (e) => {
       break;
   }
 });
+
+// ============================================================
+// Recently Played (localStorage)
+// ============================================================
+
+const RECENTLY_PLAYED_KEY = 'spotify_clone_recently_played';
+const MAX_RECENT = 6;
+
+function saveRecentlyPlayed(song) {
+  try {
+    let recent = JSON.parse(localStorage.getItem(RECENTLY_PLAYED_KEY) || '[]');
+    // Remove if already exists
+    recent = recent.filter(s => s.title !== song.title);
+    // Add to front
+    recent.unshift({ title: song.title, singer: song.singer, filePath: song.filePath, playlist: song.playlist });
+    // Trim to max
+    recent = recent.slice(0, MAX_RECENT);
+    localStorage.setItem(RECENTLY_PLAYED_KEY, JSON.stringify(recent));
+    renderRecentlyPlayed();
+  } catch (e) {
+    console.warn('Could not save recently played:', e);
+  }
+}
+
+function renderRecentlyPlayed() {
+  const container = document.getElementById('recently-played-section');
+  if (!container) return;
+
+  try {
+    const recent = JSON.parse(localStorage.getItem(RECENTLY_PLAYED_KEY) || '[]');
+    if (recent.length === 0) {
+      container.style.display = 'none';
+      return;
+    }
+    container.style.display = 'block';
+    const grid = container.querySelector('.recently-played-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+    recent.forEach((song, index) => {
+      const item = document.createElement('div');
+      item.className = 'recently-played-item flex items-center gap-3 bg-[#181818] hover:bg-[#282828] rounded-md cursor-pointer transition duration-200 p-3 group overflow-hidden';
+      item.innerHTML = `
+        <div class="w-10 h-10 rounded bg-[#333] flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-music text-spotify-green text-sm"></i>
+        </div>
+        <div class="overflow-hidden flex-1">
+          <p class="text-xs font-semibold text-white truncate">${song.title}</p>
+          <p class="text-[10px] text-spotify-subdued truncate">${song.singer}</p>
+        </div>
+        <div class="opacity-0 group-hover:opacity-100 transition shrink-0">
+          <i class="fa-solid fa-play text-xs text-white"></i>
+        </div>
+      `;
+      item.addEventListener('click', () => {
+        setPlayingQueue([song], 0);
+        playQueueTrack(0);
+      });
+      grid.appendChild(item);
+    });
+  } catch (e) {
+    console.warn('Could not render recently played:', e);
+  }
+}
+
+// Initialize recently played section on load
+renderRecentlyPlayed();
+
+// ============================================================
+// Mobile Drawer Open / Close
+// ============================================================
+
+function openDrawer() {
+  if (!mobileDrawer || !drawerBackdrop) return;
+  mobileDrawer.classList.add('open');
+  drawerBackdrop.classList.add('open');
+  isDrawerOpen = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  if (!mobileDrawer || !drawerBackdrop) return;
+  mobileDrawer.classList.remove('open');
+  drawerBackdrop.classList.remove('open');
+  isDrawerOpen = false;
+  document.body.style.overflow = '';
+}
+
+if (hamburgerBtn) hamburgerBtn.addEventListener('click', openDrawer);
+if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
+if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+if (mobNavLibrary) mobNavLibrary.addEventListener('click', openDrawer);
+
+// Drawer library items → populate songs list + close drawer
+document.querySelectorAll('.drawer-lib-item').forEach((item, index) => {
+  item.addEventListener('click', () => {
+    if (index < playlistMap.length) {
+      populateSongsList(playlistMap[index]);
+      showSongsList();
+    }
+    closeDrawer();
+  });
+});
+
+// Touch swipe-left to close drawer
+let drawerTouchStartX = 0;
+if (mobileDrawer) {
+  mobileDrawer.addEventListener('touchstart', (e) => {
+    drawerTouchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  mobileDrawer.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - drawerTouchStartX;
+    if (dx < -60) closeDrawer(); // swipe left 60px = close
+  }, { passive: true });
+}
+
+// ============================================================
+// Mobile Search Bar Toggle
+// ============================================================
+
+function openMobileSearch() {
+  if (!mobileSearchBar) return;
+  mobileSearchBar.classList.add('open');
+  isMobileSearchOpen = true;
+  if (mobileInput) mobileInput.focus();
+}
+
+function closeMobileSearch() {
+  if (!mobileSearchBar) return;
+  mobileSearchBar.classList.remove('open');
+  isMobileSearchOpen = false;
+}
+
+if (mobileSearchToggle) mobileSearchToggle.addEventListener('click', () => {
+  isMobileSearchOpen ? closeMobileSearch() : openMobileSearch();
+});
+
+// Mobile search bar events (mirrors desktop)
+if (mobileInput) {
+  mobileInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      if (searchInput) searchInput.value = mobileInput.value;
+      closeMobileSearch();
+      performSearch();
+    }
+  });
+}
+if (mobileSearchBtn) {
+  mobileSearchBtn.addEventListener('click', () => {
+    if (mobileInput && searchInput) searchInput.value = mobileInput.value;
+    closeMobileSearch();
+    performSearch();
+  });
+}
+
+// Mobile home button (in mobile search bar)
+if (mobileHomeBtn) mobileHomeBtn.addEventListener('click', () => {
+  closeMobileSearch();
+  showMostContainer();
+  setMobileNavActive(mobNavHome);
+});
+
+// ============================================================
+// Mobile Bottom Navigation Tab Switching
+// ============================================================
+
+function setMobileNavActive(activeBtn) {
+  [mobNavHome, mobNavSearch, mobNavLibrary].forEach(btn => {
+    if (!btn) return;
+    btn.classList.remove('mobile-nav-active');
+    btn.querySelector('i')?.classList.remove('text-white');
+    btn.querySelector('i')?.classList.add('text-spotify-subdued');
+  });
+  if (activeBtn) {
+    activeBtn.classList.add('mobile-nav-active');
+    activeBtn.querySelector('i')?.classList.remove('text-spotify-subdued');
+    activeBtn.querySelector('i')?.classList.add('text-white');
+  }
+}
+
+if (mobNavHome) {
+  mobNavHome.addEventListener('click', () => {
+    closeMobileSearch();
+    closeDrawer();
+    showMostContainer();
+    setMobileNavActive(mobNavHome);
+  });
+}
+
+if (mobNavSearch) {
+  mobNavSearch.addEventListener('click', () => {
+    openMobileSearch();
+    setMobileNavActive(mobNavSearch);
+  });
+}
+
+// ============================================================
+// Now Playing Full-Screen Panel (Mobile)
+// ============================================================
+
+function openNowPlaying() {
+  if (!nowPlayingPanel) return;
+  nowPlayingPanel.classList.add('open');
+  isNowPlayingOpen = true;
+}
+
+function closeNowPlaying() {
+  if (!nowPlayingPanel) return;
+  nowPlayingPanel.classList.remove('open');
+  isNowPlayingOpen = false;
+}
+
+// Open: tap mini-player area or expand button
+if (miniPlayerInfo) miniPlayerInfo.addEventListener('click', () => {
+  if (window.innerWidth < 768) openNowPlaying();
+});
+if (mobileExpandPlayer) mobileExpandPlayer.addEventListener('click', openNowPlaying);
+
+// Close: tap collapse button
+if (npCollapseBtn) npCollapseBtn.addEventListener('click', closeNowPlaying);
+
+// NP panel controls (mirror footer controls)
+if (npPlayBtn) npPlayBtn.addEventListener('click', togglePlayPause);
+if (npPrevBtn) npPrevBtn.addEventListener('click', playPrevTrack);
+if (npNextBtn) npNextBtn.addEventListener('click', playNextTrack);
+
+// NP panel seek bar
+if (npProgressBar) {
+  npProgressBar.addEventListener('click', (e) => {
+    if (!currentAudio.duration) return;
+    const rect = npProgressBar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percent = Math.min(Math.max(clickX / rect.width, 0), 1);
+    currentAudio.currentTime = percent * currentAudio.duration;
+    updateProgressBar();
+  });
+}
+
+// Swipe down to close NP panel
+let npTouchStartY = 0;
+if (nowPlayingPanel) {
+  nowPlayingPanel.addEventListener('touchstart', (e) => {
+    npTouchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  nowPlayingPanel.addEventListener('touchend', (e) => {
+    const dy = e.changedTouches[0].clientY - npTouchStartY;
+    if (dy > 80) closeNowPlaying(); // swipe down 80px = close
+  }, { passive: true });
+}
+
+// ============================================================
+// Shuffle & Repeat Toggle
+// ============================================================
+
+if (shuffleBtn) {
+  shuffleBtn.addEventListener('click', () => {
+    isShuffleOn = !isShuffleOn;
+    shuffleBtn.classList.toggle('active', isShuffleOn);
+    showToast(isShuffleOn ? 'Shuffle On' : 'Shuffle Off');
+  });
+}
+
+if (repeatBtn) {
+  repeatBtn.addEventListener('click', () => {
+    if (repeatMode === 'off') {
+      repeatMode = 'all';
+      repeatBtn.classList.add('active');
+      showToast('Repeat All On');
+    } else if (repeatMode === 'all') {
+      repeatMode = 'one';
+      repeatBtn.classList.add('active');
+      repeatBtn.querySelector('i').className = 'fa-solid fa-repeat-1';
+      showToast('Repeat One On');
+    } else {
+      repeatMode = 'off';
+      repeatBtn.classList.remove('active');
+      repeatBtn.querySelector('i').className = 'fa-solid fa-repeat';
+      showToast('Repeat Off');
+    }
+  });
+}
+
+// Set home tab as active on init
+setMobileNavActive(mobNavHome);
+
